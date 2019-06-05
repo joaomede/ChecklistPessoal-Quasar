@@ -1,18 +1,26 @@
 <template>
-  <div id="q-app">
+  <div id="q-app" class="q-pa-md">
     <q-layout view="lHr lpR lFr">
       <q-header elevated class="bg-primary text-white">
+        <q-bar class="q-electron-drag">
+          <q-icon name="laptop_chromebook"/>
+          <div>CheckList Pessoal</div>
+
+          <q-space/>
+
+          <q-btn dense flat icon="minimize" @click="minimize"/>
+          <q-btn dense flat icon="crop_square" @click="maximize"/>
+          <q-btn dense flat icon="close" @click="closeApp"/>
+        </q-bar>
+
         <q-toolbar>
           <q-btn dense flat round icon="menu" @click="left = !left"/>
 
-          <q-toolbar-title>
-            CheckList Pessoal
-          </q-toolbar-title>
+          <q-toolbar-title>CheckList Pessoal</q-toolbar-title>
 
           <q-btn dense flat round icon="home" v-if="user" to="/dash"/>
-          <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user" to="/login" />
-          <q-btn flat round dense icon="exit_to_app" @click="logout" v-if="user" />
-
+          <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user" to="/login"/>
+          <q-btn flat round dense icon="exit_to_app" @click="logout" v-if="user"/>
         </q-toolbar>
       </q-header>
 
@@ -24,7 +32,6 @@
         >
           <q-list padding>
             <q-item clickable v-ripple to="dash">
-
               <q-item-section avatar>
                 <q-icon name="dashboard"/>
               </q-item-section>
@@ -32,14 +39,13 @@
               <q-item-section>Tela Inicial</q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple  v-if="user" to="trocarsenha">
+            <q-item clickable v-ripple v-if="user" to="trocarsenha">
               <q-item-section avatar>
                 <q-icon name="vpn_key"/>
               </q-item-section>
 
               <q-item-section>Trocar Senha</q-item-section>
             </q-item>
-
 
             <q-item clickable v-ripple to="sobre">
               <q-item-section avatar>
@@ -48,8 +54,6 @@
 
               <q-item-section>Sobre</q-item-section>
             </q-item>
-
-
           </q-list>
         </q-scroll-area>
 
@@ -74,10 +78,7 @@
 
       <q-footer reveal elevated class="bg-grey-8 text-white">
         <q-toolbar>
-          <q-toolbar-title>
-            Organize-se
-            
-          </q-toolbar-title>
+          <q-toolbar-title>Organize-se</q-toolbar-title>
         </q-toolbar>
       </q-footer>
     </q-layout>
@@ -97,7 +98,7 @@ export default {
       left: false,
       login: null,
       drawer: null,
-      emailUsuario: "",
+      emailUsuario: ""
     };
   },
   methods: {
@@ -114,14 +115,35 @@ export default {
         .signOut()
         .then(() => this.$router.replace("/login"));
     },
-    verificaSeEstaLogado(){
-      if(this.$store.getters.getUser != null)
-      {
+    verificaSeEstaLogado() {
+      if (this.$store.getters.getUser != null) {
         this.emailUsuario = this.$store.getters.getUser.email;
         this.alertaLoginSucesso = false;
+      } else {
+        this.emailUsuario = "@email";
       }
-      else{
-        this.emailUsuario = '@email';
+    },
+    minimize() {
+      if (process.env.MODE === "electron") {
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow().minimize();
+      }
+    },
+
+    maximize() {
+      if (process.env.MODE === "electron") {
+        const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow();
+
+        if (win.isMaximized()) {
+          win.unmaximize();
+        } else {
+          win.maximize();
+        }
+      }
+    },
+
+    closeApp() {
+      if (process.env.MODE === "electron") {
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow().close();
       }
     }
   },
@@ -136,18 +158,15 @@ export default {
       return this.$store.getters.getUser;
     },
     nomeUsuario() {
-      if(this.$store.getters.getUser != null){
+      if (this.$store.getters.getUser != null) {
         return this.$store.getters.getNomeUsuario;
       } else {
-        return 'Usuario';
+        return "Usuario";
       }
-      
-    },
+    }
   }
 };
 </script>
 
 <style>
-
-
 </style>
