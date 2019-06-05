@@ -1,13 +1,20 @@
 <template>
   <div class="q-pa-md">
     <!-- flutuante -->
-    <q-btn round color="orange darken-2" @click.stop="dialogoAddTarefa = true" class="fixed" style="right: 18px; bottom: 60px">
+    <q-btn
+      round
+      color="orange darken-2"
+      @click.stop="dialogoAddTarefa = true"
+      class="fixed"
+      style="right: 18px; bottom: 60px"
+    >
       <q-icon name="add"/>
     </q-btn>
+    <div class="text-h5 text-center">Tarefas</div>
 
     <!-- tabs -->
-    <div class="q-pa-md">
-      <div class="q-gutter-y-md" style="max-width: 600px">
+    <div style="max-width: 900px; margin: auto;">
+      <div class="q-gutter-y-md">
         <q-card>
           <q-tabs
             v-model="tab"
@@ -18,8 +25,8 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab name="ativo" label="Tarefas Ativas"/>
-            <q-tab name="concluido" label="Tarefas Concluídas"/>
+            <q-tab name="ativo" label="Ativas"/>
+            <q-tab name="concluido" label="Concluídas"/>
           </q-tabs>
 
           <q-separator/>
@@ -27,9 +34,9 @@
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="ativo">
               <!-- Tab tarefas ativas -->
-              <q-list bordered padding class="rounded-borders" style="max-width: 350px">
+              <q-list bordered style="max-width: 900px; margin: auto;">
                 <div
-                  class="text-h5"
+                  class="text-h5 text-center"
                 >/{{this.$store.getters.getNomeDaPasta}}/{{this.$store.getters.getNomeDoQuadro}}/</div>
 
                 <q-item
@@ -64,9 +71,9 @@
 
             <q-tab-panel name="concluido">
               <!-- Tab tarefas concluídas -->
-              <q-list bordered padding class="rounded-borders" style="max-width: 350px">
+              <q-list bordered style="max-width: 900px; margin: auto;">
                 <div
-                  class="text-h5"
+                  class="text-h5 text-center"
                 >/{{this.$store.getters.getNomeDaPasta}}/{{this.$store.getters.getNomeDoQuadro}}/</div>
 
                 <q-item
@@ -104,7 +111,7 @@
     </div>
 
     <!-- caixa de diálogo exibe detalhes tarefas ativas -->
-    <q-dialog v-model="dialogoDetalhesAtivas">
+    <q-dialog v-model="dialogoDetalhesAtivas" class="q-gutter-sm">
       <q-card>
         <q-card-section>
           <div class="text-h6">Titulo:</div>
@@ -122,17 +129,13 @@
           <div class="text-h6">{{this.descricaoDetalhesAtivo}}</div>
         </q-card-section>
 
-        <q-card-section>
+        <q-card-section align="center">
           <q-btn color="primary" @click="EditarTarefas(item)">Editar</q-btn>
+          <q-btn flat color="primary" @click="DialogoDeletaTarefa(item)">Apagar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="DialogoDeletaTarefa(item)">Apagar</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
-        </q-card-section>
+        <q-card-section></q-card-section>
       </q-card>
     </q-dialog>
 
@@ -160,13 +163,12 @@
           <div class="text-h6">{{this.notasDetalhe}}</div>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="DialogoDeletaTarefa(item)">Apagar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="DialogoDeletaTarefa(item)">Apagar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoDetalhesConcluidas = false">Voltar</q-btn>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoDetalhesConcluidas = false">Voltar</q-btn>
-        </q-card-section>
+        <q-card-section></q-card-section>
       </q-card>
     </q-dialog>
 
@@ -189,12 +191,9 @@
           </q-form>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="CriaTarefas">Salvar</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoAddTarefa = false">Voltar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="CriaTarefas">Salvar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddTarefa = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -210,12 +209,9 @@
           <div class="text-h6">{{this.editaNomeDaTarefaAtiva}}</div>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="ApagaTarefa">Sim</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoApagaTarefaAtiva = false">Voltar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="ApagaTarefa">Sim</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoApagaTarefaAtiva = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -231,18 +227,15 @@
           <div class="text-h6">{{this.tituloTarefaConclusao}}</div>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="ConcluiTarefa">Sim</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click="dialogoConcluirTarefa = false">Voltar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="ConcluiTarefa">Sim</q-btn>
+          <q-btn flat color="primary" @click="dialogoConcluirTarefa = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
 
     <!-- caixa de diálogo restaurar tarefa -->
-    <q-dialog v-model="dialogoRestaurarTarefa" max-width="290" xs12 sm6 md6 lg6 xl6>
+    <q-dialog v-model="dialogoRestaurarTarefa">
       <q-card>
         <q-card-section>
           <div class="text-h6">Deseja restaurar esta tarefa:</div>
@@ -252,13 +245,12 @@
           <div class="text-h6">"{{this.tituloTarefaConclusao}}"?</div>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="RestauraTarefa()">Sim</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="RestauraTarefa()">Sim</q-btn>
+          <q-btn flat color="primary" @click="dialogoRestaurarTarefa = false">Voltar</q-btn>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="dialogoRestaurarTarefa = false">Voltar</q-btn>
-        </q-card-section>
+        <q-card-section></q-card-section>
       </q-card>
     </q-dialog>
 
@@ -279,17 +271,16 @@
           </q-form>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="AddNota()">Sim</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="AddNota()">Sim</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddNota = false">Voltar</q-btn>
         </q-card-section>
 
         <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoAddNota = false">Voltar</q-btn>
+          
         </q-card-section>
       </q-card>
     </q-dialog>
-
-    
   </div>
 </template>
 
@@ -577,16 +568,6 @@ export default {
 </script>
 
 <style scoped>
-.flutuante {
-  margin-bottom: 150px;
-}
-
-div {
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
 form > * {
   display: block;
 }

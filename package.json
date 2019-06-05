@@ -1,6 +1,6 @@
 {
   "name": "YourAPIweb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CheckList Pessoal",
   "productName": "CheckList Pessoal",
   "cordovaId": "org.cordova.quasar.app",
@@ -22,7 +22,8 @@
     "devtron": "^1.4.0",
     "electron": "^4.2.3",
     "electron-debug": "^2.2.0",
-    "electron-devtools-installer": "^2.2.4"
+    "electron-devtools-installer": "^2.2.4",
+    "electron-packager": "^13.1.1"
   },
   "engines": {
     "node": ">= 8.9.0",

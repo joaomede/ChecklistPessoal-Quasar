@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div class="text-h4">{{ msg }}</div>
+    <div class="text-h4 text-center">{{ msg }}</div>
     <!-- flutuante -->
     <q-btn round color="orange darken-2" @click.stop="dialogoAddQuadro = true" class="fixed" style="right: 18px; bottom: 60px">
       <q-icon name="add"/>
     </q-btn>
 
-    <!-- conteudo pasta -->
-    <div class="q-pa-md q-gutter-md">
-      <q-list bordered padding class="rounded-borders" style="max-width: 350px">
-        <div class="text-h5">Selecione o Quadro</div>
-        <div class="text-h6">//{{this.$store.getters.getNomeDaPasta}}</div>
+    <!-- conteudo do quadro -->
+    <div class="q-pa-md" style="max-width: 900px; margin: auto;">
+      <q-list bordered>
+        <div class="text-h5 text-center">Selecione o Quadro</div>
+        <div class="text-h6 text-center">//{{this.$store.getters.getNomeDaPasta}}</div>
         <q-item
           clickable
           v-ripple
@@ -18,6 +18,10 @@
           :key="item.idQuadro"
           @click="SetIDdoQuadro(item)"
         >
+        <q-item-section avatar>
+            <q-avatar icon="dashboard" color="primary" text-color="secondary" />
+          </q-item-section>
+
           <q-item-section>
             <q-item-label lines="1">{{ item.nomeDoQuadro }}</q-item-label>
           </q-item-section>
@@ -46,13 +50,11 @@
           </q-form>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="AtualizaEditaQuadro">Salvar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="AtualizaEditaQuadro">Salvar</q-btn>
+          <q-btn flat @click.stop="dialogoEditaQuadro = false">Voltar</q-btn>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn @click.stop="dialogoEditaQuadro = false">Voltar</q-btn>
-        </q-card-section>
       </q-card>
     </q-dialog>
 
@@ -69,11 +71,8 @@
           </q-form>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @@click="CriaQuadro">Salvar</q-btn>
-        </q-card-section>
-
-        <q-card-section>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @@click="CriaQuadro">Salvar</q-btn>
           <q-btn color="primary" @click.stop="dialogoAddQuadro = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
@@ -90,12 +89,9 @@
           <div class="text-h6">{{this.editaNomeDoQuadro}}</div>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="ApagaQuadroDB">Sim</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoApagaQuadro = false">Voltar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="ApagaQuadroDB">Sim</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoApagaQuadro = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -242,12 +238,7 @@ export default {
 </script>
 
 <style scoped>
-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+
 
 form > * {
   display: block;

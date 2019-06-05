@@ -1,4 +1,4 @@
-import Login from '../components/Login'
+/*import Login from '../components/Login'
 import Registro from '../components/Registro'
 import Tarefas from '../components/Tarefas'
 import Quadro from '../components/Quadro'
@@ -62,4 +62,4 @@ if (process.env.MODE !== 'ssr') {
     })
 }
 
-export default routes
+export default routes*/

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-h4">{{ msg }}</div>
+    <div class="text-h4 text-center">{{ msg }}</div>
     <!-- flutuante -->
     <!-- flutuante -->
     <q-btn round color="orange darken-2" @click.stop="dialogoAddPasta = true" class="fixed" style="right: 18px; bottom: 60px">
@@ -9,9 +9,9 @@
 
 
     <!-- conteudo pasta -->
-    <div class="q-pa-md q-gutter-md">
-      <q-list bordered padding class="rounded-borders" style="max-width: 350px">
-        <div class="text-h6">Selecione sua pasta pessoal</div>
+    <div class="q-pa-md" style="max-width: 900px; margin: auto;">
+      <q-list bordered>
+        <div class="text-h6 text-center">Selecione sua pasta pessoal</div>
 
         <q-item
           clickable
@@ -21,7 +21,7 @@
           @click="CarregaTelaQuadros(item)"
         >
           <q-item-section avatar top>
-            <q-avatar icon="folder" color="primary" text-color="white"/>
+            <q-avatar icon="folder" color="primary" text-color="secondary"/>
           </q-item-section>
 
           <q-item-section>
@@ -35,6 +35,8 @@
           <q-item-section side>
             <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="DeletaPasta(item)"/>
           </q-item-section>
+
+          
         </q-item>
       </q-list>
     </div>
@@ -52,12 +54,9 @@
           </q-form>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="CriaPasta">Salvar</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoAddPasta = false">Voltar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="CriaPasta">Salvar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddPasta = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -75,12 +74,9 @@
           </q-form>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="AtualizaEditaPasta">Salvar</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoEditaPasta = false">Voltar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="AtualizaEditaPasta">Salvar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoEditaPasta = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -96,12 +92,9 @@
           <div class="text-h6">{{this.editaNomePasta}}</div>
         </q-card-section>
 
-        <q-card-section>
-          <q-btn color="primary" @click="ApagaPastaDB">Sim</q-btn>
-        </q-card-section>
-
-        <q-card-section>
-          <q-btn color="primary" @click.stop="dialogoConfirmaDeletaPasta = false">Voltar</q-btn>
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="ApagaPastaDB">Sim</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoConfirmaDeletaPasta = false">Voltar</q-btn>
         </q-card-section>
 
       </q-card>
@@ -242,12 +235,6 @@ export default {
 </script>
 
 <style scoped>
-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 
 form > * {
   display: block;

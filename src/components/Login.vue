@@ -115,10 +115,17 @@ export default {
           console.log("email de recuperação enviado com sucesso");
         });
       this.dialogoEsqueciSenha = false;
+    },
+    verificaEstaLogado(){
+      if(this.$store.getters.getUser != null)
+      {
+        this.$router.replace("dash");
+      }
     }
   },
   created() {
     this.setUser();
+    this.verificaEstaLogado();
   },
 
   computed: {

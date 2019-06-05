@@ -58,7 +58,7 @@ module.exports = function (ctx) {
         'QTabPanel',
         'QFab',
         'QFabAction',
-        'QSeparator'
+        'QSeparator',
       ],
 
       directives: [
@@ -104,9 +104,9 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        // name: 'Quasar App',
+         name: 'CheckList Pessoal',
         // short_name: 'Quasar-PWA',
-        // description: 'Best PWA App in town!',
+        description: 'Criado para organização',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
