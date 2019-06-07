@@ -65,13 +65,12 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-    
   </div>
 </template>
 
 <script>
-import firebase from 'firebase';
-import { timestamp } from '../boot/main';
+import firebase from "firebase";
+import { timestamp } from "../boot/main";
 
 export default {
   name: "Login",
@@ -91,6 +90,12 @@ export default {
     ]
   }),
   methods: {
+    alertaNotificacao(e) {
+      this.$q.notify({
+          message: "Problemas na autenticação, verifique o e-mail e senha",
+          color: "red"
+        });
+    },
     setUser: function() {
       this.$store.dispatch("setUser");
     },
@@ -102,9 +107,12 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.senha)
         .then(data => {
-          console.log('teste')
+          console.log("teste");
           this.gravaUltimoAcesso();
           this.$router.replace("dash");
+        })
+        .catch(e => {
+          this.alertaNotificacao(e);
         });
     },
     RecuperaAcesso() {
@@ -116,9 +124,8 @@ export default {
         });
       this.dialogoEsqueciSenha = false;
     },
-    verificaEstaLogado(){
-      if(this.$store.getters.getUser != null)
-      {
+    verificaEstaLogado() {
+      if (this.$store.getters.getUser != null) {
         this.$router.replace("dash");
       }
     }
