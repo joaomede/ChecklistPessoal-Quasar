@@ -15,7 +15,7 @@
               required
               filled
               lazy-rules
-              type="Email"
+              type="text"
             ></q-input>
             <q-input
               v-model="email"
@@ -23,7 +23,7 @@
               label="E-mail"
               required
               filled
-              type="Password"
+              type="email"
               lazy-rules
             />
             <q-input

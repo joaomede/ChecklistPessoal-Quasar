@@ -2,16 +2,7 @@
   <div id="q-app" class="q-pa-md">
     <q-layout view="lHr lpR lFr">
       <q-header elevated class="bg-primary text-white">
-        <q-bar class="q-electron-drag">
-          <q-icon name="laptop_chromebook"/>
-          <div>CheckList Pessoal</div>
 
-          <q-space/>
-
-          <q-btn dense flat icon="minimize" @click="minimize"/>
-          <q-btn dense flat icon="crop_square" @click="maximize"/>
-          <q-btn dense flat icon="close" @click="closeApp"/>
-        </q-bar>
 
         <q-toolbar>
           <q-btn dense flat round icon="menu" @click="left = !left"/>

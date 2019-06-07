@@ -72,8 +72,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @@click="CriaQuadro">Salvar</q-btn>
-          <q-btn color="primary" @click.stop="dialogoAddQuadro = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click="CriaQuadro">Salvar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddQuadro = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -109,7 +109,7 @@ export default {
       dialogoAddQuadro: false,
       dialogoEditaQuadro: false,
       dialogoApagaQuadro: false,
-      msg: "Quadro de Tarefas",
+      msg: "Quadros",
       idQuadro: "",
       nomeDoQuadro: "",
       editaNomeDoQuadro: "",
