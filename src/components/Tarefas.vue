@@ -302,9 +302,7 @@
           <q-btn flat color="primary" @click.stop="dialogoAddNota = false">Voltar</q-btn>
         </q-card-section>
 
-        <q-card-section>
-          
-        </q-card-section>
+        <q-card-section></q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -479,11 +477,17 @@ export default {
         .collection("Tarefas")
         .doc(this.idTarefa)
         .delete()
-        .then(function() {
-          console.log("Document successfully deleted!");
+        .then(() => {
+          this.$q.notify({
+            message: "Tarefa \"" + this.tituloExclusao + "\" foi apagada",
+            color: "orange"
+          });
         })
-        .catch(function(error) {
-          console.error("Error removing document: ", error);
+        .catch((e) => {
+          this.$q.notify({
+            message: "Não foi possível excluir tarefa",
+            color: "red"
+          });
         });
       if (this.dialogoDetalhesAtivas == true) {
         this.dialogoDetalhesAtivas = false;
@@ -509,6 +513,10 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
+          this.$q.notify({
+            message: "Tarefa \"" + this.tituloTarefaConclusao + "\" foi concluída",
+            color: "green"
+          });
           console.log("Tarefa Concluida");
         })
         .catch(() => {
@@ -537,12 +545,18 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          console.log("nota foi adicionada: " + this.notasDetalhe);
+          this.$q.notify({
+            message: "Nota \"" + this.notaConclusao + "\" foi adicionada",
+            color: "green"
+          });
+        this.notaConclusao = "";
         })
         .catch(() => {
-          console.log("Não foi possível concluir tarefa");
+          this.$q.notify({
+            message: "Não foi possível adicionar nota",
+            color: "green"
+          });
         });
-      this.notaConclusao = "";
       this.dialogoAddNota = false;
     },
     RestauraTarefa() {
@@ -560,14 +574,20 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          console.log("Tarefa Concluida");
+          this.$q.notify({
+            message: "Tarefa \"" + this.tituloTarefaConclusao + "\" restaurada",
+            color: "green"
+          });
         })
         .catch(() => {
-          console.log("Não foi possível concluir tarefa");
+          this.$q.notify({
+            message: "Não foi possível restaurar essa tarefa, tente novamente.",
+            color: "green"
+          });
         });
       this.dialogoRestaurarTarefa = false;
       this.idTarefa = "";
-      this.tituloTarefaConclusao = "";
+      //this.tituloTarefaConclusao = "";
     },
     DialogoDeletaTarefa(item) {
       this.dialogoApagaTarefaAtiva = true;
@@ -588,16 +608,16 @@ export default {
       this.tituloTarefaConclusao = item.nomeDaTarefa;
       this.idTarefa = item.idTarefa;
     },
-    EditarTarefas(){
+    EditarTarefas() {
       this.dialogoEditaTarefa = true;
       this.tituloEditar = this.tituloDetalheAtivo;
       this.descriEditar = this.descricaoDetalhesAtivo;
     },
-    AtualizaTarefas(){
+    AtualizaTarefas() {
       const conteudo = {
         nomeDaTarefa: this.tituloEditar,
         descricaoTarefa: this.descriEditar
-      }
+      };
 
       db.collection("app")
         .doc(this.$store.getters.getUser.uid)
@@ -609,14 +629,21 @@ export default {
         .doc(this.idTarefa)
         .update(conteudo)
         .then(ref => {
-          console.log("Tarefa Atualizada");
+          this.$q.notify({
+            message: "Tarefa atualizada",
+            color: "green"
+          });
         })
         .catch(() => {
+          this.$q.notify({
+            message: "Problemas ao tentar atualizar tarefa",
+            color: "red"
+          });
           console.log("Atualização Falhou");
         });
 
-        this.dialogoEditaTarefa = false;
-        this.dialogoDetalhesAtivas = false;
+      this.dialogoEditaTarefa = false;
+      this.dialogoDetalhesAtivas = false;
     }
   },
   created() {
