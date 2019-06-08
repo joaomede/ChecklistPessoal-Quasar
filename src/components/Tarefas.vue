@@ -118,7 +118,7 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.tiuloDetalheAtivo}}</div>
+          <div class="text-h6">{{this.tituloDetalheAtivo}}</div>
         </q-card-section>
 
         <q-card-section>
@@ -130,7 +130,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn color="primary" @click="EditarTarefas(item)">Editar</q-btn>
+          <q-btn flat color="primary" @click="EditarTarefas()">Editar</q-btn>
           <q-btn flat color="primary" @click="DialogoDeletaTarefa(item)">Apagar</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
         </q-card-section>
@@ -164,7 +164,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="DialogoDeletaTarefa(item)">Apagar</q-btn>
+          <q-btn flat color="primary" @click="DialogoDeletaTarefaDetalhes()">Apagar</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoDetalhesConcluidas = false">Voltar</q-btn>
         </q-card-section>
 
@@ -198,6 +198,32 @@
       </q-card>
     </q-dialog>
 
+    <!-- caixa de diálogo edita tarefa -->
+    <q-dialog v-model="dialogoEditaTarefa">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Editar Tarefa</div>
+        </q-card-section>
+
+        <q-card-section>
+          <q-form class="q-gutter-md">
+            <q-input v-model="tituloEditar" label="Informe o titulo da tarefa" required></q-input>
+          </q-form>
+        </q-card-section>
+
+        <q-card-section>
+          <q-form class="q-gutter-md">
+            <q-input v-model="descriEditar" label="Informe a descrição da tarefa" required></q-input>
+          </q-form>
+        </q-card-section>
+
+        <q-card-section align="center">
+          <q-btn flat color="primary" @click="AtualizaTarefas()">Salvar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoEditaTarefa = false">Voltar</q-btn>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
     <!-- caixa de diálogo apagar tarefa ativa confirmação -->
     <q-dialog v-model="dialogoApagaTarefaAtiva">
       <q-card>
@@ -206,7 +232,7 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.editaNomeDaTarefaAtiva}}</div>
+          <div class="text-h6">{{this.tituloExclusao}}</div>
         </q-card-section>
 
         <q-card-section align="center">
@@ -298,15 +324,15 @@ export default {
       dialogoConcluirTarefa: false,
       dialogoAddNota: false,
       dialogoRestaurarTarefa: false,
-
-      dialogoApagaTarefaAtiva: false,
-
       dialogoEditaTarefa: false,
-      editaNomeDaTarefaAtiva: "",
-      editaDescricaoTarefaAtiva: "",
+      dialogoApagaTarefaAtiva: false,
+      tituloExclusao: "",
       tituloTarefaConclusao: "",
 
-      tiuloDetalheAtivo: "",
+      tituloEditar: "",
+      descriEditar: "",
+
+      tituloDetalheAtivo: "",
       descricaoDetalhesAtivo: "",
 
       tituloDetalheConcluido: "",
@@ -433,7 +459,7 @@ export default {
     exibeDetalhesAtiva(objeto) {
       this.dialogoDetalhesAtivas = true;
       this.idTarefa = objeto.idTarefa;
-      this.tiuloDetalheAtivo = objeto.nomeDaTarefa;
+      this.tituloDetalheAtivo = objeto.nomeDaTarefa;
       this.descricaoDetalhesAtivo = objeto.descricaoTarefa;
     },
     exibeDetalhesConcluida(objeto) {
@@ -545,8 +571,12 @@ export default {
     },
     DialogoDeletaTarefa(item) {
       this.dialogoApagaTarefaAtiva = true;
-      this.editaNomeDaTarefaAtiva = item.nomeDaTarefa;
+      this.tituloExclusao = item.nomeDaTarefa;
       this.idTarefa = item.idTarefa;
+    },
+    DialogoDeletaTarefaDetalhes() {
+      this.dialogoApagaTarefaAtiva = true;
+      this.tituloExclusao = this.tituloDetalheConcluido;
     },
     DialogoConcluirTarefa(item) {
       this.dialogoConcluirTarefa = true;
@@ -557,6 +587,36 @@ export default {
       this.dialogoRestaurarTarefa = true;
       this.tituloTarefaConclusao = item.nomeDaTarefa;
       this.idTarefa = item.idTarefa;
+    },
+    EditarTarefas(){
+      this.dialogoEditaTarefa = true;
+      this.tituloEditar = this.tituloDetalheAtivo;
+      this.descriEditar = this.descricaoDetalhesAtivo;
+    },
+    AtualizaTarefas(){
+      const conteudo = {
+        nomeDaTarefa: this.tituloEditar,
+        descricaoTarefa: this.descriEditar
+      }
+
+      db.collection("app")
+        .doc(this.$store.getters.getUser.uid)
+        .collection("Pasta")
+        .doc(this.$store.getters.getPushIDPasta)
+        .collection("Quadro")
+        .doc(this.$store.getters.getPushIDQuadro)
+        .collection("Tarefas")
+        .doc(this.idTarefa)
+        .update(conteudo)
+        .then(ref => {
+          console.log("Tarefa Atualizada");
+        })
+        .catch(() => {
+          console.log("Atualização Falhou");
+        });
+
+        this.dialogoEditaTarefa = false;
+        this.dialogoDetalhesAtivas = false;
     }
   },
   created() {
