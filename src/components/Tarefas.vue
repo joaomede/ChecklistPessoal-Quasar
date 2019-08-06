@@ -8,7 +8,7 @@
       class="fixed"
       style="right: 18px; bottom: 60px"
     >
-      <q-icon name="add"/>
+      <q-icon name="add" />
     </q-btn>
     <div class="text-h5 text-center">Tarefas</div>
 
@@ -25,11 +25,11 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab name="ativo" label="Ativas"/>
-            <q-tab name="concluido" label="Concluídas"/>
+            <q-tab name="ativo" label="Ativas" />
+            <q-tab name="concluido" label="Concluídas" />
           </q-tabs>
 
-          <q-separator/>
+          <q-separator />
 
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="ativo">
@@ -47,7 +47,7 @@
                   @click="exibeDetalhesAtiva(item)"
                 >
                   <q-item-section avatar top>
-                    <q-avatar icon="event_note" color="primary" text-color="white"/>
+                    <q-avatar icon="event_note" color="primary" text-color="white" />
                   </q-item-section>
 
                   <q-item-section>
@@ -55,7 +55,7 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="check" color="primary" @click.stop="DialogoConcluirTarefa(item)"/>
+                    <q-icon name="check" color="primary" @click.stop="DialogoConcluirTarefa(item)" />
                   </q-item-section>
 
                   <q-item-section side>
@@ -84,7 +84,7 @@
                   @click="exibeDetalhesConcluida(item)"
                 >
                   <q-item-section avatar top>
-                    <q-avatar icon="event_note" color="primary" text-color="white"/>
+                    <q-avatar icon="event_note" color="primary" text-color="white" />
                   </q-item-section>
 
                   <q-item-section>
@@ -92,7 +92,7 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="restore" color="primary" @click.stop="DialogoRestaurar(item)"/>
+                    <q-icon name="restore" color="primary" @click.stop="DialogoRestaurar(item)" />
                   </q-item-section>
 
                   <q-item-section side>
@@ -112,7 +112,7 @@
 
     <!-- caixa de diálogo exibe detalhes tarefas ativas -->
     <q-dialog v-model="dialogoDetalhesAtivas" class="q-gutter-sm">
-      <q-card>
+      <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">Titulo:</div>
         </q-card-section>
@@ -126,7 +126,7 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.descricaoDetalhesAtivo}}</div>
+          <div v-html="this.descricaoDetalhesAtivo"></div>
         </q-card-section>
 
         <q-card-section align="center">
@@ -141,7 +141,7 @@
 
     <!-- caixa de diálogo exibe detalhes tarefas concluida -->
     <q-dialog v-model="dialogoDetalhesConcluidas" max-width="290" xs12 sm6 md6 lg6 xl6>
-      <q-card>
+      <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">Titulo:</div>
         </q-card-section>
@@ -153,7 +153,7 @@
           <div class="text-h6" v-if="this.descricaoDetalhesConcluido != ''">Descrição:</div>
         </q-card-section>
         <q-card-section>
-          <div class="text-h6">{{this.descricaoDetalhesConcluido}}</div>
+          <div v-html="this.descricaoDetalhesConcluido"></div>
         </q-card-section>
 
         <q-card-section>
@@ -174,7 +174,7 @@
 
     <!-- caixa de diálogo adiciona tarefa -->
     <q-dialog v-model="dialogoAddTarefa">
-      <q-card>
+      <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">Adicione uma Tarefa</div>
         </q-card-section>
@@ -187,7 +187,56 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="descricaoTarefa" label="Informe a descrição da tarefa" required></q-input>
+            <div class="text-h6">Descrição:</div>
+            <q-editor
+              v-model="descriEditar"
+              :toolbar="[
+        [
+          {
+            label: 'Alinhamentos',
+            icon: $q.iconSet.editor.align,
+            fixedLabel: true,
+            list: 'only-icons',
+            options: ['left', 'center', 'right', 'justify']
+          },
+          {
+        label: 'Formatação 1',
+        icon: 'format_bold',
+        fixedLabel: true,
+        fixedIcon: true,
+        list: 'only-icons',
+        options: ['bold', 'italic', 'strike', 'underline']
+      },
+        ],
+        [
+          {
+            label: 'Paragrafo',
+            icon: $q.iconSet.editor.formatting,
+            list: 'no-icons',
+            options: paragrafos
+          },
+          {
+            label: 'Tamanho da Fonte',
+            icon: $q.iconSet.editor.fontSize,
+            fixedLabel: true,
+            fixedIcon: true,
+            list: 'no-icons',
+            options: tamanhoDaFonte
+          },
+          {
+            label: 'Fonte padrão',
+            icon: $q.iconSet.editor.font,
+            fixedIcon: true,
+            list: 'no-icons',
+            options: fontes
+          },
+          'removeFormat'
+        ],
+        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
+        ['undo', 'redo']
+      ]"
+              :fonts="nomeDasFontes"
+            />
           </q-form>
         </q-card-section>
 
@@ -200,7 +249,7 @@
 
     <!-- caixa de diálogo edita tarefa -->
     <q-dialog v-model="dialogoEditaTarefa">
-      <q-card>
+      <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">Editar Tarefa</div>
         </q-card-section>
@@ -213,7 +262,56 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="descriEditar" label="Informe a descrição da tarefa" required></q-input>
+            <div class="text-h6">Descrição:</div>
+            <q-editor
+              v-model="descriEditar"
+              :toolbar="[
+        [
+          {
+            label: 'Alinhamentos',
+            icon: $q.iconSet.editor.align,
+            fixedLabel: true,
+            list: 'only-icons',
+            options: ['left', 'center', 'right', 'justify']
+          },
+          {
+        label: 'Formatação 1',
+        icon: 'format_bold',
+        fixedLabel: true,
+        fixedIcon: true,
+        list: 'only-icons',
+        options: ['bold', 'italic', 'strike', 'underline']
+      },
+        ],
+        [
+          {
+            label: 'Paragrafo',
+            icon: $q.iconSet.editor.formatting,
+            list: 'no-icons',
+            options: paragrafos
+          },
+          {
+            label: 'Tamanho da Fonte',
+            icon: $q.iconSet.editor.fontSize,
+            fixedLabel: true,
+            fixedIcon: true,
+            list: 'no-icons',
+            options: tamanhoDaFonte
+          },
+          {
+            label: 'Fonte padrão',
+            icon: $q.iconSet.editor.font,
+            fixedIcon: true,
+            list: 'no-icons',
+            options: fontes
+          },
+          'removeFormat'
+        ],
+        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
+        ['undo', 'redo']
+      ]"
+              :fonts="nomeDasFontes"
+            />
           </q-form>
         </q-card-section>
 
@@ -369,7 +467,39 @@ export default {
         .where("concluida", "==", true)
         .orderBy("tarefaTimeStamp", "asc"),
       tarefasAtivaData: [],
-      tarefasConcluidaData: []
+      tarefasConcluidaData: [],
+
+      fontes: [
+        "default_font",
+        "arial",
+        "arial_black",
+        "comic_sans",
+        "courier_new",
+        "impact",
+        "lucida_grande",
+        "times_new_roman",
+        "verdana"
+      ],
+      nomeDasFontes: {
+        arial: "Arial",
+        arial_black: "Arial Black",
+        comic_sans: "Comic Sans MS",
+        courier_new: "Courier New",
+        impact: "Impact",
+        lucida_grande: "Lucida Grande",
+        times_new_roman: "Times New Roman",
+        verdana: "Verdana"
+      },
+      tamanhoDaFonte: [
+        "size-1",
+        "size-2",
+        "size-3",
+        "size-4",
+        "size-5",
+        "size-6",
+        "size-7"
+      ],
+      paragrafos: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "code"]
     };
   },
 
@@ -479,11 +609,11 @@ export default {
         .delete()
         .then(() => {
           this.$q.notify({
-            message: "Tarefa \"" + this.tituloExclusao + "\" foi apagada",
+            message: 'Tarefa "' + this.tituloExclusao + '" foi apagada',
             color: "orange"
           });
         })
-        .catch((e) => {
+        .catch(e => {
           this.$q.notify({
             message: "Não foi possível excluir tarefa",
             color: "red"
@@ -514,7 +644,8 @@ export default {
         .update(objeto)
         .then(() => {
           this.$q.notify({
-            message: "Tarefa \"" + this.tituloTarefaConclusao + "\" foi concluída",
+            message:
+              'Tarefa "' + this.tituloTarefaConclusao + '" foi concluída',
             color: "green"
           });
           console.log("Tarefa Concluida");
@@ -546,10 +677,10 @@ export default {
         .update(objeto)
         .then(() => {
           this.$q.notify({
-            message: "Nota \"" + this.notaConclusao + "\" foi adicionada",
+            message: 'Nota "' + this.notaConclusao + '" foi adicionada',
             color: "green"
           });
-        this.notaConclusao = "";
+          this.notaConclusao = "";
         })
         .catch(() => {
           this.$q.notify({
@@ -575,7 +706,7 @@ export default {
         .update(objeto)
         .then(() => {
           this.$q.notify({
-            message: "Tarefa \"" + this.tituloTarefaConclusao + "\" restaurada",
+            message: 'Tarefa "' + this.tituloTarefaConclusao + '" restaurada',
             color: "green"
           });
         })
