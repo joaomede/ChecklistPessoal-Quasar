@@ -60,7 +60,8 @@ module.exports = function (ctx) {
         'QFabAction',
         'QSeparator',
         'QBar',
-        'QSpace'
+        'QSpace',
+        'QEditor'
       ],
 
       directives: [
