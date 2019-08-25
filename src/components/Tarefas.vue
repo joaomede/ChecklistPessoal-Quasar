@@ -35,9 +35,11 @@
             <q-tab-panel name="ativo">
               <!-- Tab tarefas ativas -->
               <q-list bordered style="max-width: 900px; margin: auto;">
-                <div
-                  class="text-h5 text-center"
-                >/{{this.$store.getters.getNomeDaPasta}}/{{this.$store.getters.getNomeDoQuadro}}/</div>
+                <div class="text-h5 text-center">
+                  /{{ this.$store.getters.getNomeDaPasta }}/{{
+                    this.$store.getters.getNomeDoQuadro
+                  }}/
+                </div>
 
                 <q-item
                   clickable
@@ -47,15 +49,25 @@
                   @click="exibeDetalhesAtiva(item)"
                 >
                   <q-item-section avatar top>
-                    <q-avatar icon="event_note" color="primary" text-color="white" />
+                    <q-avatar
+                      icon="event_note"
+                      color="primary"
+                      text-color="white"
+                    />
                   </q-item-section>
 
                   <q-item-section>
-                    <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
+                    <q-item-label lines="1">{{
+                      item.nomeDaTarefa
+                    }}</q-item-label>
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="check" color="primary" @click.stop="DialogoConcluirTarefa(item)" />
+                    <q-icon
+                      name="check"
+                      color="primary"
+                      @click.stop="DialogoConcluirTarefa(item)"
+                    />
                   </q-item-section>
 
                   <q-item-section side>
@@ -72,9 +84,11 @@
             <q-tab-panel name="concluido">
               <!-- Tab tarefas concluídas -->
               <q-list bordered style="max-width: 900px; margin: auto;">
-                <div
-                  class="text-h5 text-center"
-                >/{{this.$store.getters.getNomeDaPasta}}/{{this.$store.getters.getNomeDoQuadro}}/</div>
+                <div class="text-h5 text-center">
+                  /{{ this.$store.getters.getNomeDaPasta }}/{{
+                    this.$store.getters.getNomeDoQuadro
+                  }}/
+                </div>
 
                 <q-item
                   clickable
@@ -84,15 +98,25 @@
                   @click="exibeDetalhesConcluida(item)"
                 >
                   <q-item-section avatar top>
-                    <q-avatar icon="event_note" color="primary" text-color="white" />
+                    <q-avatar
+                      icon="event_note"
+                      color="primary"
+                      text-color="white"
+                    />
                   </q-item-section>
 
                   <q-item-section>
-                    <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
+                    <q-item-label lines="1">{{
+                      item.nomeDaTarefa
+                    }}</q-item-label>
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="restore" color="primary" @click.stop="DialogoRestaurar(item)" />
+                    <q-icon
+                      name="restore"
+                      color="primary"
+                      @click.stop="DialogoRestaurar(item)"
+                    />
                   </q-item-section>
 
                   <q-item-section side>
@@ -118,11 +142,13 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.tituloDetalheAtivo}}</div>
+          <div class="text-h6">{{ this.tituloDetalheAtivo }}</div>
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6" v-if="this.descricaoDetalhesAtivo != ''">Descrição:</div>
+          <div class="text-h6" v-if="this.descricaoDetalhesAtivo != ''">
+            Descrição:
+          </div>
         </q-card-section>
 
         <q-card-section>
@@ -131,8 +157,15 @@
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="EditarTarefas()">Editar</q-btn>
-          <q-btn flat color="primary" @click="DialogoDeletaTarefa(item)">Apagar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click="DialogoDeletaTarefa(item)"
+            >Apagar</q-btn
+          >
+          <q-btn
+            flat
+            color="primary"
+            @click.stop="dialogoDetalhesAtivas = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -140,32 +173,51 @@
     </q-dialog>
 
     <!-- caixa de diálogo exibe detalhes tarefas concluida -->
-    <q-dialog v-model="dialogoDetalhesConcluidas" max-width="290" xs12 sm6 md6 lg6 xl6>
+    <q-dialog
+      v-model="dialogoDetalhesConcluidas"
+      max-width="290"
+      xs12
+      sm6
+      md6
+      lg6
+      xl6
+    >
       <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">Titulo:</div>
         </q-card-section>
         <q-card-section>
-          <div class="text-h6">{{this.tituloDetalheConcluido}}</div>
+          <div class="text-h6">{{ this.tituloDetalheConcluido }}</div>
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6" v-if="this.descricaoDetalhesConcluido != ''">Descrição:</div>
+          <div class="text-h6" v-if="this.descricaoDetalhesConcluido != ''">
+            Descrição:
+          </div>
         </q-card-section>
         <q-card-section>
           <div v-html="this.descricaoDetalhesConcluido"></div>
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6" v-if="this.notasDetalhe != ''">Nota de Conclusão:</div>
+          <div class="text-h6" v-if="this.notasDetalhe != ''">
+            Nota de Conclusão:
+          </div>
         </q-card-section>
         <q-card-section>
-          <div class="text-h6">{{this.notasDetalhe}}</div>
+          <div class="text-h6">{{ this.notasDetalhe }}</div>
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="DialogoDeletaTarefaDetalhes()">Apagar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoDetalhesConcluidas = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click="DialogoDeletaTarefaDetalhes()"
+            >Apagar</q-btn
+          >
+          <q-btn
+            flat
+            color="primary"
+            @click.stop="dialogoDetalhesConcluidas = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -181,7 +233,11 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="nomeDaTarefa" label="Informe o titulo da tarefa" required></q-input>
+            <q-input
+              v-model="nomeDaTarefa"
+              label="Informe o titulo da tarefa"
+              required
+            ></q-input>
           </q-form>
         </q-card-section>
 
@@ -189,52 +245,52 @@
           <q-form class="q-gutter-md">
             <div class="text-h6">Descrição:</div>
             <q-editor
-              v-model="descriEditar"
+              v-model="descricaoTarefa"
               :toolbar="[
-        [
-          {
-            label: 'Alinhamentos',
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            list: 'only-icons',
-            options: ['left', 'center', 'right', 'justify']
-          },
-          {
-        label: 'Formatação 1',
-        icon: 'format_bold',
-        fixedLabel: true,
-        fixedIcon: true,
-        list: 'only-icons',
-        options: ['bold', 'italic', 'strike', 'underline']
-      },
-        ],
-        [
-          {
-            label: 'Paragrafo',
-            icon: $q.iconSet.editor.formatting,
-            list: 'no-icons',
-            options: paragrafos
-          },
-          {
-            label: 'Tamanho da Fonte',
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: tamanhoDaFonte
-          },
-          {
-            label: 'Fonte padrão',
-            icon: $q.iconSet.editor.font,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: fontes
-          },
-          'removeFormat'
-        ],
-        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
-        ['undo', 'redo']
-      ]"
+                [
+                  {
+                    label: 'Alinhamentos',
+                    icon: $q.iconSet.editor.align,
+                    fixedLabel: true,
+                    list: 'only-icons',
+                    options: ['left', 'center', 'right', 'justify']
+                  },
+                  {
+                    label: 'Formatação 1',
+                    icon: 'format_bold',
+                    fixedLabel: true,
+                    fixedIcon: true,
+                    list: 'only-icons',
+                    options: ['bold', 'italic', 'strike', 'underline']
+                  }
+                ],
+                [
+                  {
+                    label: 'Paragrafo',
+                    icon: $q.iconSet.editor.formatting,
+                    list: 'no-icons',
+                    options: paragrafos
+                  },
+                  {
+                    label: 'Tamanho da Fonte',
+                    icon: $q.iconSet.editor.fontSize,
+                    fixedLabel: true,
+                    fixedIcon: true,
+                    list: 'no-icons',
+                    options: tamanhoDaFonte
+                  },
+                  {
+                    label: 'Fonte padrão',
+                    icon: $q.iconSet.editor.font,
+                    fixedIcon: true,
+                    list: 'no-icons',
+                    options: fontes
+                  },
+                  'removeFormat'
+                ],
+                ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
+                ['undo', 'redo']
+              ]"
               :fonts="nomeDasFontes"
             />
           </q-form>
@@ -242,7 +298,9 @@
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="CriaTarefas">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoAddTarefa = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddTarefa = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -256,7 +314,11 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="tituloEditar" label="Informe o titulo da tarefa" required></q-input>
+            <q-input
+              v-model="tituloEditar"
+              label="Informe o titulo da tarefa"
+              required
+            ></q-input>
           </q-form>
         </q-card-section>
 
@@ -266,50 +328,50 @@
             <q-editor
               v-model="descriEditar"
               :toolbar="[
-        [
-          {
-            label: 'Alinhamentos',
-            icon: $q.iconSet.editor.align,
-            fixedLabel: true,
-            list: 'only-icons',
-            options: ['left', 'center', 'right', 'justify']
-          },
-          {
-        label: 'Formatação 1',
-        icon: 'format_bold',
-        fixedLabel: true,
-        fixedIcon: true,
-        list: 'only-icons',
-        options: ['bold', 'italic', 'strike', 'underline']
-      },
-        ],
-        [
-          {
-            label: 'Paragrafo',
-            icon: $q.iconSet.editor.formatting,
-            list: 'no-icons',
-            options: paragrafos
-          },
-          {
-            label: 'Tamanho da Fonte',
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: tamanhoDaFonte
-          },
-          {
-            label: 'Fonte padrão',
-            icon: $q.iconSet.editor.font,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: fontes
-          },
-          'removeFormat'
-        ],
-        ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
-        ['undo', 'redo']
-      ]"
+                [
+                  {
+                    label: 'Alinhamentos',
+                    icon: $q.iconSet.editor.align,
+                    fixedLabel: true,
+                    list: 'only-icons',
+                    options: ['left', 'center', 'right', 'justify']
+                  },
+                  {
+                    label: 'Formatação 1',
+                    icon: 'format_bold',
+                    fixedLabel: true,
+                    fixedIcon: true,
+                    list: 'only-icons',
+                    options: ['bold', 'italic', 'strike', 'underline']
+                  }
+                ],
+                [
+                  {
+                    label: 'Paragrafo',
+                    icon: $q.iconSet.editor.formatting,
+                    list: 'no-icons',
+                    options: paragrafos
+                  },
+                  {
+                    label: 'Tamanho da Fonte',
+                    icon: $q.iconSet.editor.fontSize,
+                    fixedLabel: true,
+                    fixedIcon: true,
+                    list: 'no-icons',
+                    options: tamanhoDaFonte
+                  },
+                  {
+                    label: 'Fonte padrão',
+                    icon: $q.iconSet.editor.font,
+                    fixedIcon: true,
+                    list: 'no-icons',
+                    options: fontes
+                  },
+                  'removeFormat'
+                ],
+                ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
+                ['undo', 'redo']
+              ]"
               :fonts="nomeDasFontes"
             />
           </q-form>
@@ -317,7 +379,9 @@
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="AtualizaTarefas()">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoEditaTarefa = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoEditaTarefa = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -330,12 +394,17 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.tituloExclusao}}</div>
+          <div class="text-h6">{{ this.tituloExclusao }}</div>
         </q-card-section>
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="ApagaTarefa">Sim</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoApagaTarefaAtiva = false">Voltar</q-btn>
+          <q-btn
+            flat
+            color="primary"
+            @click.stop="dialogoApagaTarefaAtiva = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -348,12 +417,14 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.tituloTarefaConclusao}}</div>
+          <div class="text-h6">{{ this.tituloTarefaConclusao }}</div>
         </q-card-section>
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="ConcluiTarefa">Sim</q-btn>
-          <q-btn flat color="primary" @click="dialogoConcluirTarefa = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click="dialogoConcluirTarefa = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -366,12 +437,14 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">"{{this.tituloTarefaConclusao}}"?</div>
+          <div class="text-h6">"{{ this.tituloTarefaConclusao }}"?</div>
         </q-card-section>
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="RestauraTarefa()">Sim</q-btn>
-          <q-btn flat color="primary" @click="dialogoRestaurarTarefa = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click="dialogoRestaurarTarefa = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -386,18 +459,24 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.tituloTarefaConclusao}}</div>
+          <div class="text-h6">{{ this.tituloTarefaConclusao }}</div>
         </q-card-section>
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="notaConclusao" label="Informe a nota de conclusão" required></q-input>
+            <q-input
+              v-model="notaConclusao"
+              label="Informe a nota de conclusão"
+              required
+            ></q-input>
           </q-form>
         </q-card-section>
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="AddNota()">Sim</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoAddNota = false">Voltar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddNota = false"
+            >Voltar</q-btn
+          >
         </q-card-section>
 
         <q-card-section></q-card-section>
