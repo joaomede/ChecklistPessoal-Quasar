@@ -1,10 +1,16 @@
 <template>
   <div>
-    TELA SOBRE
+    <p>Tela Sobre</p>
 
-    <br><strong>Desenvolvedor do projeto:</strong> João mede e Augusto Silva de Oliveira.
+    <br><strong>Desenvolvedor do projeto:</strong>
+    <div class="q-pa-md q-gutter-sm">
+    
+      <a href="https://github.com/joaomede"><q-btn color="blue" text-color="white" label="Joao Medeiros"/></a>
+      <a href="https://github.com/augustoOliveira1993"><q-btn color="black" text-color="white" label="Augusto Oliveira" /></a>
 
-    <br><strong>Status:</strong> Em desenvolvimento...
+  </div>
+
+    <br><strong>Status:</strong> Em processo de Desenvolvimento.
 
   </div>
 </template>
