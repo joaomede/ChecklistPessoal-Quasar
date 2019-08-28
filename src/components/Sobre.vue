@@ -2,9 +2,9 @@
   <div>
     TELA SOBRE
 
-    Desenvolvedor do proheto: Jo√£o mede e Augusto Silva de Oliveira.
+    <br><strong>Desenvolvedor do projeto:</strong> Jo„o mede e Augusto Silva de Oliveira.
 
-    Status: Em desenvolvimento...
+    <br><strong>Status:</strong> Em desenvolvimento...
 
   </div>
 </template>

@@ -11,7 +11,7 @@
 
           <q-btn dense flat round icon="home" v-if="user" to="/dash"/>
           <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user" to="/login"/>
-          <q-btn flat round dense icon="exit_to_app" @click="logout" v-if="user"/>
+          <q-btn alt="Sair" flat round dense icon="exit_to_app" @click="logout" v-if="user"/>
         </q-toolbar>
       </q-header>
 
