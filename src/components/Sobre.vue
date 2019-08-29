@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p>Tela Sobre</p>
+    <div>
+      <q-badge align="top" style="color: blue;">Tela Sobre</q-badge>
+    </div>
 
     <br><strong>Desenvolvedor do projeto:</strong>
     <div class="q-pa-md q-gutter-sm">
