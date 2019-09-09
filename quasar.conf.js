@@ -6,7 +6,8 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     boot: [
       'main.js',
-      'boot.js'
+      'boot.js',,
+      'notify.js'
     ],
 
     css: [
@@ -70,7 +71,8 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'Cookies'
       ]
 
       // iconSet: 'ionicons-v4'
