@@ -8,42 +8,10 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="nome"
-              :rules="rulesNome"
-              label="Qual seu nome?"
-              required
-              filled
-              lazy-rules
-              type="text"
-            ></q-input>
-            <q-input
-              v-model="email"
-              :rules="emailRules"
-              label="E-mail"
-              required
-              filled
-              type="email"
-              lazy-rules
-            />
-            <q-input
-              v-model="senha"
-              type="password"
-              :rules="senhaRules"
-              label="Senha"
-              required
-              filled
-              lazy-rules
-            />
-            <q-input
-              v-model="senha2"
-              type="password"
-              :rules="senhaRules"
-              label="Repita a senha"
-              required
-              filled
-              lazy-rules
-            />
+            <q-input v-model="nome" :rules="rulesNome" label="Qual seu nome?" required filled lazy-rules type="text"></q-input>
+            <q-input v-model="email" :rules="emailRules" label="E-mail" required filled type="email" lazy-rules />
+            <q-input v-model="senha" type="password" :rules="senhaRules" label="Senha" required filled lazy-rules />
+            <q-input v-model="senha2" type="password" :rules="senhaRules" label="Repita a senha" required filled lazy-rules />
           </q-form>
         </q-card-section>
 
@@ -73,18 +41,9 @@ export default {
     senha2: "",
     ultimoAcesso: "",
     uid: "",
-    rulesNome: [
-      v => !!v || "O nome é requerido",
-      v => v.length >= 4 || "E-mail precisa ser válido"
-    ],
-    emailRules: [
-      v => !!v || "E-mail é requerido",
-      v => /.+@.+/.test(v) || "E-mail precisa ser válido"
-    ],
-    senhaRules: [
-      v => !!v || "Senha é requerida",
-      v => v.length >= 6 || "Precisa ter mais de 6 dígitos"
-    ]
+    rulesNome: [v => !!v || "O nome é requerido", v => v.length >= 4 || "E-mail precisa ser válido"],
+    emailRules: [v => !!v || "E-mail é requerido", v => /.+@.+/.test(v) || "E-mail precisa ser válido"],
+    senhaRules: [v => !!v || "Senha é requerida", v => v.length >= 6 || "Precisa ter mais de 6 dígitos"]
   }),
   methods: {
     registrar() {

@@ -8,24 +8,8 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              filled
-              v-model="email"
-              lazy-rules
-              :rules="emailRules"
-              type="Email"
-              label="E-mail"
-              required
-            ></q-input>
-            <q-input
-              filled
-              type="Password"
-              v-model="senha"
-              label="Senha"
-              lazy-rules
-              required
-              :rules="senhaRules"
-            />
+            <q-input filled v-model="email" lazy-rules :rules="emailRules" type="Email" label="E-mail" required></q-input>
+            <q-input filled type="Password" v-model="senha" label="Senha" lazy-rules required :rules="senhaRules" />
           </q-form>
         </q-card-section>
 
@@ -57,7 +41,7 @@
         </q-card-section>
 
         <q-card-section>
-          <q-btn color="primary" @click="RecuperaAcesso">Recuperar Acesso</q-btn>
+          <q-btn color="primary" @click="recuperaAcesso">Recuperar Acesso</q-btn>
         </q-card-section>
 
         <q-card-section>
@@ -80,21 +64,15 @@ export default {
     email: "",
     senha: "",
     emailRecuperacao: "",
-    emailRules: [
-      v => !!v || "E-mail é requerido",
-      v => /.+@.+/.test(v) || "E-mail precisa ser válido"
-    ],
-    senhaRules: [
-      v => !!v || "Senha é requerida",
-      v => v.length >= 6 || "Precisa ter mais de 6 dígitos"
-    ]
+    emailRules: [v => !!v || "E-mail é requerido", v => /.+@.+/.test(v) || "E-mail precisa ser válido"],
+    senhaRules: [v => !!v || "Senha é requerida", v => v.length >= 6 || "Precisa ter mais de 6 dígitos"]
   }),
   methods: {
     alertaNotificacao(e) {
       this.$q.notify({
-          message: "Problemas na autenticação, verifique o e-mail e senha",
-          color: "red"
-        });
+        message: "Problemas na autenticação, verifique o e-mail e senha",
+        color: "red"
+      });
     },
     setUser: function() {
       this.$store.dispatch("setUser");
@@ -115,7 +93,7 @@ export default {
           this.alertaNotificacao(e);
         });
     },
-    RecuperaAcesso() {
+    recuperaAcesso() {
       firebase
         .auth()
         .sendPasswordResetEmail(this.emailRecuperacao)

@@ -40,7 +40,7 @@ export default new Vuex.Store({
         setUser: state => {
             state.user = Firebase.auth().currentUser;
         },
-        CarregaNomeDoUsuario(state, nome) {
+        carregaNomeDoUsuario(state, nome) {
             state.nomeDoUsuario = nome;
         },
         SetPushIDpasta(state, PushIDpasta){
@@ -60,7 +60,7 @@ export default new Vuex.Store({
         setUser: context => {
             context.commit('setUser');
         },
-        CarregaNomeDoUsuario ({commit}) {
+        carregaNomeDoUsuario ({commit}) {
             const usuario = Firebase.auth().currentUser;
 
             if (usuario === null){
@@ -71,7 +71,7 @@ export default new Vuex.Store({
             .then(docs =>{
                 const nome = docs.data().nomeDoUsuario;
                 
-                commit('CarregaNomeDoUsuario', nome)
+                commit('carregaNomeDoUsuario', nome)
             });
         },
         gravaUltimoAcesso() {

@@ -8,24 +8,8 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="senha1"
-              type="password"
-              :rules="senhaRules"
-              label="Senha"
-              required
-              filled
-              lazy-rules
-            ></q-input>
-            <q-input
-              v-model="senha2"
-              type="password"
-              :rules="senhaRules"
-              label="Repita a senha"
-              required
-              filled
-              lazy-rules
-            />
+            <q-input v-model="senha1" type="password" :rules="senhaRules" label="Senha" required filled lazy-rules></q-input>
+            <q-input v-model="senha2" type="password" :rules="senhaRules" label="Repita a senha" required filled lazy-rules />
           </q-form>
         </q-card-section>
 
@@ -41,9 +25,9 @@
         <q-card-section>
           <div class="text-h6">Desenha realmente alterar a senha?</div>
         </q-card-section>
-      
+
         <q-card-section>
-          <q-btn color="primary" @click="TrocarSenha">Trocar Senha</q-btn>
+          <q-btn color="primary" @click="trocarSenha">Trocar Senha</q-btn>
         </q-card-section>
 
         <q-card-section>
@@ -52,21 +36,18 @@
       </q-card>
     </q-dialog>
 
-
     <!-- caixa de diálogo senha troca com sucesso pasta -->
     <q-dialog v-model="popMensagem">
       <q-card>
         <q-card-section>
-          <div class="text-h6">{{Mensagem}}</div>
+          <div class="text-h6">{{ Mensagem }}</div>
         </q-card-section>
-      
+
         <q-card-section>
           <q-btn color="primary" @click.stop="popMensagem = false">Ok!</q-btn>
         </q-card-section>
-
       </q-card>
     </q-dialog>
-
   </div>
 </template>
 
@@ -82,16 +63,13 @@ export default {
     popMensagem: false,
     senha1: "",
     senha2: "",
-    senhaRules: [
-      v => !!v || "Senha é requerida",
-      v => v.length >= 6 || "Precisa ter mais de 6 dígitos"
-    ]
+    senhaRules: [v => !!v || "Senha é requerida", v => v.length >= 6 || "Precisa ter mais de 6 dígitos"]
   }),
   methods: {
     setUser: function() {
       this.$store.dispatch("setUser");
     },
-    TrocarSenha() {
+    trocarSenha() {
       const user = firebase.auth().currentUser;
       if (this.senha1 === this.senha2) {
         this.user

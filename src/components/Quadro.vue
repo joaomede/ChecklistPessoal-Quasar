@@ -3,22 +3,16 @@
     <div class="text-h4 text-center">{{ msg }}</div>
     <!-- flutuante -->
     <q-btn round color="orange darken-2" @click.stop="dialogoAddQuadro = true" class="fixed" style="right: 18px; bottom: 60px">
-      <q-icon name="add"/>
+      <q-icon name="add" />
     </q-btn>
 
     <!-- conteudo do quadro -->
     <div class="q-pa-md" style="max-width: 900px; margin: auto;">
       <q-list bordered>
         <div class="text-h5 text-center">Selecione o Quadro</div>
-        <div class="text-h6 text-center">//{{this.$store.getters.getNomeDaPasta}}</div>
-        <q-item
-          clickable
-          v-ripple
-          v-for="item in quadroData"
-          :key="item.idQuadro"
-          @click="SetIDdoQuadro(item)"
-        >
-        <q-item-section avatar>
+        <div class="text-h6 text-center">//{{ this.$store.getters.getNomeDaPasta }}</div>
+        <q-item clickable v-ripple v-for="item in quadroData" :key="item.idQuadro" @click="setIDdoQuadro(item)">
+          <q-item-section avatar>
             <q-avatar icon="dashboard" color="primary" text-color="secondary" />
           </q-item-section>
 
@@ -27,11 +21,11 @@
           </q-item-section>
 
           <q-item-section side>
-            <q-icon name="edit" color="blue" @click.stop="EditaQuadro(item)"/>
+            <q-icon name="edit" color="blue" @click.stop="editaQuadro(item)" />
           </q-item-section>
 
           <q-item-section side>
-            <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="DeletaQuadro(item)"/>
+            <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="deletaQuadro(item)" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -51,10 +45,9 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="AtualizaEditaQuadro">Salvar</q-btn>
+          <q-btn flat color="primary" @click="apagaQuadroDB">Salvar</q-btn>
           <q-btn flat @click.stop="dialogoEditaQuadro = false">Voltar</q-btn>
         </q-card-section>
-
       </q-card>
     </q-dialog>
 
@@ -72,7 +65,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="CriaQuadro">Salvar</q-btn>
+          <q-btn flat color="primary" @click="criaQuadro">Salvar</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoAddQuadro = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
@@ -86,11 +79,11 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.editaNomeDoQuadro}}</div>
+          <div class="text-h6">{{ this.editaNomeDoQuadro }}</div>
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="ApagaQuadroDB">Sim</q-btn>
+          <q-btn flat color="primary" @click="apagaQuadroDB">Sim</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoApagaQuadro = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
@@ -130,7 +123,7 @@ export default {
     setUser: function() {
       this.$store.dispatch("setUser");
     },
-    CriaQuadro() {
+    criaQuadro() {
       let b = this.nomeDoQuadro;
       if (b.includes("/") | b.includes("..")) {
         //entrada para metodo de alerta de caractere proibido
@@ -159,7 +152,7 @@ export default {
       this.dialogoAddQuadro = false;
       this.nomeDoQuadro = "";
     },
-    CarregaQuadro() {
+    carregaQuadro() {
       this.refQuadro.onSnapshot(querySnapshot => {
         this.quadroData = [];
         querySnapshot.forEach(doc => {
@@ -171,23 +164,23 @@ export default {
       });
     },
     //carrega tela tarefas
-    SetIDdoQuadro(item) {
+    setIDdoQuadro(item) {
       this.$store.dispatch("SetPushIDquadro", item.idQuadro);
       this.$store.dispatch("SetNomeDoQuadro", item.nomeDoQuadro);
       //carrega página quadro
       this.$router.replace("tarefas");
     },
-    EditaQuadro(item) {
+    editaQuadro(item) {
       this.dialogoEditaQuadro = true;
       this.editaNomeDoQuadro = item.nomeDoQuadro;
       this.idQuadro = item.idQuadro;
     },
-    DeletaQuadro(item) {
+    deletaQuadro(item) {
       this.dialogoApagaQuadro = true;
       this.editaNomeDoQuadro = item.nomeDoQuadro;
       this.idQuadro = item.idQuadro;
     },
-    ApagaQuadroDB() {
+    apagaQuadroDB() {
       db.collection("app")
         .doc(this.$store.getters.getUser.uid)
         .collection("Pasta")
@@ -203,7 +196,7 @@ export default {
         });
       this.dialogoApagaQuadro = false;
     },
-    AtualizaEditaQuadro() {
+    apagaQuadroDB() {
       let b = this.editaNomeDoQuadro;
       if (b.includes("/") | b.includes("..")) {
         //entrada para metodo de alerta de caractere proibido
@@ -232,14 +225,12 @@ export default {
 
   created() {
     this.setUser();
-    this.CarregaQuadro();
+    this.carregaQuadro();
   }
 };
 </script>
 
 <style scoped>
-
-
 form > * {
   display: block;
 }

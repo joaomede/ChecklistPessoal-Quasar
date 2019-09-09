@@ -18,7 +18,7 @@
           v-ripple
           v-for="item in pastaData"
           :key="item.idPasta"
-          @click="CarregaTelaQuadros(item)"
+          @click="carregaTelaQuadros(item)"
         >
           <q-item-section avatar top>
             <q-avatar icon="folder" color="primary" text-color="secondary"/>
@@ -29,11 +29,11 @@
           </q-item-section>
 
           <q-item-section side>
-            <q-icon name="edit" color="blue" @click.stop="EditaPasta(item)"/>
+            <q-icon name="edit" color="blue" @click.stop="editaPasta(item)"/>
           </q-item-section>
 
           <q-item-section side>
-            <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="DeletaPasta(item)"/>
+            <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="deletaPasta(item)"/>
           </q-item-section>
 
           
@@ -55,7 +55,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="CriaPasta">Salvar</q-btn>
+          <q-btn flat color="primary" @click="criaPasta">Salvar</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoAddPasta = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
@@ -75,7 +75,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="AtualizaEditaPasta">Salvar</q-btn>
+          <q-btn flat color="primary" @click="atualizaEditaPasta">Salvar</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoEditaPasta = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
@@ -93,7 +93,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="ApagaPastaDB">Sim</q-btn>
+          <q-btn flat color="primary" @click="apagaPastaDB">Sim</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoConfirmaDeletaPasta = false">Voltar</q-btn>
         </q-card-section>
 
@@ -135,7 +135,7 @@ export default {
     setUser: function() {
       this.$store.dispatch("setUser");
     },
-    CriaPasta() {
+    criaPasta() {
       if (this.nomeDaPasta.includes("/") || this.nomeDaPasta.includes("..")) {
         // entrada para método de alerta caractere incorreto
         return;
@@ -161,7 +161,7 @@ export default {
       this.dialogoAddPasta = false;
       this.nomeDaPasta = "";
     },
-    CarregaPastas() {
+    carregaPastas() {
       this.refPastas.onSnapshot(querySnapshot => {
         this.pastaData = [];
         querySnapshot.forEach(doc => {
@@ -172,7 +172,7 @@ export default {
         });
       });
     },
-    AtualizaEditaPasta() {
+    atualizaEditaPasta() {
       let a = this.editaNomePasta;
       if (a.includes("/") || a.includes("..")) {
         // entrada para método de alerta caractere incorreto
@@ -195,7 +195,7 @@ export default {
       this.dialogoEditaPasta = false;
       this.editaNomePasta = "";
     },
-    ApagaPastaDB() {
+    apagaPastaDB() {
       db.collection("app")
         .doc(this.$store.getters.getUser.uid)
         .collection("Pasta")
@@ -210,18 +210,18 @@ export default {
       this.dialogoConfirmaDeletaPasta = false;
     },
     //carrega tela quadros
-    CarregaTelaQuadros(item) {
+    carregaTelaQuadros(item) {
       this.$store.dispatch("SetPushIDpasta", item.idPasta);
       this.$store.dispatch("SetNomeDaPasta", item.nomeDaPasta);
       //carrega página quadro
       this.$router.replace("quadro");
     },
-    EditaPasta(item) {
+    editaPasta(item) {
       this.dialogoEditaPasta = true;
       this.editaNomePasta = item.nomeDaPasta;
       this.idPasta = item.idPasta;
     },
-    DeletaPasta(item) {
+    deletaPasta(item) {
       this.dialogoConfirmaDeletaPasta = true;
       this.editaNomePasta = item.nomeDaPasta;
       this.idPasta = item.idPasta;
@@ -229,7 +229,7 @@ export default {
   },
   created() {
     this.setUser();
-    this.CarregaPastas();
+    this.carregaPastas();
   }
 };
 </script>

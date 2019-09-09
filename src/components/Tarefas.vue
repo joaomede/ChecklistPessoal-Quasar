@@ -1,13 +1,7 @@
 <template>
   <div class="q-pa-md">
     <!-- flutuante -->
-    <q-btn
-      round
-      color="orange darken-2"
-      @click.stop="dialogoAddTarefa = true"
-      class="fixed"
-      style="right: 18px; bottom: 60px"
-    >
+    <q-btn round color="orange darken-2" @click.stop="dialogoAddTarefa = true" class="fixed" style="right: 18px; bottom: 60px">
       <q-icon name="add" />
     </q-btn>
     <div class="text-h5 text-center">Tarefas</div>
@@ -16,15 +10,7 @@
     <div style="max-width: 900px; margin: auto;">
       <div class="q-gutter-y-md">
         <q-card>
-          <q-tabs
-            v-model="tab"
-            dense
-            class="text-grey"
-            active-color="primary"
-            indicator-color="primary"
-            align="justify"
-            narrow-indicator
-          >
+          <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
             <q-tab name="ativo" label="Ativas" />
             <q-tab name="concluido" label="Concluídas" />
           </q-tabs>
@@ -35,47 +21,23 @@
             <q-tab-panel name="ativo">
               <!-- Tab tarefas ativas -->
               <q-list bordered style="max-width: 900px; margin: auto;">
-                <div class="text-h5 text-center">
-                  /{{ this.$store.getters.getNomeDaPasta }}/{{
-                    this.$store.getters.getNomeDoQuadro
-                  }}/
-                </div>
+                <div class="text-h5 text-center">/{{ this.$store.getters.getNomeDaPasta }}/{{ this.$store.getters.getNomeDoQuadro }}/</div>
 
-                <q-item
-                  clickable
-                  v-ripple
-                  v-for="item in tarefasAtivaData"
-                  :key="item.idTarefa"
-                  @click="exibeDetalhesAtiva(item)"
-                >
+                <q-item clickable v-ripple v-for="item in tarefasAtivaData" :key="item.idTarefa" @click="exibeDetalhesAtiva(item)">
                   <q-item-section avatar top>
-                    <q-avatar
-                      icon="event_note"
-                      color="primary"
-                      text-color="white"
-                    />
+                    <q-avatar icon="event_note" color="primary" text-color="white" />
                   </q-item-section>
 
                   <q-item-section>
-                    <q-item-label lines="1">{{
-                      item.nomeDaTarefa
-                    }}</q-item-label>
+                    <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon
-                      name="check"
-                      color="primary"
-                      @click.stop="DialogoConcluirTarefa(item)"
-                    />
+                    <q-icon name="check" color="primary" @click.stop="dialogoConcluirTarefa(item)" />
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon
-                      name="delete_sweep"
-                      color="primary"
-                      @click.stop="DialogoDeletaTarefa(item)"
-                    />
+                    <q-icon name="delete_sweep" color="primary" @click.stop="dialogoDeletaTarefa(item)" />
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -84,47 +46,23 @@
             <q-tab-panel name="concluido">
               <!-- Tab tarefas concluídas -->
               <q-list bordered style="max-width: 900px; margin: auto;">
-                <div class="text-h5 text-center">
-                  /{{ this.$store.getters.getNomeDaPasta }}/{{
-                    this.$store.getters.getNomeDoQuadro
-                  }}/
-                </div>
+                <div class="text-h5 text-center">/{{ this.$store.getters.getNomeDaPasta }}/{{ this.$store.getters.getNomeDoQuadro }}/</div>
 
-                <q-item
-                  clickable
-                  v-ripple
-                  v-for="item in tarefasConcluidaData"
-                  :key="item.idTarefa"
-                  @click="exibeDetalhesConcluida(item)"
-                >
+                <q-item clickable v-ripple v-for="item in tarefasConcluidaData" :key="item.idTarefa" @click="exibeDetalhesConcluida(item)">
                   <q-item-section avatar top>
-                    <q-avatar
-                      icon="event_note"
-                      color="primary"
-                      text-color="white"
-                    />
+                    <q-avatar icon="event_note" color="primary" text-color="white" />
                   </q-item-section>
 
                   <q-item-section>
-                    <q-item-label lines="1">{{
-                      item.nomeDaTarefa
-                    }}</q-item-label>
+                    <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon
-                      name="restore"
-                      color="primary"
-                      @click.stop="DialogoRestaurar(item)"
-                    />
+                    <q-icon name="restore" color="primary" @click.stop="dialogoRestaurar(item)" />
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon
-                      name="delete_sweep"
-                      color="primary"
-                      @click.stop="DialogoDeletaTarefa(item)"
-                    />
+                    <q-icon name="delete_sweep" color="primary" @click.stop="dialogoDeletaTarefa(item)" />
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -156,16 +94,9 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="EditarTarefas()">Editar</q-btn>
-          <q-btn flat color="primary" @click="DialogoDeletaTarefa(item)"
-            >Apagar</q-btn
-          >
-          <q-btn
-            flat
-            color="primary"
-            @click.stop="dialogoDetalhesAtivas = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="editarTarefas()">Editar</q-btn>
+          <q-btn flat color="primary" @click="dialogoDeletaTarefa(item)">Apagar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -173,15 +104,7 @@
     </q-dialog>
 
     <!-- caixa de diálogo exibe detalhes tarefas concluida -->
-    <q-dialog
-      v-model="dialogoDetalhesConcluidas"
-      max-width="290"
-      xs12
-      sm6
-      md6
-      lg6
-      xl6
-    >
+    <q-dialog v-model="dialogoDetalhesConcluidas" max-width="290" xs12 sm6 md6 lg6 xl6>
       <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">Titulo:</div>
@@ -209,15 +132,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="DialogoDeletaTarefaDetalhes()"
-            >Apagar</q-btn
-          >
-          <q-btn
-            flat
-            color="primary"
-            @click.stop="dialogoDetalhesConcluidas = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="dialogoDeletaTarefaDetalhes()">Apagar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoDetalhesConcluidas = false">Voltar</q-btn>
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -233,11 +149,7 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="nomeDaTarefa"
-              label="Informe o titulo da tarefa"
-              required
-            ></q-input>
+            <q-input v-model="nomeDaTarefa" label="Informe o titulo da tarefa" required></q-input>
           </q-form>
         </q-card-section>
 
@@ -297,10 +209,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="CriaTarefas">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoAddTarefa = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="criaTarefas">Salvar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddTarefa = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -314,11 +224,7 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="tituloEditar"
-              label="Informe o titulo da tarefa"
-              required
-            ></q-input>
+            <q-input v-model="tituloEditar" label="Informe o titulo da tarefa" required></q-input>
           </q-form>
         </q-card-section>
 
@@ -378,10 +284,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="AtualizaTarefas()">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoEditaTarefa = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="atualizaTarefas()">Salvar</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoEditaTarefa = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -398,13 +302,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="ApagaTarefa">Sim</q-btn>
-          <q-btn
-            flat
-            color="primary"
-            @click.stop="dialogoApagaTarefaAtiva = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="apagaTarefa">Sim</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoApagaTarefaAtiva = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -421,10 +320,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="ConcluiTarefa">Sim</q-btn>
-          <q-btn flat color="primary" @click="dialogoConcluirTarefa = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="concluiTarefa">Sim</q-btn>
+          <q-btn flat color="primary" @click="dialogoConcluirTarefa = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -441,10 +338,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="RestauraTarefa()">Sim</q-btn>
-          <q-btn flat color="primary" @click="dialogoRestaurarTarefa = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="restauraTarefa()">Sim</q-btn>
+          <q-btn flat color="primary" @click="dialogoRestaurarTarefa = false">Voltar</q-btn>
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -464,19 +359,13 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="notaConclusao"
-              label="Informe a nota de conclusão"
-              required
-            ></q-input>
+            <q-input v-model="notaConclusao" label="Informe a nota de conclusão" required></q-input>
           </q-form>
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="AddNota()">Sim</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoAddNota = false"
-            >Voltar</q-btn
-          >
+          <q-btn flat color="primary" @click="addNota()">Sim</q-btn>
+          <q-btn flat color="primary" @click.stop="dialogoAddNota = false">Voltar</q-btn>
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -548,17 +437,7 @@ export default {
       tarefasAtivaData: [],
       tarefasConcluidaData: [],
 
-      fontes: [
-        "default_font",
-        "arial",
-        "arial_black",
-        "comic_sans",
-        "courier_new",
-        "impact",
-        "lucida_grande",
-        "times_new_roman",
-        "verdana"
-      ],
+      fontes: ["default_font", "arial", "arial_black", "comic_sans", "courier_new", "impact", "lucida_grande", "times_new_roman", "verdana"],
       nomeDasFontes: {
         arial: "Arial",
         arial_black: "Arial Black",
@@ -569,15 +448,7 @@ export default {
         times_new_roman: "Times New Roman",
         verdana: "Verdana"
       },
-      tamanhoDaFonte: [
-        "size-1",
-        "size-2",
-        "size-3",
-        "size-4",
-        "size-5",
-        "size-6",
-        "size-7"
-      ],
+      tamanhoDaFonte: ["size-1", "size-2", "size-3", "size-4", "size-5", "size-6", "size-7"],
       paragrafos: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "code"]
     };
   },
@@ -586,7 +457,7 @@ export default {
     setUser: function() {
       this.$store.dispatch("setUser");
     },
-    CriaTarefas() {
+    criaTarefas() {
       let a = this.nomeDaTarefa;
       let b = this.descricaoTarefa;
       if (a.includes("/") | b.includes("/")) {
@@ -633,7 +504,7 @@ export default {
       this.nomeDaTarefa = "";
       this.descricaoTarefa = "";
     },
-    CarregaTarefasAtiva() {
+    carregaTarefasAtiva() {
       this.refTarefasAtivas.onSnapshot(querySnapshot => {
         this.tarefasAtivaData = [];
         querySnapshot.forEach(doc => {
@@ -648,7 +519,7 @@ export default {
         });
       });
     },
-    CarregaTarefasConcluidas() {
+    carregaTarefasConcluidas() {
       this.refTarefasConcluida.onSnapshot(querySnapshot => {
         this.tarefasConcluidaData = [];
         querySnapshot.forEach(doc => {
@@ -676,7 +547,7 @@ export default {
       this.descricaoDetalhesConcluido = objeto.descricaoTarefa;
       this.notasDetalhe = objeto.notaConclusao;
     },
-    ApagaTarefa() {
+    apagaTarefa() {
       db.collection("app")
         .doc(this.$store.getters.getUser.uid)
         .collection("Pasta")
@@ -708,7 +579,7 @@ export default {
         this.dialogoApagaTarefaAtiva = false;
       }
     },
-    ConcluiTarefa() {
+    concluiTarefa() {
       const objeto = {
         concluida: true
       };
@@ -723,8 +594,7 @@ export default {
         .update(objeto)
         .then(() => {
           this.$q.notify({
-            message:
-              'Tarefa "' + this.tituloTarefaConclusao + '" foi concluída',
+            message: 'Tarefa "' + this.tituloTarefaConclusao + '" foi concluída',
             color: "green"
           });
           console.log("Tarefa Concluida");
@@ -735,7 +605,7 @@ export default {
       this.dialogoAddNota = true;
       this.dialogoConcluirTarefa = false;
     },
-    AddNota() {
+    addNota() {
       let a = this.notaConclusao;
       if (a.includes("/") | a.includes("..")) {
         //entrada para alerta
@@ -769,7 +639,7 @@ export default {
         });
       this.dialogoAddNota = false;
     },
-    RestauraTarefa() {
+    restauraTarefa() {
       const objeto = {
         concluida: false,
         notaConclusao: ""
@@ -799,31 +669,31 @@ export default {
       this.idTarefa = "";
       //this.tituloTarefaConclusao = "";
     },
-    DialogoDeletaTarefa(item) {
+    dialogoDeletaTarefa(item) {
       this.dialogoApagaTarefaAtiva = true;
       this.tituloExclusao = item.nomeDaTarefa;
       this.idTarefa = item.idTarefa;
     },
-    DialogoDeletaTarefaDetalhes() {
+    dialogoDeletaTarefaDetalhes() {
       this.dialogoApagaTarefaAtiva = true;
       this.tituloExclusao = this.tituloDetalheConcluido;
     },
-    DialogoConcluirTarefa(item) {
+    dialogoConcluirTarefa(item) {
       this.dialogoConcluirTarefa = true;
       this.tituloTarefaConclusao = item.nomeDaTarefa;
       this.idTarefa = item.idTarefa;
     },
-    DialogoRestaurar(item) {
+    dialogoRestaurar(item) {
       this.dialogoRestaurarTarefa = true;
       this.tituloTarefaConclusao = item.nomeDaTarefa;
       this.idTarefa = item.idTarefa;
     },
-    EditarTarefas() {
+    editarTarefas() {
       this.dialogoEditaTarefa = true;
       this.tituloEditar = this.tituloDetalheAtivo;
       this.descriEditar = this.descricaoDetalhesAtivo;
     },
-    AtualizaTarefas() {
+    atualizaTarefas() {
       const conteudo = {
         nomeDaTarefa: this.tituloEditar,
         descricaoTarefa: this.descriEditar
@@ -858,8 +728,8 @@ export default {
   },
   created() {
     this.setUser();
-    this.CarregaTarefasAtiva();
-    this.CarregaTarefasConcluidas();
+    this.carregaTarefasAtiva();
+    this.carregaTarefasConcluidas();
   }
 };
 </script>
