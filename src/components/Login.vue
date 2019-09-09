@@ -68,12 +68,6 @@ export default {
     senhaRules: [v => !!v || "Senha é requerida", v => v.length >= 6 || "Precisa ter mais de 6 dígitos"]
   }),
   methods: {
-    alertaNotificacao(e) {
-      this.$q.notify({
-        message: "Problemas na autenticação, verifique o e-mail e senha",
-        color: "red"
-      });
-    },
     setUser: function() {
       this.$store.dispatch("setUser");
     },
@@ -85,12 +79,11 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.senha)
         .then(data => {
-          console.log("teste");
-          this.gravaUltimoAcesso();
+          this.$notificacao("Bem vindo de volta", "green");
           this.$router.replace("dash");
         })
-        .catch(e => {
-          this.alertaNotificacao(e);
+        .catch(() => {
+          this.$$notificacao("Erro ao tentar efetuar o login", "red");
         });
     },
     recuperaAcesso() {
@@ -98,8 +91,10 @@ export default {
         .auth()
         .sendPasswordResetEmail(this.emailRecuperacao)
         .then(() => {
-          console.log("email de recuperação enviado com sucesso");
-        });
+          this.$notificacao("Email de recuperação enviado com sucesso", "green");
+        }).catch(()=>{
+          this.$notificacao("Erro ao tentar enviar de recuperação", "red")
+        })
       this.dialogoEsqueciSenha = false;
     },
     verificaEstaLogado() {

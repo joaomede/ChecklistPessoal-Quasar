@@ -461,17 +461,15 @@ export default {
       let a = this.nomeDaTarefa;
       let b = this.descricaoTarefa;
       if (a.includes("/") | b.includes("/")) {
-        //entrada para alerta
+        this.$notificacao("Caracteres '/' são proíbidos", "red")
         return;
       }
       if (a.includes("..") | b.includes("..")) {
-        //entrada para alerta
+        this.$notificacao("Caracteres '..' são proíbidos", "red")
         return;
       }
-      //se titulo for branco
       if (a === "") {
-        console.log("erro, tarefa em branco");
-        //mensagem titulo obrigatório
+        this.$notificacao("Erro, tarefa em branco", "red")
         return;
       }
 
@@ -494,10 +492,10 @@ export default {
         .then(ref => {
           const pushID = { idTarefa: ref.id };
           ref.update(pushID);
-          console.log("Novo Quadro Adicionada");
+          this.$notificacao("Novo Quadro Adicionada", "green");
         })
         .catch(() => {
-          console.log("objeto não adicionado");
+          this.$notificacao("objeto não adicionado", "red");
         });
 
       this.dialogoAddTarefa = false;
@@ -558,16 +556,10 @@ export default {
         .doc(this.idTarefa)
         .delete()
         .then(() => {
-          this.$q.notify({
-            message: 'Tarefa "' + this.tituloExclusao + '" foi apagada',
-            color: "orange"
-          });
+          this.$notificacao('Tarefa "' + this.tituloExclusao + '" foi apagada', "orange");
         })
-        .catch(e => {
-          this.$q.notify({
-            message: "Não foi possível excluir tarefa",
-            color: "red"
-          });
+        .catch(() => {
+          this.$notificacao("Não foi possível excluir tarefa", "red");
         });
       if (this.dialogoDetalhesAtivas == true) {
         this.dialogoDetalhesAtivas = false;
@@ -593,14 +585,10 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          this.$q.notify({
-            message: 'Tarefa "' + this.tituloTarefaConclusao + '" foi concluída',
-            color: "green"
-          });
-          console.log("Tarefa Concluida");
+          this.$notificacao('Tarefa "' + this.tituloTarefaConclusao + '" foi concluída', "green")
         })
         .catch(() => {
-          console.log("Não foi possível concluir tarefa");
+          this.$notificacao("Não foi possível concluir tarefa", "red");
         });
       this.dialogoAddNota = true;
       this.dialogoConcluirTarefa = false;
@@ -625,17 +613,11 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          this.$q.notify({
-            message: 'Nota "' + this.notaConclusao + '" foi adicionada',
-            color: "green"
-          });
+          this.$notificacao('Nota "' + this.notaConclusao + '" foi adicionada', "green");
           this.notaConclusao = "";
         })
         .catch(() => {
-          this.$q.notify({
-            message: "Não foi possível adicionar nota",
-            color: "green"
-          });
+          this.$notificacao("Não foi possível adicionar nota", "green");
         });
       this.dialogoAddNota = false;
     },
@@ -654,16 +636,10 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          this.$q.notify({
-            message: 'Tarefa "' + this.tituloTarefaConclusao + '" restaurada',
-            color: "green"
-          });
+          this.$notificacao('Tarefa "' + this.tituloTarefaConclusao + '" restaurada', "green");
         })
         .catch(() => {
-          this.$q.notify({
-            message: "Não foi possível restaurar essa tarefa, tente novamente.",
-            color: "green"
-          });
+          this.$notificacao("Não foi possível restaurar essa tarefa, tente novamente.", "green");
         });
       this.dialogoRestaurarTarefa = false;
       this.idTarefa = "";
@@ -709,19 +685,11 @@ export default {
         .doc(this.idTarefa)
         .update(conteudo)
         .then(ref => {
-          this.$q.notify({
-            message: "Tarefa atualizada",
-            color: "green"
-          });
+          this.$notificacao("Tarefa atualizada", "green");
         })
         .catch(() => {
-          this.$q.notify({
-            message: "Problemas ao tentar atualizar tarefa",
-            color: "red"
-          });
-          console.log("Atualização Falhou");
+          this.$notificacao("Problemas ao tentar atualizar tarefa", "red");
         });
-
       this.dialogoEditaTarefa = false;
       this.dialogoDetalhesAtivas = false;
     }

@@ -68,17 +68,17 @@ export default {
               .set(objeto)
               .then(() => {
                 this.$router.replace("dash");
-                console.log("Cadastro realizado com sucesso");
+                this.$notificacao("Cadastro realizado com sucesso", "green")
               })
               .catch(() => {
-                console.log("Cadastro falhou " + error);
+                this.$notificacao("Erro ao tentar efetuar login", "red")
               });
           })
           .catch(error => {
-            console.log(error);
+            this.$notificacao("Erro ao tentar criar usuário", "red")
           });
       } else {
-        console.log("senha diferentes");
+        this.$notificacao("Senhas são diferentes", "red")
       }
     }
   }

@@ -152,10 +152,10 @@ export default {
         .then(ref => {
           const pushID = { idPasta: ref.id };
           ref.update(pushID);
-          console.log("Nova Pasta Adicionada");
+          this.$notificacao("Nova Pasta Adicionada", "green")
         })
         .catch(() => {
-          console.log("objeto não adicionado");
+          this.$notificacao("objeto não adicionado", "red")
         });
 
       this.dialogoAddPasta = false;
@@ -187,10 +187,10 @@ export default {
         .doc(this.idPasta)
         .update(objeto)
         .then(() => {
-          console.log("Ultimo acesso atualizado");
+          this.$notificacao("Ultimo acesso atualizado", "green")
         })
         .catch(() => {
-          console.log("Acesso não atualizado");
+          this.$notificacao("Acesso não atualizado", "red")
         });
       this.dialogoEditaPasta = false;
       this.editaNomePasta = "";
@@ -202,10 +202,10 @@ export default {
         .doc(this.idPasta)
         .delete()
         .then(function() {
-          console.log("Document successfully deleted!");
+          this.$notificacao("Pasta removida com sucesso", "green")
         })
-        .catch(function(error) {
-          console.error("Error removing document: ", error);
+        .catch(() => {
+          this.$notificacao("Erro ao tentar remover pasta", "red")
         });
       this.dialogoConfirmaDeletaPasta = false;
     },

@@ -143,10 +143,10 @@ export default {
         .then(ref => {
           const pushID = { idQuadro: ref.id };
           ref.update(pushID);
-          console.log("Novo Quadro Adicionada");
+          this.$notificacao("Novo Quadro Adicionada", "green");
         })
         .catch(() => {
-          console.log("objeto não adicionado");
+          this.$notificacao("Objeto não adicionado", "red");
         });
 
       this.dialogoAddQuadro = false;
@@ -167,7 +167,6 @@ export default {
     setIDdoQuadro(item) {
       this.$store.dispatch("SetPushIDquadro", item.idQuadro);
       this.$store.dispatch("SetNomeDoQuadro", item.nomeDoQuadro);
-      //carrega página quadro
       this.$router.replace("tarefas");
     },
     editaQuadro(item) {
@@ -189,10 +188,10 @@ export default {
         .doc(this.idQuadro)
         .delete()
         .then(function() {
-          console.log("Document successfully deleted!");
+          this.$notificacao("Quadro apagado com sucesso", "green");
         })
-        .catch(function(error) {
-          console.error("Error removing document: ", error);
+        .catch(() => {
+          this.$notificacao("Erro ao tentar apagar o contrato", "red");
         });
       this.dialogoApagaQuadro = false;
     },
@@ -213,10 +212,10 @@ export default {
         .doc(this.idQuadro)
         .update(objeto)
         .then(() => {
-          console.log("Ultimo acesso atualizado");
+          this.$notificacao("Quadro excluído com sucesso", "green");
         })
         .catch(() => {
-          console.log("Acesso não atualizado");
+          this.$notificacao("Erro ao tentar excluir o quadro", "red")
         });
       this.dialogoEditaQuadro = false;
       this.editaNomeDoQuadro = "";

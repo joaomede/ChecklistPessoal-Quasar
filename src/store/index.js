@@ -70,7 +70,6 @@ export default new Vuex.Store({
             db.collection("app").doc(usuario.uid).get()
             .then(docs =>{
                 const nome = docs.data().nomeDoUsuario;
-                
                 commit('carregaNomeDoUsuario', nome)
             });
         },
@@ -85,10 +84,10 @@ export default new Vuex.Store({
             .doc(usuario)
             .update(objeto)
             .then(() => {
-                console.log("Ultimo acesso atualizado");
+                this.$notificacao("Ultimo acesso atualizado", "green")
             })
             .catch(() => {
-                console.log("Acesso não atualizado");
+                this.$notificacao("Acesso não atualizado", "red")
             });
         },
         SetPushIDpasta({commit}, PushIDPasta){
