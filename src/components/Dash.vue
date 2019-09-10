@@ -4,24 +4,17 @@
     <!-- flutuante -->
     <!-- flutuante -->
     <q-btn round color="orange darken-2" @click.stop="dialogoAddPasta = true" class="fixed" style="right: 18px; bottom: 60px">
-      <q-icon name="add"/>
+      <q-icon name="add" />
     </q-btn>
-
 
     <!-- conteudo pasta -->
     <div class="q-pa-md" style="max-width: 900px; margin: auto;">
       <q-list bordered>
         <div class="text-h6 text-center">Selecione sua pasta pessoal</div>
 
-        <q-item
-          clickable
-          v-ripple
-          v-for="item in pastaData"
-          :key="item.idPasta"
-          @click="carregaTelaQuadros(item)"
-        >
+        <q-item clickable v-ripple v-for="item in pastaData" :key="item.idPasta" @click="carregaTelaQuadros(item)">
           <q-item-section avatar top>
-            <q-avatar icon="folder" color="primary" text-color="secondary"/>
+            <q-avatar icon="folder" color="primary" text-color="secondary" />
           </q-item-section>
 
           <q-item-section>
@@ -29,14 +22,12 @@
           </q-item-section>
 
           <q-item-section side>
-            <q-icon name="edit" color="blue" @click.stop="editaPasta(item)"/>
+            <q-icon name="edit" color="blue" @click.stop="editaPasta(item)" />
           </q-item-section>
 
           <q-item-section side>
-            <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="deletaPasta(item)"/>
+            <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="deletaPasta(item)" />
           </q-item-section>
-
-          
         </q-item>
       </q-list>
     </div>
@@ -89,14 +80,13 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{this.editaNomePasta}}</div>
+          <div class="text-h6">{{ this.editaNomePasta }}</div>
         </q-card-section>
 
         <q-card-section align="center">
           <q-btn flat color="primary" @click="apagaPastaDB">Sim</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoConfirmaDeletaPasta = false">Voltar</q-btn>
         </q-card-section>
-
       </q-card>
     </q-dialog>
 
@@ -121,20 +111,14 @@ export default {
       idPasta: "",
       nomeDaPasta: "",
       ref: firebase.firestore().collection("app"),
-      refPastas: firebase
-        .firestore()
-        .collection("app")
-        .doc(this.$store.getters.getUser.uid)
-        .collection("Pasta")
-        .orderBy("nomeDaPasta", "desc"),
       pastaData: []
     };
   },
+  watch: {
+    refPasta: 'carregaPastas'
+  },
 
   methods: {
-    setUser: function() {
-      this.$store.dispatch("setUser");
-    },
     criaPasta() {
       if (this.nomeDaPasta.includes("/") || this.nomeDaPasta.includes("..")) {
         // entrada para método de alerta caractere incorreto
@@ -152,25 +136,27 @@ export default {
         .then(ref => {
           const pushID = { idPasta: ref.id };
           ref.update(pushID);
-          this.$notificacao("Nova Pasta Adicionada", "green")
+          this.$notificacao("Nova Pasta Adicionada", "green");
         })
         .catch(() => {
-          this.$notificacao("objeto não adicionado", "red")
+          this.$notificacao("objeto não adicionado", "red");
         });
 
       this.dialogoAddPasta = false;
       this.nomeDaPasta = "";
     },
     carregaPastas() {
-      this.refPastas.onSnapshot(querySnapshot => {
-        this.pastaData = [];
-        querySnapshot.forEach(doc => {
-          this.pastaData.push({
-            idPasta: doc.id,
-            nomeDaPasta: doc.data().nomeDaPasta
+      if (this.user.uid != null & this.refPasta != null) {
+        this.refPasta.onSnapshot(querySnapshot => {
+          this.pastaData = [];
+          querySnapshot.forEach(doc => {
+            this.pastaData.push({
+              idPasta: doc.id,
+              nomeDaPasta: doc.data().nomeDaPasta
+            });
           });
         });
-      });
+      }
     },
     atualizaEditaPasta() {
       let a = this.editaNomePasta;
@@ -187,10 +173,10 @@ export default {
         .doc(this.idPasta)
         .update(objeto)
         .then(() => {
-          this.$notificacao("Ultimo acesso atualizado", "green")
+          this.$notificacao("Ultimo acesso atualizado", "green");
         })
         .catch(() => {
-          this.$notificacao("Acesso não atualizado", "red")
+          this.$notificacao("Acesso não atualizado", "red");
         });
       this.dialogoEditaPasta = false;
       this.editaNomePasta = "";
@@ -202,10 +188,10 @@ export default {
         .doc(this.idPasta)
         .delete()
         .then(function() {
-          this.$notificacao("Pasta removida com sucesso", "green")
+          this.$notificacao("Pasta removida com sucesso", "green");
         })
         .catch(() => {
-          this.$notificacao("Erro ao tentar remover pasta", "red")
+          this.$notificacao("Erro ao tentar remover pasta", "red");
         });
       this.dialogoConfirmaDeletaPasta = false;
     },
@@ -227,15 +213,34 @@ export default {
       this.idPasta = item.idPasta;
     }
   },
-  created() {
-    this.setUser();
+  mounted() {
     this.carregaPastas();
+  },
+  computed: {
+    user() {
+      if (this.$store.getters.getUser != null) {
+        return this.$store.getters.getUser;
+      } else {
+        return { uid: null, email: null };
+      }
+    },
+    refPasta(){
+      if (this.user.uid != null){
+        return firebase
+        .firestore()
+        .collection("app")
+        .doc(this.user.uid)
+        .collection("Pasta")
+        .orderBy("nomeDaPasta", "desc");
+      } else {
+        return null
+      }
+    }
   }
 };
 </script>
 
 <style scoped>
-
 form > * {
   display: block;
 }

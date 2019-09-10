@@ -83,64 +83,40 @@ export default {
       left: false,
       login: null,
       drawer: null,
-      emailUsuario: ""
+      emailUsuario: null
     };
   },
   methods: {
-    setUser: function() {
-      this.$store.dispatch("setUser");
-      this.$store.dispatch("carregaNomeDoUsuario");
-    },
-    carregaNomeDoUsuario: function() {
+    carregaNomeDoUsuario() {
       this.$store.dispatch("carregaNomeDoUsuario");
     },
     logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => this.$router.replace("/login"));
+      firebase.auth().signOut();
+      this.$q.cookies.remove("user");
+      this.$store.dispatch("setUser");
+      this.$router.replace("login")
     },
     verificaSeEstaLogado() {
-      if (this.$store.getters.getUser != null) {
-        this.emailUsuario = this.$store.getters.getUser.email;
-        this.alertaLoginSucesso = false;
+      if (this.user.uid != null) {
+        this.emailUsuario = this.user.email;
       } else {
-        this.emailUsuario = "@email";
+        this.emailUsuario = "sem@email.com";
       }
     },
-    minimize() {
-      if (process.env.MODE === "electron") {
-        this.$q.electron.remote.BrowserWindow.getFocusedWindow().minimize();
-      }
-    },
-
-    maximize() {
-      if (process.env.MODE === "electron") {
-        const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow();
-
-        if (win.isMaximized()) {
-          win.unmaximize();
-        } else {
-          win.maximize();
-        }
-      }
-    },
-
-    closeApp() {
-      if (process.env.MODE === "electron") {
-        this.$q.electron.remote.BrowserWindow.getFocusedWindow().close();
-      }
-    }
   },
 
   created() {
+    this.$store.dispatch("setUser");
     this.carregaNomeDoUsuario();
-    this.setUser();
     this.verificaSeEstaLogado();
   },
   computed: {
     user() {
-      return this.$store.getters.getUser;
+      if (this.$store.getters.getUser != null) {
+        return this.$store.getters.getUser;
+      } else {
+        return { uid: null, email: null };
+      }
     },
     nomeUsuario() {
       if (this.$store.getters.getUser != null) {
