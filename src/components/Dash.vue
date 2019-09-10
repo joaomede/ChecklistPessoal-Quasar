@@ -3,7 +3,7 @@
     <div class="text-h4 text-center">{{ msg }}</div>
     <!-- flutuante -->
     <!-- flutuante -->
-    <q-btn round color="orange darken-2" @click.stop="dialogoAddPasta = true" class="fixed" style="right: 18px; bottom: 60px">
+    <q-btn round color="orange darken-2" @click.stop="dialogoAddPasta = true" class="fixed fabRight">
       <q-icon name="add" />
     </q-btn>
 
