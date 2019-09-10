@@ -96,6 +96,7 @@ import firebase from "firebase";
 import { db, timestamp } from "../boot/main";
 
 export default {
+  props: ["idPasta"],
   name: "Quadro",
   data() {
     return {
@@ -215,16 +216,23 @@ export default {
           this.$notificacao("Quadro excluído com sucesso", "green");
         })
         .catch(() => {
-          this.$notificacao("Erro ao tentar excluir o quadro", "red")
+          this.$notificacao("Erro ao tentar excluir o quadro", "red");
         });
       this.dialogoEditaQuadro = false;
       this.editaNomeDoQuadro = "";
     }
   },
-
   created() {
-    this.setUser();
     this.carregaQuadro();
+  },
+  computed: {
+    user() {
+      if (this.$store.getters.getUser != null) {
+        return this.$store.getters.getUser;
+      } else {
+        return { uid: null, email: null };
+      }
+    }
   }
 };
 </script>

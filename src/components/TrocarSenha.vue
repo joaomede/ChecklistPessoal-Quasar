@@ -98,8 +98,12 @@ export default {
 
   computed: {
     user() {
-      return this.$store.getters.getUser;
-    }
+      if (this.$store.getters.getUser != null) {
+        return this.$store.getters.getUser;
+      } else {
+        return { uid: null, email: null };
+      }
+    },
   }
 };
 </script>

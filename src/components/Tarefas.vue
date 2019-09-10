@@ -454,9 +454,6 @@ export default {
   },
 
   methods: {
-    setUser: function() {
-      this.$store.dispatch("setUser");
-    },
     criaTarefas() {
       let a = this.nomeDaTarefa;
       let b = this.descricaoTarefa;
@@ -698,7 +695,16 @@ export default {
     this.setUser();
     this.carregaTarefasAtiva();
     this.carregaTarefasConcluidas();
-  }
+  },
+  computed: {
+    user() {
+      if (this.$store.getters.getUser != null) {
+        return this.$store.getters.getUser;
+      } else {
+        return { uid: null, email: null };
+      }
+    },
+  },
 };
 </script>
 
