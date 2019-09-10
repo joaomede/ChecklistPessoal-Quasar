@@ -21,7 +21,7 @@
             <q-tab-panel name="ativo">
               <!-- Tab tarefas ativas -->
               <q-list bordered style="max-width: 900px; margin: auto;">
-                <div class="text-h5 text-center">/{{ this.$store.getters.getNomeDaPasta }}/{{ this.$store.getters.getNomeDoQuadro }}/</div>
+                <div class="text-h5 text-center">/{{ nomePasta }}/{{ nomeQuadro }}/</div>
 
                 <q-item clickable v-ripple v-for="item in tarefasAtivaData" :key="item.idTarefa" @click="exibeDetalhesAtiva(item)">
                   <q-item-section avatar top>
@@ -46,7 +46,7 @@
             <q-tab-panel name="concluido">
               <!-- Tab tarefas concluídas -->
               <q-list bordered style="max-width: 900px; margin: auto;">
-                <div class="text-h5 text-center">/{{ this.$store.getters.getNomeDaPasta }}/{{ this.$store.getters.getNomeDoQuadro }}/</div>
+                <div class="text-h5 text-center">/{{ this.nomePasta }}/{{ this.nomeQuadro }}/</div>
 
                 <q-item clickable v-ripple v-for="item in tarefasConcluidaData" :key="item.idTarefa" @click="exibeDetalhesConcluida(item)">
                   <q-item-section avatar top>
@@ -434,7 +434,9 @@ export default {
     };
   },
   watch: {
-    user: "init"
+    user: "init",
+    refPasta: "carregaPastaAtual",
+    refQuadro: "carregaQuadroAtual"
   },
   methods: {
     init() {
@@ -710,8 +712,7 @@ export default {
     }
   },
   mounted() {
-    this.carregaTarefasAtiva();
-    this.carregaTarefasConcluidas();
+    this.init();
   },
   computed: {
     user() {
@@ -758,6 +759,26 @@ export default {
           .collection("Quadro")
           .doc(this.idQuadro)
           .collection("Tarefas");
+      } else {
+        return null;
+      }
+    },
+    nomePasta() {
+      if (this.pasta != null) {
+        if (this.pasta.nomeDaPasta != null) {
+          return this.pasta.nomeDaPasta;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    },
+    nomeQuadro() {
+      if (this.quadro != null) {
+        if (this.quadro.nomeDoQuadro != null) {
+          return this.quadro.nomeDoQuadro;
+        }
       } else {
         return null;
       }
