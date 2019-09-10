@@ -55,6 +55,7 @@
 <script>
 import firebase from "firebase";
 import { timestamp } from "../boot/main";
+import { Cookies } from "quasar";
 
 export default {
   name: "Login",
@@ -68,22 +69,18 @@ export default {
     senhaRules: [v => !!v || "Senha é requerida", v => v.length >= 6 || "Precisa ter mais de 6 dígitos"]
   }),
   methods: {
-    setUser: function() {
-      this.$store.dispatch("setUser");
-    },
-    gravaUltimoAcesso: function() {
-      this.$store.dispatch("gravaUltimoAcesso");
-    },
     login() {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.senha)
         .then(data => {
-          this.$notificacao("Bem vindo de volta", "green");
+          this.$q.cookies.set("user", data.user);
+          this.$store.dispatch("setUser");
           this.$router.replace("dash");
+          this.$notificacao("Bem vindo de volta", "green");
         })
         .catch(() => {
-          this.$$notificacao("Erro ao tentar efetuar o login", "red");
+          this.$notificacao("Erro ao tentar efetuar o login", "red");
         });
     },
     recuperaAcesso() {
@@ -92,9 +89,10 @@ export default {
         .sendPasswordResetEmail(this.emailRecuperacao)
         .then(() => {
           this.$notificacao("Email de recuperação enviado com sucesso", "green");
-        }).catch(()=>{
-          this.$notificacao("Erro ao tentar enviar de recuperação", "red")
         })
+        .catch(() => {
+          this.$notificacao("Erro ao tentar enviar de recuperação", "red");
+        });
       this.dialogoEsqueciSenha = false;
     },
     verificaEstaLogado() {
@@ -104,7 +102,6 @@ export default {
     }
   },
   created() {
-    this.setUser();
     this.verificaEstaLogado();
   },
 
