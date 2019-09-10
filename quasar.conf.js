@@ -77,7 +77,8 @@ module.exports = function (ctx) {
 
         'QTimeline',
         'QTimelineEntry',
-        'QBadge'
+        'QBadge',
+        'QEditor'
       ],
 
       directives: [
