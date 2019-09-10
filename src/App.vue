@@ -12,9 +12,8 @@
           <q-btn class="q-mr-xs" dense round flat icon="new_releases" v-if="!user">
             <q-badge color="red" floating transparent>{{ this.versaoUltima }}</q-badge>
           </q-btn>
-          <q-btn dense flat round icon="home" v-if="user" to="/dash" />
-          <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user" to="/login" />
-          <q-btn alt="Sair" flat round dense icon="exit_to_app" @click="logout" v-if="user" />
+          <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user.uid" to="/login" />
+          <q-btn alt="Sair" flat round dense icon="exit_to_app" @click="logout" v-if="user.uid" />
         </q-toolbar>
       </q-header>
 
@@ -143,7 +142,7 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     this.verificaVersaoCloud();
     this.$store.dispatch("setUser");
     this.carregaNomeDoUsuario();
@@ -165,7 +164,7 @@ export default {
       }
     },
     nomeUsuario() {
-      if (this.$store.getters.getUser != null) {
+      if (this.user.uid != null) {
         return this.$store.getters.getNomeUsuario;
       } else {
         return "Usuario";
