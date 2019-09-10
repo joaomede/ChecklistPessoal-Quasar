@@ -97,7 +97,7 @@ export default {
       drawer: null,
       emailUsuario: null,
       versaoUltima: null,
-      versao: "v1.134.62.r24"
+      versao: "v1.13.10"
     };
   },
   methods: {
@@ -138,7 +138,7 @@ export default {
     },
     checagem() {
       if (this.versaoUltima != this.versao) {
-        //window.location.reload(true);
+        window.location.reload(true);
       }
     }
   },
