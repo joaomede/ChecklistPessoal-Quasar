@@ -158,52 +158,8 @@
             <div class="text-h6">Descrição:</div>
             <q-editor
               v-model="descricaoTarefa"
-              :toolbar="[
-                [
-                  {
-                    label: 'Alinhamentos',
-                    icon: $q.iconSet.editor.align,
-                    fixedLabel: true,
-                    list: 'only-icons',
-                    options: ['left', 'center', 'right', 'justify']
-                  },
-                  {
-                    label: 'Formatação 1',
-                    icon: 'format_bold',
-                    fixedLabel: true,
-                    fixedIcon: true,
-                    list: 'only-icons',
-                    options: ['bold', 'italic', 'strike', 'underline']
-                  }
-                ],
-                [
-                  {
-                    label: 'Paragrafo',
-                    icon: $q.iconSet.editor.formatting,
-                    list: 'no-icons',
-                    options: paragrafos
-                  },
-                  {
-                    label: 'Tamanho da Fonte',
-                    icon: $q.iconSet.editor.fontSize,
-                    fixedLabel: true,
-                    fixedIcon: true,
-                    list: 'no-icons',
-                    options: tamanhoDaFonte
-                  },
-                  {
-                    label: 'Fonte padrão',
-                    icon: $q.iconSet.editor.font,
-                    fixedIcon: true,
-                    list: 'no-icons',
-                    options: fontes
-                  },
-                  'removeFormat'
-                ],
-                ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
-                ['undo', 'redo']
-              ]"
-              :fonts="nomeDasFontes"
+              :toolbar="editorTools"
+              :fonts="nomeDasFronts"
             />
           </q-form>
         </q-card-section>
@@ -233,52 +189,8 @@
             <div class="text-h6">Descrição:</div>
             <q-editor
               v-model="descriEditar"
-              :toolbar="[
-                [
-                  {
-                    label: 'Alinhamentos',
-                    icon: $q.iconSet.editor.align,
-                    fixedLabel: true,
-                    list: 'only-icons',
-                    options: ['left', 'center', 'right', 'justify']
-                  },
-                  {
-                    label: 'Formatação 1',
-                    icon: 'format_bold',
-                    fixedLabel: true,
-                    fixedIcon: true,
-                    list: 'only-icons',
-                    options: ['bold', 'italic', 'strike', 'underline']
-                  }
-                ],
-                [
-                  {
-                    label: 'Paragrafo',
-                    icon: $q.iconSet.editor.formatting,
-                    list: 'no-icons',
-                    options: paragrafos
-                  },
-                  {
-                    label: 'Tamanho da Fonte',
-                    icon: $q.iconSet.editor.fontSize,
-                    fixedLabel: true,
-                    fixedIcon: true,
-                    list: 'no-icons',
-                    options: tamanhoDaFonte
-                  },
-                  {
-                    label: 'Fonte padrão',
-                    icon: $q.iconSet.editor.font,
-                    fixedIcon: true,
-                    list: 'no-icons',
-                    options: fontes
-                  },
-                  'removeFormat'
-                ],
-                ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
-                ['undo', 'redo']
-              ]"
-              :fonts="nomeDasFontes"
+              :toolbar="editorTools"
+              :fonts="nomeDasFronts"
             />
           </q-form>
         </q-card-section>
@@ -377,12 +289,15 @@
 <script>
 import firebase from "firebase";
 import { db, timestamp } from "../boot/main";
+import { editorTools, nomeDasFronts } from "../boot/utils";
 
 export default {
   props: ["idPasta", "idQuadro"],
   name: "Tarefas",
   data() {
     return {
+      editorTools: editorTools,
+      nomeDasFronts: nomeDasFronts,
       tab: "ativo",
       dialogoAddTarefa: false,
       dialogoDetalhesAtivas: false,
@@ -417,20 +332,6 @@ export default {
       dialogoDetalhesConcluidas: false,
       tarefasAtivaData: [],
       tarefasConcluidaData: [],
-
-      fontes: ["default_font", "arial", "arial_black", "comic_sans", "courier_new", "impact", "lucida_grande", "times_new_roman", "verdana"],
-      nomeDasFontes: {
-        arial: "Arial",
-        arial_black: "Arial Black",
-        comic_sans: "Comic Sans MS",
-        courier_new: "Courier New",
-        impact: "Impact",
-        lucida_grande: "Lucida Grande",
-        times_new_roman: "Times New Roman",
-        verdana: "Verdana"
-      },
-      tamanhoDaFonte: ["size-1", "size-2", "size-3", "size-4", "size-5", "size-6", "size-7"],
-      paragrafos: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "code"]
     };
   },
   watch: {
@@ -503,7 +404,6 @@ export default {
           this.$notificacao(err, "red");
         });
     },
-
     criaTarefas() {
       let a = this.nomeDaTarefa;
       let b = this.descricaoTarefa;
