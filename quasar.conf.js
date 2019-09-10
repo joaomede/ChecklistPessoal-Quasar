@@ -6,7 +6,7 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     boot: [
       'main.js',
-      'boot.js',,
+      'boot.js',
       'notify.js'
     ],
 
@@ -62,7 +62,22 @@ module.exports = function (ctx) {
         'QSeparator',
         'QBar',
         'QSpace',
-        'QEditor'
+        'QSelect',
+        'QRadio',
+        'QTime',
+        'QDate',
+        'QPopupProxy',
+        'QTable',
+        'QTh',
+        'QTr',
+        'QTd',
+        'QCheckbox',
+        'QToggle',
+        'QSpinnerHourglass',
+
+        'QTimeline',
+        'QTimelineEntry',
+        'QBadge'
       ],
 
       directives: [
@@ -83,7 +98,7 @@ module.exports = function (ctx) {
 
     build: {
       scopeHoisting: true,
-      // vueRouterMode: 'history',
+      vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
