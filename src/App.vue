@@ -120,7 +120,7 @@ export default {
     verificaVersaoCloud() {
       dbfeed
         .collection("app")
-        .doc("TNLrCbQEuBVDBeXA0IV4")
+        .doc("nsArXKTPGLVF471Jd3Lv")
         .collection("feed")
         .where("novo", "==", true)
         .onSnapshot(querySnapshot => {
