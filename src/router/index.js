@@ -55,11 +55,18 @@ export default function({ ssrContext }) {
           meta: { requerAuth: true }
         },
         {
-          path: "/tarefas",
+          path: "/tarefas/:idPasta/:idQuadro",
           name: "Tarefas",
+          props: true,
           component: () => import("../components/Tarefas"),
           meta: { requerAuth: true }
-        }
+        },
+        {
+          path: "/feedversion",
+          name: "FeedVersion",
+          component: () => import("../FeedVersion"),
+          meta: { requerAuth: true }
+        },
       ]
     });
 
@@ -128,17 +135,25 @@ export default function({ ssrContext }) {
           meta: { requerAuth: true }
         },
         {
-          path: "/quadro",
+          path: "/quadro/:idPasta",
           name: "Quadro",
+          props: true,
           component: () => import("../components/Quadro"),
           meta: { requerAuth: true }
         },
         {
-          path: "/tarefas",
+          path: "/tarefas/:idPasta/:idQuadro",
           name: "Tarefas",
+          props: true,
           component: () => import("../components/Tarefas"),
           meta: { requerAuth: true }
-        }
+        },
+        {
+          path: "/feedversion",
+          name: "FeedVersion",
+          component: () => import("../FeedVersion"),
+          meta: { requerAuth: true }
+        },
       ]
     });
 

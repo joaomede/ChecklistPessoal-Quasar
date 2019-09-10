@@ -33,7 +33,7 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="check" color="primary" @click.stop="dialogoConcluirTarefa(item)" />
+                    <q-icon name="check" color="primary" @click.stop="exibeDialogoConcluirTarefa(item)" />
                   </q-item-section>
 
                   <q-item-section side>
@@ -379,6 +379,7 @@ import firebase from "firebase";
 import { db, timestamp } from "../boot/main";
 
 export default {
+  props: ["idPasta", "idQuadro"],
   name: "Tarefas",
   data() {
     return {
@@ -392,6 +393,9 @@ export default {
       dialogoApagaTarefaAtiva: false,
       tituloExclusao: "",
       tituloTarefaConclusao: "",
+
+      pasta: null,
+      quadro: null,
 
       tituloEditar: "",
       descriEditar: "",
@@ -411,29 +415,6 @@ export default {
       notaConclusao: "",
       tarefaTimeStamp: "",
       dialogoDetalhesConcluidas: false,
-      ref: firebase.firestore().collection("app"),
-      refTarefasAtivas: firebase
-        .firestore()
-        .collection("app")
-        .doc(this.$store.getters.getUser.uid)
-        .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
-        .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
-        .collection("Tarefas")
-        .where("concluida", "==", false)
-        .orderBy("tarefaTimeStamp", "asc"),
-      refTarefasConcluida: firebase
-        .firestore()
-        .collection("app")
-        .doc(this.$store.getters.getUser.uid)
-        .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
-        .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
-        .collection("Tarefas")
-        .where("concluida", "==", true)
-        .orderBy("tarefaTimeStamp", "asc"),
       tarefasAtivaData: [],
       tarefasConcluidaData: [],
 
@@ -452,21 +433,88 @@ export default {
       paragrafos: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "code"]
     };
   },
-
+  watch: {
+    user: "init"
+  },
   methods: {
+    init() {
+      if ((this.user.uid != null) & (this.refTarefas != null)) {
+        this.carregaTarefasAtiva();
+        this.carregaTarefasConcluidas();
+        this.carregaQuadroAtual();
+        this.carregaPastaAtual();
+      }
+    },
+    carregaTarefasAtiva() {
+      this.refTarefas
+        .where("concluida", "==", false)
+        .orderBy("tarefaTimeStamp", "asc")
+        .onSnapshot(querySnapshot => {
+          this.tarefasAtivaData = [];
+          querySnapshot.forEach(doc => {
+            this.tarefasAtivaData.push({
+              idTarefa: doc.id,
+              nomeDaTarefa: doc.data().nomeDaTarefa,
+              descricaoTarefa: doc.data().descricaoTarefa,
+              tarefaTimeStamp: doc.data().tarefaTimeStamp,
+              concluida: doc.data().concluida,
+              notaConclusao: doc.data().notaConclusao
+            });
+          });
+        });
+    },
+    carregaTarefasConcluidas() {
+      this.refTarefas
+        .where("concluida", "==", true)
+        .orderBy("tarefaTimeStamp", "asc")
+        .onSnapshot(querySnapshot => {
+          this.tarefasConcluidaData = [];
+          querySnapshot.forEach(doc => {
+            this.tarefasConcluidaData.push({
+              idTarefa: doc.id,
+              nomeDaTarefa: doc.data().nomeDaTarefa,
+              descricaoTarefa: doc.data().descricaoTarefa,
+              tarefaTimeStamp: doc.data().tarefaTimeStamp,
+              concluida: doc.data().concluida,
+              notaConclusao: doc.data().notaConclusao
+            });
+          });
+        });
+    },
+    carregaQuadroAtual() {
+      this.refQuadro
+        .get()
+        .then(resp => {
+          this.quadro = resp.data();
+        })
+        .catch(err => {
+          this.$notificacao(err, "red");
+        });
+    },
+    carregaPastaAtual() {
+      this.refPasta
+        .get()
+        .then(resp => {
+          this.pasta = resp.data();
+        })
+        .catch(err => {
+          this.$notificacao(err, "red");
+        });
+    },
+
     criaTarefas() {
       let a = this.nomeDaTarefa;
       let b = this.descricaoTarefa;
       if (a.includes("/") | b.includes("/")) {
-        this.$notificacao("Caracteres '/' são proíbidos", "red")
+        this.$notificacao("Caracteres '/' são proíbidos", "red");
         return;
       }
       if (a.includes("..") | b.includes("..")) {
-        this.$notificacao("Caracteres '..' são proíbidos", "red")
+        this.$notificacao("Caracteres '..' são proíbidos", "red");
         return;
       }
       if (a === "") {
-        this.$notificacao("Erro, tarefa em branco", "red")
+        this.$notificacao("Erro, tarefa em branco", "red");
         return;
       }
 
@@ -479,11 +527,11 @@ export default {
         concluida: false
       };
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
+        .doc(this.idQuadro)
         .collection("Tarefas")
         .add(conteudo)
         .then(ref => {
@@ -498,36 +546,6 @@ export default {
       this.dialogoAddTarefa = false;
       this.nomeDaTarefa = "";
       this.descricaoTarefa = "";
-    },
-    carregaTarefasAtiva() {
-      this.refTarefasAtivas.onSnapshot(querySnapshot => {
-        this.tarefasAtivaData = [];
-        querySnapshot.forEach(doc => {
-          this.tarefasAtivaData.push({
-            idTarefa: doc.id,
-            nomeDaTarefa: doc.data().nomeDaTarefa,
-            descricaoTarefa: doc.data().descricaoTarefa,
-            tarefaTimeStamp: doc.data().tarefaTimeStamp,
-            concluida: doc.data().concluida,
-            notaConclusao: doc.data().notaConclusao
-          });
-        });
-      });
-    },
-    carregaTarefasConcluidas() {
-      this.refTarefasConcluida.onSnapshot(querySnapshot => {
-        this.tarefasConcluidaData = [];
-        querySnapshot.forEach(doc => {
-          this.tarefasConcluidaData.push({
-            idTarefa: doc.id,
-            nomeDaTarefa: doc.data().nomeDaTarefa,
-            descricaoTarefa: doc.data().descricaoTarefa,
-            tarefaTimeStamp: doc.data().tarefaTimeStamp,
-            concluida: doc.data().concluida,
-            notaConclusao: doc.data().notaConclusao
-          });
-        });
-      });
     },
     exibeDetalhesAtiva(objeto) {
       this.dialogoDetalhesAtivas = true;
@@ -544,11 +562,11 @@ export default {
     },
     apagaTarefa() {
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
+        .doc(this.idQuadro)
         .collection("Tarefas")
         .doc(this.idTarefa)
         .delete()
@@ -573,16 +591,16 @@ export default {
         concluida: true
       };
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
+        .doc(this.idQuadro)
         .collection("Tarefas")
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          this.$notificacao('Tarefa "' + this.tituloTarefaConclusao + '" foi concluída', "green")
+          this.$notificacao('Tarefa "' + this.tituloTarefaConclusao + '" foi concluída', "green");
         })
         .catch(() => {
           this.$notificacao("Não foi possível concluir tarefa", "red");
@@ -601,11 +619,11 @@ export default {
         notaConclusao: this.notaConclusao
       };
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
+        .doc(this.idQuadro)
         .collection("Tarefas")
         .doc(this.idTarefa)
         .update(objeto)
@@ -624,11 +642,11 @@ export default {
         notaConclusao: ""
       };
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
+        .doc(this.idQuadro)
         .collection("Tarefas")
         .doc(this.idTarefa)
         .update(objeto)
@@ -651,7 +669,7 @@ export default {
       this.dialogoApagaTarefaAtiva = true;
       this.tituloExclusao = this.tituloDetalheConcluido;
     },
-    dialogoConcluirTarefa(item) {
+    exibeDialogoConcluirTarefa(item) {
       this.dialogoConcluirTarefa = true;
       this.tituloTarefaConclusao = item.nomeDaTarefa;
       this.idTarefa = item.idTarefa;
@@ -673,11 +691,11 @@ export default {
       };
 
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
-        .doc(this.$store.getters.getPushIDQuadro)
+        .doc(this.idQuadro)
         .collection("Tarefas")
         .doc(this.idTarefa)
         .update(conteudo)
@@ -691,8 +709,7 @@ export default {
       this.dialogoDetalhesAtivas = false;
     }
   },
-  created() {
-    this.setUser();
+  mounted() {
     this.carregaTarefasAtiva();
     this.carregaTarefasConcluidas();
   },
@@ -704,7 +721,48 @@ export default {
         return { uid: null, email: null };
       }
     },
-  },
+    refQuadro() {
+      if (this.user.uid != null) {
+        return firebase
+          .firestore()
+          .collection("app")
+          .doc(this.user.uid)
+          .collection("Pasta")
+          .doc(this.idPasta)
+          .collection("Quadro")
+          .doc(this.idQuadro);
+      } else {
+        return null;
+      }
+    },
+    refPasta() {
+      if (this.user.uid != null) {
+        return firebase
+          .firestore()
+          .collection("app")
+          .doc(this.user.uid)
+          .collection("Pasta")
+          .doc(this.idPasta);
+      } else {
+        return null;
+      }
+    },
+    refTarefas() {
+      if (this.user.uid != null) {
+        return firebase
+          .firestore()
+          .collection("app")
+          .doc(this.user.uid)
+          .collection("Pasta")
+          .doc(this.idPasta)
+          .collection("Quadro")
+          .doc(this.idQuadro)
+          .collection("Tarefas");
+      } else {
+        return null;
+      }
+    }
+  }
 };
 </script>
 

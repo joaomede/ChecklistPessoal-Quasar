@@ -10,10 +10,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     nomeDoUsuario: "",
-    PushIDPasta: "",
-    PushIDQuadro: "",
-    NomeDaPastastate: "",
-    NomedoQuadrostate: ""
+    ultimaVersao: null,
   },
   getters: {
     getUser: state => {
@@ -22,17 +19,8 @@ export default new Vuex.Store({
     getNomeUsuario: state => {
       return state.nomeDoUsuario;
     },
-    getPushIDPasta: state => {
-      return state.PushIDPasta;
-    },
-    getPushIDQuadro: state => {
-      return state.PushIDQuadro;
-    },
-    getNomeDaPasta: state => {
-      return state.NomeDaPastastate;
-    },
-    getNomeDoQuadro: state => {
-      return state.NomedoQuadrostate;
+    getUltimaVersao: state => {
+      return state.ultimaVersao;
     }
   },
   mutations: {
@@ -61,18 +49,9 @@ export default new Vuex.Store({
           this.$notificacao("Erro ao tentar verificar nome do usuário", "red");
         });
     },
-    SetPushIDpasta(state, PushIDpasta) {
-      state.PushIDPasta = PushIDpasta;
+    DefineUltimaVersao(state, objeto) {
+      state.ultimaVersao = objeto;
     },
-    SetPushIDquadro(state, PushIDQuadro) {
-      state.PushIDQuadro = PushIDQuadro;
-    },
-    SetNomeDaPasta(state, NomeDaPasta) {
-      state.NomeDaPastastate = NomeDaPasta;
-    },
-    SetNomeDoQuadro(state, NomeDoQuadro) {
-      state.NomedoQuadrostate = NomeDoQuadro;
-    }
   },
   actions: {
     setUser({ commit }) {
@@ -81,34 +60,8 @@ export default new Vuex.Store({
     carregaNomeDoUsuario({ commit }) {
       commit("carregaNomeDoUsuario");
     },
-    gravaUltimoAcesso() {
-      let usuario = Firebase.auth().currentUser.uid;
-
-      const objeto = {
-        ultimoAcesso: timestamp
-      };
-
-      db.collection("app")
-        .doc(usuario)
-        .update(objeto)
-        .then(() => {
-          this.$notificacao("Ultimo acesso atualizado", "green");
-        })
-        .catch(() => {
-          this.$notificacao("Acesso não atualizado", "red");
-        });
+    DefineUltimaVersao({ commit }, ultimaVersao) {
+      commit("DefineUltimaVersao", ultimaVersao);
     },
-    SetPushIDpasta({ commit }, PushIDPasta) {
-      commit("SetPushIDpasta", PushIDPasta);
-    },
-    SetPushIDquadro({ commit }, PushIDQuadro) {
-      commit("SetPushIDquadro", PushIDQuadro);
-    },
-    SetNomeDaPasta({ commit }, NomeDaPasta) {
-      commit("SetNomeDaPasta", NomeDaPasta);
-    },
-    SetNomeDoQuadro({ commit }, NomeDoQuadro) {
-      commit("SetNomeDoQuadro", NomeDoQuadro);
-    }
   }
 });

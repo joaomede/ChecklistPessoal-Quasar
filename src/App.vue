@@ -6,7 +6,12 @@
           <q-btn dense flat round icon="menu" @click="left = !left" />
 
           <q-toolbar-title>CheckList Pessoal</q-toolbar-title>
-
+          <q-btn class="q-mr-xs" dense round flat icon="new_releases" to="/feedversion" v-if="user">
+            <q-badge color="red" floating transparent>{{ this.versaoUltima }}</q-badge>
+          </q-btn>
+          <q-btn class="q-mr-xs" dense round flat icon="new_releases" v-if="!user">
+            <q-badge color="red" floating transparent>{{ this.versaoUltima }}</q-badge>
+          </q-btn>
           <q-btn dense flat round icon="home" v-if="user" to="/dash" />
           <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user" to="/login" />
           <q-btn alt="Sair" flat round dense icon="exit_to_app" @click="logout" v-if="user" />
@@ -20,7 +25,7 @@
           border-right: 1px solid #ddd"
         >
           <q-list padding>
-            <q-item clickable v-ripple to="dash">
+            <q-item clickable v-ripple to="/dash">
               <q-item-section avatar>
                 <q-icon name="dashboard" />
               </q-item-section>
@@ -28,7 +33,14 @@
               <q-item-section>Tela Inicial</q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple v-if="user" to="trocarsenha">
+            <q-item clickable v-ripple to="feedversion" v-if="user">
+              <q-item-section avatar>
+                <q-icon name="fas fa-sync-alt" />
+              </q-item-section>
+              <q-item-section>Atualizações</q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple v-if="user" to="/trocarsenha">
               <q-item-section avatar>
                 <q-icon name="vpn_key" />
               </q-item-section>
@@ -36,7 +48,7 @@
               <q-item-section>Trocar Senha</q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="sobre">
+            <q-item clickable v-ripple to="/sobre">
               <q-item-section avatar>
                 <q-icon name="question_answer" />
               </q-item-section>
@@ -63,7 +75,7 @@
 
       <q-footer reveal elevated class="bg-grey-8 text-white">
         <q-toolbar>
-          <q-toolbar-title>Organize-se</q-toolbar-title>
+          <q-toolbar-title>Organize-se - {{this.versao}}</q-toolbar-title>
         </q-toolbar>
       </q-footer>
     </q-layout>
@@ -74,7 +86,7 @@
 <script>
 import firebase from "firebase";
 import router from "./router";
-import { db } from "./boot/main";
+import { db, dbfeed } from "./boot/main";
 
 export default {
   name: "App",
@@ -83,7 +95,9 @@ export default {
       left: false,
       login: null,
       drawer: null,
-      emailUsuario: null
+      emailUsuario: null,
+      versaoUltima: null,
+      versao: "v1.134.62.r24"
     };
   },
   methods: {
@@ -94,7 +108,7 @@ export default {
       firebase.auth().signOut();
       this.$q.cookies.remove("user");
       this.$store.dispatch("setUser");
-      this.$router.replace("login")
+      this.$router.replace("login");
     },
     verificaSeEstaLogado() {
       if (this.user.uid != null) {
@@ -103,14 +117,46 @@ export default {
         this.emailUsuario = "sem@email.com";
       }
     },
+    verificaVersaoCloud() {
+      dbfeed
+        .collection("app")
+        .doc("TNLrCbQEuBVDBeXA0IV4")
+        .collection("feed")
+        .where("novo", "==", true)
+        .onSnapshot(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.versaoUltima = doc.data().tituloPostagem;
+          });
+          this.$store.dispatch("DefineUltimaVersao", this.versaoUltima);
+          this.checagem();
+        });
+    },
+    defineVersaoSistemica() {
+      if (this.versaoAtual == null) {
+        this.$store.dispatch("DefineVersaoDoApp", this.versao);
+      }
+    },
+    checagem() {
+      if (this.versaoUltima != this.versao) {
+        //window.location.reload(true);
+      }
+    }
   },
 
   created() {
+    this.verificaVersaoCloud();
     this.$store.dispatch("setUser");
     this.carregaNomeDoUsuario();
     this.verificaSeEstaLogado();
   },
   computed: {
+    versionUpdate() {
+      if (this.$store.getters.getUltimaVersao) {
+        return this.checagem();
+      } else {
+        return;
+      }
+    },
     user() {
       if (this.$store.getters.getUser != null) {
         return this.$store.getters.getUser;

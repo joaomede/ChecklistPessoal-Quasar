@@ -10,8 +10,8 @@
     <div class="q-pa-md" style="max-width: 900px; margin: auto;">
       <q-list bordered>
         <div class="text-h5 text-center">Selecione o Quadro</div>
-        <div class="text-h6 text-center">//{{ this.$store.getters.getNomeDaPasta }}</div>
-        <q-item clickable v-ripple v-for="item in quadroData" :key="item.idQuadro" @click="setIDdoQuadro(item)">
+        <div class="text-h6 text-center">//{{ this.pasta.nomeDaPasta }}</div>
+        <q-item clickable v-ripple v-for="item in quadroData" :key="item.idQuadro" @click="carregaTarefas(item)">
           <q-item-section avatar>
             <q-avatar icon="dashboard" color="primary" text-color="secondary" />
           </q-item-section>
@@ -45,7 +45,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="apagaQuadroDB">Salvar</q-btn>
+          <q-btn flat color="primary" @click="salvaEdicao()">Salvar</q-btn>
           <q-btn flat @click.stop="dialogoEditaQuadro = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
@@ -83,7 +83,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="apagaQuadroDB">Sim</q-btn>
+          <q-btn flat color="primary" @click="apagaQuadroDB()">Sim</q-btn>
           <q-btn flat color="primary" @click.stop="dialogoApagaQuadro = false">Voltar</q-btn>
         </q-card-section>
       </q-card>
@@ -107,23 +107,15 @@ export default {
       idQuadro: "",
       nomeDoQuadro: "",
       editaNomeDoQuadro: "",
-      ref: firebase.firestore().collection("app"),
-      refQuadro: firebase
-        .firestore()
-        .collection("app")
-        .doc(this.$store.getters.getUser.uid)
-        .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
-        .collection("Quadro")
-        .orderBy("nomeDoQuadro", "desc"),
-      quadroData: []
+      quadroData: [],
+      pasta: []
     };
   },
-
+  watch: {
+    refQuadro: "init",
+    user: "init"
+  },
   methods: {
-    setUser: function() {
-      this.$store.dispatch("setUser");
-    },
     criaQuadro() {
       let b = this.nomeDoQuadro;
       if (b.includes("/") | b.includes("..")) {
@@ -136,9 +128,9 @@ export default {
       };
 
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
         .add(conteudo)
         .then(ref => {
@@ -153,22 +145,38 @@ export default {
       this.dialogoAddQuadro = false;
       this.nomeDoQuadro = "";
     },
+    init() {
+      this.carregaPastaAtual();
+      this.carregaQuadro();
+    },
     carregaQuadro() {
-      this.refQuadro.onSnapshot(querySnapshot => {
-        this.quadroData = [];
-        querySnapshot.forEach(doc => {
-          this.quadroData.push({
-            idQuadro: doc.id,
-            nomeDoQuadro: doc.data().nomeDoQuadro
+      if ((this.user.uid != null) & (this.refQuadro != null)) {
+        this.refQuadro.onSnapshot(querySnapshot => {
+          this.quadroData = [];
+          querySnapshot.forEach(doc => {
+            this.quadroData.push({
+              idQuadro: doc.id,
+              nomeDoQuadro: doc.data().nomeDoQuadro
+            });
           });
         });
-      });
+      }
+    },
+    carregaPastaAtual() {
+      if (this.refPasta != null) {
+        this.refPasta
+          .get()
+          .then(resp => {
+            this.pasta = resp.data();
+          })
+          .catch(err => {
+            this.$notificacao(err, "red");
+          });
+      }
     },
     //carrega tela tarefas
-    setIDdoQuadro(item) {
-      this.$store.dispatch("SetPushIDquadro", item.idQuadro);
-      this.$store.dispatch("SetNomeDoQuadro", item.nomeDoQuadro);
-      this.$router.replace("tarefas");
+    carregaTarefas(item) {
+      this.$router.push({ name: "Tarefas", params: { idQuadro: item.idQuadro, idPasta: this.idPasta } });
     },
     editaQuadro(item) {
       this.dialogoEditaQuadro = true;
@@ -182,13 +190,13 @@ export default {
     },
     apagaQuadroDB() {
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
         .doc(this.idQuadro)
         .delete()
-        .then(function() {
+        .then(() => {
           this.$notificacao("Quadro apagado com sucesso", "green");
         })
         .catch(() => {
@@ -196,7 +204,7 @@ export default {
         });
       this.dialogoApagaQuadro = false;
     },
-    apagaQuadroDB() {
+    salvaEdicao() {
       let b = this.editaNomeDoQuadro;
       if (b.includes("/") | b.includes("..")) {
         //entrada para metodo de alerta de caractere proibido
@@ -206,9 +214,9 @@ export default {
         nomeDoQuadro: this.editaNomeDoQuadro
       };
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
-        .doc(this.$store.getters.getPushIDPasta)
+        .doc(this.idPasta)
         .collection("Quadro")
         .doc(this.idQuadro)
         .update(objeto)
@@ -222,8 +230,8 @@ export default {
       this.editaNomeDoQuadro = "";
     }
   },
-  created() {
-    this.carregaQuadro();
+  mounted() {
+    this.init();
   },
   computed: {
     user() {
@@ -231,6 +239,32 @@ export default {
         return this.$store.getters.getUser;
       } else {
         return { uid: null, email: null };
+      }
+    },
+    refQuadro() {
+      if (this.user.uid != null) {
+        return firebase
+          .firestore()
+          .collection("app")
+          .doc(this.user.uid)
+          .collection("Pasta")
+          .doc(this.idPasta)
+          .collection("Quadro")
+          .orderBy("nomeDoQuadro", "desc");
+      } else {
+        return null;
+      }
+    },
+    refPasta() {
+      if (this.user.uid != null) {
+        return firebase
+          .firestore()
+          .collection("app")
+          .doc(this.user.uid)
+          .collection("Pasta")
+          .doc(this.idPasta);
+      } else {
+        return null;
       }
     }
   }

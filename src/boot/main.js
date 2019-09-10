@@ -2,6 +2,18 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
 
+
+var versionfeedconfig = {
+    apiKey: "YourAPI",
+    authDomain: "YourAPI",
+    databaseURL: "YourAPI",
+    projectId: "YourAPI",
+    storageBucket: "",
+    messagingSenderId: "YourAPI",
+    appId: "YourAPI"
+};
+
+
 var Config = {
   apiKey: 'YourAPI',
   authDomain: 'YourAPI',
@@ -11,9 +23,15 @@ var Config = {
   messagingSenderId: 'YourAPI',
   appId: '1:YourAPI:web:df0460478a00ec53'
 }
+
+
 // Initialize Firebase
 firebase.initializeApp(Config)
 // incia banco
+
+var secondary = firebase.initializeApp(YourAPIedconfig, "secondary");
+export const dbfeed = secondary.firestore();
+
 export const db = firebase.firestore()
 export const timestamp = firebase.firestore.FieldValue.serverTimestamp()
 export default firebase;

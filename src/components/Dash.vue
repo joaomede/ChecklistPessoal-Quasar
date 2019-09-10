@@ -97,6 +97,7 @@
 <script>
 import firebase from "firebase";
 import { db, timestamp } from "../boot/main";
+import router from "../router";
 
 export default {
   name: "Dash",
@@ -115,7 +116,7 @@ export default {
     };
   },
   watch: {
-    refPasta: 'carregaPastas'
+    refPasta: "carregaPastas"
   },
 
   methods: {
@@ -126,7 +127,7 @@ export default {
       }
       const conteudo = {
         nomeDaPasta: this.nomeDaPasta,
-        idPasta: this.idPasta
+        idPasta: null
       };
 
       db.collection("app")
@@ -146,7 +147,7 @@ export default {
       this.nomeDaPasta = "";
     },
     carregaPastas() {
-      if (this.user.uid != null & this.refPasta != null) {
+      if ((this.user.uid != null) & (this.refPasta != null)) {
         this.refPasta.onSnapshot(querySnapshot => {
           this.pastaData = [];
           querySnapshot.forEach(doc => {
@@ -183,7 +184,7 @@ export default {
     },
     apagaPastaDB() {
       db.collection("app")
-        .doc(this.$store.getters.getUser.uid)
+        .doc(this.user.uid)
         .collection("Pasta")
         .doc(this.idPasta)
         .delete()
@@ -197,10 +198,10 @@ export default {
     },
     //carrega tela quadros
     carregaTelaQuadros(item) {
-      this.$store.dispatch("SetPushIDpasta", item.idPasta);
-      this.$store.dispatch("SetNomeDaPasta", item.nomeDaPasta);
-      //carrega página quadro
-      this.$router.replace("quadro");
+      this.$router.push({
+        name: "Quadro",
+        params: { idPasta: item.idPasta }
+      });
     },
     editaPasta(item) {
       this.dialogoEditaPasta = true;
@@ -224,16 +225,16 @@ export default {
         return { uid: null, email: null };
       }
     },
-    refPasta(){
-      if (this.user.uid != null){
+    refPasta() {
+      if (this.user.uid != null) {
         return firebase
-        .firestore()
-        .collection("app")
-        .doc(this.user.uid)
-        .collection("Pasta")
-        .orderBy("nomeDaPasta", "desc");
+          .firestore()
+          .collection("app")
+          .doc(this.user.uid)
+          .collection("Pasta")
+          .orderBy("nomeDaPasta", "desc");
       } else {
-        return null
+        return null;
       }
     }
   }
