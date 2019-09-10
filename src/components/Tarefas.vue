@@ -40,7 +40,7 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="delete_sweep" color="primary" @click.stop="dialogoDeletaTarefa(item)" />
+                    <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="dialogoDeletaTarefa(item)" />
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -65,7 +65,7 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="delete_sweep" color="primary" @click.stop="dialogoDeletaTarefa(item)" />
+                    <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="dialogoDeletaTarefa(item)" />
                   </q-item-section>
                 </q-item>
               </q-list>
