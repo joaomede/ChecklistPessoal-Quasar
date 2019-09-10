@@ -1,7 +1,10 @@
 <template>
   <div class="q-pa-md">
     <!-- flutuante -->
-    <q-btn round color="orange darken-2" @click.stop="dialogoAddTarefa = true" class="fixed" style="right: 18px; bottom: 60px">
+    <q-btn round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
+      <q-icon name="fas fa-arrow-left" />
+    </q-btn>
+    <q-btn round color="orange darken-2" @click.stop="dialogoAddTarefa = true" class="fixed fabRight">
       <q-icon name="add" />
     </q-btn>
     <div class="text-h5 text-center">Tarefas</div>
