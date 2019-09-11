@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-none">
     <!-- flutuante -->
     <q-btn round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
       <q-icon name="fas fa-arrow-left" />
@@ -11,68 +11,66 @@
 
     <!-- tabs -->
     <div style="max-width: 900px; margin: auto;">
-      <div class="q-gutter-y-md">
-        <q-card>
-          <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
-            <q-tab name="ativo" label="Ativas" />
-            <q-tab name="concluido" label="Concluídas" />
-          </q-tabs>
+      <q-card>
+        <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
+          <q-tab name="ativo" label="Ativas" />
+          <q-tab name="concluido" label="Concluídas" />
+        </q-tabs>
 
-          <q-separator />
+        <q-separator />
 
-          <q-tab-panels v-model="tab" animated>
-            <q-tab-panel name="ativo">
-              <!-- Tab tarefas ativas -->
-              <q-list bordered style="max-width: 900px; margin: auto;">
-                <div class="text-h5 text-center">/{{ nomePasta }}/{{ nomeQuadro }}/</div>
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="ativo" style="padding: 0px">
+            <!-- Tab tarefas ativas -->
+            <q-list  bordered style="max-width: 900px; margin: auto;">
+              <div class="text-h5 text-center">/{{ nomePasta }}/{{ nomeQuadro }}/</div>
 
-                <q-item clickable v-ripple v-for="item in tarefasAtivaData" :key="item.idTarefa" @click="exibeDetalhesAtiva(item)">
-                  <q-item-section avatar top>
-                    <q-avatar icon="event_note" color="primary" text-color="white" />
-                  </q-item-section>
+              <q-item clickable v-ripple v-for="item in tarefasAtivaData" :key="item.idTarefa" @click="exibeDetalhesAtiva(item)">
+                <q-item-section avatar top>
+                  <q-avatar icon="event_note" color="primary" text-color="white" />
+                </q-item-section>
 
-                  <q-item-section>
-                    <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
-                  </q-item-section>
+                <q-item-section>
+                  <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
+                </q-item-section>
 
-                  <q-item-section side>
-                    <q-icon name="check" color="primary" @click.stop="exibeDialogoConcluirTarefa(item)" />
-                  </q-item-section>
+                <q-item-section side>
+                  <q-icon name="check" color="primary" @click.stop="exibeDialogoConcluirTarefa(item)" />
+                </q-item-section>
 
-                  <q-item-section side>
-                    <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="dialogoDeletaTarefa(item)" />
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-tab-panel>
+                <q-item-section side>
+                  <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="dialogoDeletaTarefa(item)" />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-tab-panel>
 
-            <q-tab-panel name="concluido">
-              <!-- Tab tarefas concluídas -->
-              <q-list bordered style="max-width: 900px; margin: auto;">
-                <div class="text-h5 text-center">/{{ this.nomePasta }}/{{ this.nomeQuadro }}/</div>
+          <q-tab-panel name="concluido" style="padding: 0px">
+            <!-- Tab tarefas concluídas -->
+            <q-list bordered style="max-width: 900px; margin: auto;">
+              <div class="text-h5 text-center">/{{ this.nomePasta }}/{{ this.nomeQuadro }}/</div>
 
-                <q-item clickable v-ripple v-for="item in tarefasConcluidaData" :key="item.idTarefa" @click="exibeDetalhesConcluida(item)">
-                  <q-item-section avatar top>
-                    <q-avatar icon="event_note" color="primary" text-color="white" />
-                  </q-item-section>
+              <q-item clickable v-ripple v-for="item in tarefasConcluidaData" :key="item.idTarefa" @click="exibeDetalhesConcluida(item)">
+                <q-item-section avatar top>
+                  <q-avatar icon="event_note" color="primary" text-color="white" />
+                </q-item-section>
 
-                  <q-item-section>
-                    <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
-                  </q-item-section>
+                <q-item-section>
+                  <q-item-label lines="1">{{ item.nomeDaTarefa }}</q-item-label>
+                </q-item-section>
 
-                  <q-item-section side>
-                    <q-icon name="restore" color="primary" @click.stop="dialogoRestaurar(item)" />
-                  </q-item-section>
+                <q-item-section side>
+                  <q-icon name="restore" color="primary" @click.stop="dialogoRestaurar(item)" />
+                </q-item-section>
 
-                  <q-item-section side>
-                    <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="dialogoDeletaTarefa(item)" />
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-tab-panel>
-          </q-tab-panels>
-        </q-card>
-      </div>
+                <q-item-section side>
+                  <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="dialogoDeletaTarefa(item)" />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
     </div>
 
     <!-- caixa de diálogo exibe detalhes tarefas ativas -->
@@ -159,11 +157,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <div class="text-h6">Descrição:</div>
-            <q-editor
-              v-model="descricaoTarefa"
-              :toolbar="editorTools"
-              :fonts="nomeDasFronts"
-            />
+            <q-editor v-model="descricaoTarefa" :toolbar="editorTools" :fonts="nomeDasFronts" />
           </q-form>
         </q-card-section>
 
@@ -190,11 +184,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <div class="text-h6">Descrição:</div>
-            <q-editor
-              v-model="descriEditar"
-              :toolbar="editorTools"
-              :fonts="nomeDasFronts"
-            />
+            <q-editor v-model="descriEditar" :toolbar="editorTools" :fonts="nomeDasFronts" />
           </q-form>
         </q-card-section>
 
@@ -334,7 +324,7 @@ export default {
       tarefaTimeStamp: "",
       dialogoDetalhesConcluidas: false,
       tarefasAtivaData: [],
-      tarefasConcluidaData: [],
+      tarefasConcluidaData: []
     };
   },
   watch: {
