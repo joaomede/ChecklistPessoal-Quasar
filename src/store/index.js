@@ -34,8 +34,9 @@ export default new Vuex.Store({
         state.user = { uid: null, email: null };
       }
     },
-    carregaNomeDoUsuario(state, nome) {
+    carregaNomeDoUsuario(state) {
       if (state.user == null) {
+        state.nomeDoUsuario = null;
         return;
       }
 
@@ -46,7 +47,7 @@ export default new Vuex.Store({
           state.nomeDoUsuario = docs.data().nomeDoUsuario;
         })
         .catch(() => {
-          this.$notificacao("Erro ao tentar verificar nome do usuário", "red");
+          console.log("Erro ao tentar verificar nome do usuário")
         });
     },
     DefineUltimaVersao(state, objeto) {
