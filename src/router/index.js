@@ -100,10 +100,6 @@ export default function({ ssrContext }) {
       base: process.env.VUE_ROUTER_BASE,
       routes: [
         {
-          path: "*",
-          redirect: "/login"
-        },
-        {
           path: "/",
           redirect: "/login"
         },
