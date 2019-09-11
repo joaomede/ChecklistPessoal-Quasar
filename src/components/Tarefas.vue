@@ -22,7 +22,7 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="ativo" style="padding: 0px">
             <!-- Tab tarefas ativas -->
-            <q-list  bordered style="max-width: 900px; margin: auto;">
+            <q-list bordered style="max-width: 900px; margin: auto;">
               <div class="text-h5 text-center">/{{ nomePasta }}/{{ nomeQuadro }}/</div>
 
               <q-item clickable v-ripple v-for="item in tarefasAtivaData" :key="item.idTarefa" @click="exibeDetalhesAtiva(item)">
@@ -74,30 +74,30 @@
     </div>
 
     <!-- caixa de diálogo exibe detalhes tarefas ativas -->
-    <q-dialog v-model="dialogoDetalhesAtivas" class="q-gutter-sm">
-      <q-card class="text-center">
+    <q-dialog v-model="dialogoDetalhesAtivas">
+      <q-card class="text-center" style="background-color: #4fc3f7">
         <q-card-section>
-          <div class="text-h6">Titulo:</div>
-        </q-card-section>
-
-        <q-card-section>
-          <div class="text-h6">{{ this.tituloDetalheAtivo }}</div>
-        </q-card-section>
-
-        <q-card-section>
-          <div class="text-h6" v-if="this.descricaoDetalhesAtivo != ''">
-            Descrição:
+          <div style="background-color: #ffcc80">
+            <div class="text-h6">Titulo</div>
+            <div class="text-p">{{ this.tituloDetalheAtivo }}</div>
           </div>
         </q-card-section>
 
+        <q-card-section> </q-card-section>
+
         <q-card-section>
-          <div v-html="this.descricaoDetalhesAtivo"></div>
+          <div style="background-color: #ffcc80">
+            <div class="text-h6" v-if="this.descricaoDetalhesAtivo != ''">
+              Descrição:
+            </div>
+            <div v-html="this.descricaoDetalhesAtivo"></div>
+          </div>
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="editarTarefas()">Editar</q-btn>
-          <q-btn flat color="primary" @click="dialogoDeletaTarefa(item)">Apagar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
+          <q-btn style="margin: 2px" color="primary" @click="editarTarefas()">Editar</q-btn>
+          <q-btn style="margin: 2px" color="primary" @click="dialogoDeletaTarefa(item)">Apagar</q-btn>
+          <q-btn style="margin: 2px" color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -106,21 +106,18 @@
 
     <!-- caixa de diálogo exibe detalhes tarefas concluida -->
     <q-dialog v-model="dialogoDetalhesConcluidas" max-width="290" xs12 sm6 md6 lg6 xl6>
-      <q-card class="text-center">
+      <q-card class="text-center" style="background-color: #4fc3f7">
         <q-card-section>
           <div class="text-h6">Titulo:</div>
+          <div style="background-color: #ffcc80" class="text-h6">{{ this.tituloDetalheConcluido }}</div>
         </q-card-section>
-        <q-card-section>
-          <div class="text-h6">{{ this.tituloDetalheConcluido }}</div>
-        </q-card-section>
+        <q-card-section> </q-card-section>
 
         <q-card-section>
           <div class="text-h6" v-if="this.descricaoDetalhesConcluido != ''">
             Descrição:
           </div>
-        </q-card-section>
-        <q-card-section>
-          <div v-html="this.descricaoDetalhesConcluido"></div>
+          <div style="background-color: #ffcc80" v-html="this.descricaoDetalhesConcluido"></div>
         </q-card-section>
 
         <q-card-section>
@@ -133,8 +130,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="dialogoDeletaTarefaDetalhes()">Apagar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoDetalhesConcluidas = false">Voltar</q-btn>
+          <q-btn style="margin: 2px" color="primary" @click="dialogoDeletaTarefaDetalhes()">Apagar</q-btn>
+          <q-btn style="margin: 2px" color="primary" @click.stop="dialogoDetalhesConcluidas = false">Voltar</q-btn>
         </q-card-section>
 
         <q-card-section></q-card-section>
