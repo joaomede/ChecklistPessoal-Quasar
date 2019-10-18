@@ -43,7 +43,7 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="editaNomeDoQuadro" label="Informe o nome do quadro" required></q-input>
+            <q-input v-model="nomeDoQuadro" label="Informe o nome do quadro" required></q-input>
           </q-form>
         </q-card-section>
 
@@ -82,7 +82,7 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{ this.editaNomeDoQuadro }}</div>
+          <div class="text-h6">{{ this.nomeDoQuadro }}</div>
         </q-card-section>
 
         <q-card-section align="center">
@@ -109,7 +109,6 @@ export default {
       msg: "Quadros",
       idQuadro: "",
       nomeDoQuadro: "",
-      editaNomeDoQuadro: "",
       quadroData: [],
       pasta: []
     };
@@ -183,12 +182,12 @@ export default {
     },
     editaQuadro(item) {
       this.dialogoEditaQuadro = true;
-      this.editaNomeDoQuadro = item.nomeDoQuadro;
+      this.nomeDoQuadro = item.nomeDoQuadro;
       this.idQuadro = item.idQuadro;
     },
     deletaQuadro(item) {
       this.dialogoApagaQuadro = true;
-      this.editaNomeDoQuadro = item.nomeDoQuadro;
+      this.nomeDoQuadro = item.nomeDoQuadro;
       this.idQuadro = item.idQuadro;
     },
     apagaQuadroDB() {
@@ -208,13 +207,13 @@ export default {
       this.dialogoApagaQuadro = false;
     },
     salvaEdicao() {
-      let b = this.editaNomeDoQuadro;
+      let b = this.nomeDoQuadro;
       if (b.includes("/") | b.includes("..")) {
         //entrada para metodo de alerta de caractere proibido
         return;
       }
       const objeto = {
-        nomeDoQuadro: this.editaNomeDoQuadro
+        nomeDoQuadro: this.nomeDoQuadro
       };
       db.collection("app")
         .doc(this.user.uid)
@@ -230,7 +229,7 @@ export default {
           this.$notificacao("Erro ao tentar excluir o quadro", "red");
         });
       this.dialogoEditaQuadro = false;
-      this.editaNomeDoQuadro = "";
+      this.nomeDoQuadro = "";
     }
   },
   mounted() {
