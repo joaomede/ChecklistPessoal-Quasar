@@ -19,7 +19,13 @@
       <q-list bordered>
         <div class="text-h5 text-center">Selecione o Quadro</div>
         <div class="text-h6 text-center">//{{ this.pasta.nomeDaPasta }}</div>
-        <q-item clickable v-ripple v-for="item in quadroData" :key="item.idQuadro" @click="carregaTarefas(item)">
+        <q-item
+          clickable
+          v-ripple
+          v-for="item in quadroData"
+          :key="item.idQuadro"
+          @click="carregaTarefas(item)"
+        >
           <q-item-section avatar>
             <q-avatar icon="dashboard" color="primary" text-color="secondary" />
           </q-item-section>
