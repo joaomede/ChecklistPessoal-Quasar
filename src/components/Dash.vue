@@ -61,7 +61,7 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="editaNomePasta" label="Informe o nome da pasta" required></q-input>
+            <q-input v-model="nomeDaPasta" label="Informe o nome da pasta" required></q-input>
           </q-form>
         </q-card-section>
 
@@ -80,7 +80,7 @@
         </q-card-section>
 
         <q-card-section>
-          <div class="text-h6">{{ this.editaNomePasta }}</div>
+          <div class="text-h6">{{ this.nomeDaPasta }}</div>
         </q-card-section>
 
         <q-card-section align="center">
@@ -105,7 +105,6 @@ export default {
     return {
       dialogoAddPasta: false,
       dialogoEditaPasta: false,
-      editaNomePasta: "",
       dialogoConfirmaDeletaPasta: false,
 
       msg: "Bem vindo ao App",
@@ -160,13 +159,13 @@ export default {
       }
     },
     atualizaEditaPasta() {
-      let a = this.editaNomePasta;
+      let a = this.nomeDaPasta;
       if (a.includes("/") || a.includes("..")) {
         // entrada para método de alerta caractere incorreto
         return;
       }
       const objeto = {
-        nomeDaPasta: this.editaNomePasta
+        nomeDaPasta: this.nomeDaPasta
       };
       db.collection("app")
         .doc(this.$store.getters.getUser.uid)
@@ -180,7 +179,7 @@ export default {
           this.$notificacao("Acesso não atualizado", "red");
         });
       this.dialogoEditaPasta = false;
-      this.editaNomePasta = "";
+      this.nomeDaPasta = "";
     },
     apagaPastaDB() {
       db.collection("app")
@@ -205,12 +204,12 @@ export default {
     },
     editaPasta(item) {
       this.dialogoEditaPasta = true;
-      this.editaNomePasta = item.nomeDaPasta;
+      this.nomeDaPasta = item.nomeDaPasta;
       this.idPasta = item.idPasta;
     },
     deletaPasta(item) {
       this.dialogoConfirmaDeletaPasta = true;
-      this.editaNomePasta = item.nomeDaPasta;
+      this.nomeDaPasta = item.nomeDaPasta;
       this.idPasta = item.idPasta;
     }
   },
