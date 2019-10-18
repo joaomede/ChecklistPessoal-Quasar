@@ -397,21 +397,6 @@ export default {
         });
     },
     criaTarefas() {
-      let a = this.nomeDaTarefa;
-      let b = this.descricaoTarefa;
-      if (a.includes("/") | b.includes("/")) {
-        this.$notificacao("Caracteres '/' são proíbidos", "red");
-        return;
-      }
-      if (a.includes("..") | b.includes("..")) {
-        this.$notificacao("Caracteres '..' são proíbidos", "red");
-        return;
-      }
-      if (a === "") {
-        this.$notificacao("Erro, tarefa em branco", "red");
-        return;
-      }
-
       const conteudo = {
         nomeDaTarefa: this.nomeDaTarefa,
         idTarefa: this.idTarefa,
