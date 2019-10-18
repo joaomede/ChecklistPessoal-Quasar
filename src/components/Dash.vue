@@ -46,8 +46,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="criaPasta">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoAddPasta = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoAddPasta = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="criaPasta">Salvar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -66,8 +66,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="atualizaEditaPasta">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoEditaPasta = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoEditaPasta = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="atualizaEditaPasta">Salvar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -84,8 +84,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="apagaPastaDB">Sim</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoConfirmaDeletaPasta = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoConfirmaDeletaPasta = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="apagaPastaDB">Sim</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
