@@ -5,7 +5,12 @@
     <q-btn round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
       <q-icon name="fas fa-arrow-left" />
     </q-btn>
-    <q-btn round color="orange darken-2" @click.stop="dialogoAddQuadro = true" class="fixed fabRight">
+    <q-btn
+      round
+      color="orange darken-2"
+      @click.stop="dialogoAddQuadro = true, resetForm()"
+      class="fixed fabRight"
+    >
       <q-icon name="add" />
     </q-btn>
 
@@ -230,6 +235,9 @@ export default {
         });
       this.dialogoEditaQuadro = false;
       this.nomeDoQuadro = "";
+    },
+    resetForm(){
+      this.nomeDoQuadro = null;
     }
   },
   mounted() {
