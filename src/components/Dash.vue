@@ -187,7 +187,7 @@ export default {
         .collection("Pasta")
         .doc(this.idPasta)
         .delete()
-        .then(function() {
+        .then(() => {
           this.$notificacao("Pasta removida com sucesso", "green");
         })
         .catch(() => {
