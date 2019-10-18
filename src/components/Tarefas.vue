@@ -95,9 +95,11 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn style="margin: 2px" color="primary" @click="editarTarefas()">Editar</q-btn>
-          <q-btn style="margin: 2px" color="primary" @click="dialogoDeletaTarefa(item)">Apagar</q-btn>
-          <q-btn style="margin: 2px" color="primary" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoDetalhesAtivas = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="red" @click="dialogoDeletaTarefa(item)">Apagar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="editarTarefas()">Editar</q-btn>
+          
+          
         </q-card-section>
 
         <q-card-section></q-card-section>
@@ -159,8 +161,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="criaTarefas">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoAddTarefa = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoAddTarefa = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="criaTarefas">Salvar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -186,8 +188,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="atualizaTarefas()">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoEditaTarefa = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoEditaTarefa = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="atualizaTarefas()">Salvar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
