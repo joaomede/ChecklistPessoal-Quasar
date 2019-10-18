@@ -53,8 +53,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="salvaEdicao()">Salvar</q-btn>
-          <q-btn flat @click.stop="dialogoEditaQuadro = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoEditaQuadro = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="salvaEdicao()">Salvar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -73,8 +73,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="criaQuadro">Salvar</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoAddQuadro = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoAddQuadro = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="criaQuadro">Salvar</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -91,8 +91,8 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn flat color="primary" @click="apagaQuadroDB()">Sim</q-btn>
-          <q-btn flat color="primary" @click.stop="dialogoApagaQuadro = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogoApagaQuadro = false">Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="green" @click="apagaQuadroDB()">Sim</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
