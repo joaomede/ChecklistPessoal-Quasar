@@ -136,10 +136,10 @@ export default {
         .then(ref => {
           const pushID = { idPasta: ref.id };
           ref.update(pushID);
-          this.$notificacao("Nova Pasta Adicionada", "green");
+          this.$notifiy("Nova Pasta Adicionada", "green");
         })
         .catch(() => {
-          this.$notificacao("objeto não adicionado", "red");
+          this.$notifiy("objeto não adicionado", "red");
         });
 
       this.dialogoAddPasta = false;
@@ -173,10 +173,10 @@ export default {
         .doc(this.idPasta)
         .update(objeto)
         .then(() => {
-          this.$notificacao("Ultimo acesso atualizado", "green");
+          this.$notifiy("Ultimo acesso atualizado", "green");
         })
         .catch(() => {
-          this.$notificacao("Acesso não atualizado", "red");
+          this.$notifiy("Acesso não atualizado", "red");
         });
       this.dialogoEditaPasta = false;
       this.nomeDaPasta = "";
@@ -188,10 +188,10 @@ export default {
         .doc(this.idPasta)
         .delete()
         .then(() => {
-          this.$notificacao("Pasta removida com sucesso", "green");
+          this.$notifiy("Pasta removida com sucesso", "green");
         })
         .catch(() => {
-          this.$notificacao("Erro ao tentar remover pasta", "red");
+          this.$notifiy("Erro ao tentar remover pasta", "red");
         });
       this.dialogoConfirmaDeletaPasta = false;
     },

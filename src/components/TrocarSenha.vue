@@ -75,10 +75,10 @@ export default {
         this.user
           .updatePassword(this.senha1)
           .then(() => {
-            this.$notificacao("senha atualizada", "green");
+            this.$notifiy("senha atualizada", "green");
           })
           .catch(() => {
-            this.$notificacao("erro ao atualizar senha", "red");
+            this.$notifiy("erro ao atualizar senha", "red");
           });
         this.senha1 = "";
         this.senha2 = "";

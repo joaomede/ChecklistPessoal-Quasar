@@ -383,7 +383,7 @@ export default {
           this.quadro = resp.data();
         })
         .catch(err => {
-          this.$notificacao(err, "red");
+          this.$notifiy(err, "red");
         });
     },
     carregaPastaAtual() {
@@ -393,7 +393,7 @@ export default {
           this.pasta = resp.data();
         })
         .catch(err => {
-          this.$notificacao(err, "red");
+          this.$notifiy(err, "red");
         });
     },
     criaTarefas() {
@@ -416,10 +416,10 @@ export default {
         .then(ref => {
           const pushID = { idTarefa: ref.id };
           ref.update(pushID);
-          this.$notificacao("Novo Quadro Adicionada", "green");
+          this.$notifiy("Novo Quadro Adicionada", "green");
         })
         .catch(() => {
-          this.$notificacao("objeto não adicionado", "red");
+          this.$notifiy("objeto não adicionado", "red");
         });
 
       this.dialogoAddTarefa = false;
@@ -450,10 +450,10 @@ export default {
         .doc(this.idTarefa)
         .delete()
         .then(() => {
-          this.$notificacao('Tarefa "' + this.tituloExclusao + '" foi apagada', "orange");
+          this.$notifiy('Tarefa foi apagada', "orange");
         })
         .catch(() => {
-          this.$notificacao("Não foi possível excluir tarefa", "red");
+          this.$notifiy("Não foi possível excluir tarefa", "red");
         });
       if (this.dialogoDetalhesAtivas == true) {
         this.dialogoDetalhesAtivas = false;
@@ -479,10 +479,10 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          this.$notificacao('Tarefa "' + this.tituloTarefaConclusao + '" foi concluída', "green");
+          this.$notifiy('Tarefa "' + this.tituloTarefaConclusao + '" foi concluída', "green");
         })
         .catch(() => {
-          this.$notificacao("Não foi possível concluir tarefa", "red");
+          this.$notifiy("Não foi possível concluir tarefa", "red");
         });
       this.dialogoAddNota = true;
       this.dialogoConcluirTarefa = false;
@@ -507,11 +507,10 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          this.$notificacao('Nota "' + this.notaConclusao + '" foi adicionada', "green");
-          this.notaConclusao = "";
+          this.$notifiy('Nota "' + this.notaConclusao + '" foi adicionada', "green");
         })
         .catch(() => {
-          this.$notificacao("Não foi possível adicionar nota", "green");
+          this.$notifiy("Não foi possível adicionar nota", "green");
         });
       this.dialogoAddNota = false;
     },
@@ -530,10 +529,10 @@ export default {
         .doc(this.idTarefa)
         .update(objeto)
         .then(() => {
-          this.$notificacao('Tarefa "' + this.tituloTarefaConclusao + '" restaurada', "green");
+          this.$notifiy('Tarefa "' + this.tituloTarefaConclusao + '" restaurada', "green");
         })
         .catch(() => {
-          this.$notificacao("Não foi possível restaurar essa tarefa, tente novamente.", "green");
+          this.$notifiy("Não foi possível restaurar essa tarefa, tente novamente.", "green");
         });
       this.dialogoRestaurarTarefa = false;
       this.idTarefa = "";
@@ -579,10 +578,10 @@ export default {
         .doc(this.idTarefa)
         .update(conteudo)
         .then(ref => {
-          this.$notificacao("Tarefa atualizada", "green");
+          this.$notifiy("Tarefa atualizada", "green");
         })
         .catch(() => {
-          this.$notificacao("Problemas ao tentar atualizar tarefa", "red");
+          this.$notifiy("Problemas ao tentar atualizar tarefa", "red");
         });
       this.dialogoEditaTarefa = false;
       this.dialogoDetalhesAtivas = false;

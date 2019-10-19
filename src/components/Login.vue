@@ -77,10 +77,10 @@ export default {
           this.$q.cookies.set("user", data.user);
           this.$store.dispatch("setUser");
           this.$router.replace("dash");
-          this.$notificacao("Bem vindo de volta", "green");
+          this.$notifiy("Bem vindo de volta", "green");
         })
         .catch(() => {
-          this.$notificacao("Erro ao tentar efetuar o login", "red");
+          this.$notifiy("Erro ao tentar efetuar o login", "red");
         });
     },
     recuperaAcesso() {
@@ -88,10 +88,10 @@ export default {
         .auth()
         .sendPasswordResetEmail(this.emailRecuperacao)
         .then(() => {
-          this.$notificacao("Email de recuperação enviado com sucesso", "green");
+          this.$notifiy("Email de recuperação enviado com sucesso", "green");
         })
         .catch(() => {
-          this.$notificacao("Erro ao tentar enviar de recuperação", "red");
+          this.$notifiy("Erro ao tentar enviar de recuperação", "red");
         });
       this.dialogoEsqueciSenha = false;
     },
