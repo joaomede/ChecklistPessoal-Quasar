@@ -13,8 +13,8 @@
     <div class="divPrincipal">
       <q-card>
         <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
-          <q-tab name="ativo" label="Ativas" />
-          <q-tab name="concluido" label="Concluídas" />
+          <q-tab v-if="listTasksActive.length > 0" name="ativo" label="Ativas" />
+          <q-tab v-if="listTaskFinish.length > 0" name="concluido" label="Concluídas" />
         </q-tabs>
 
         <q-separator />
