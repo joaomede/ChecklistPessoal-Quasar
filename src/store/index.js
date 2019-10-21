@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     nomeDoUsuario: "",
-    ultimaVersao: null,
+    ultimaVersao: null
   },
   getters: {
     getUser: state => {
@@ -47,12 +47,12 @@ export default new Vuex.Store({
           state.nomeDoUsuario = docs.data().nomeDoUsuario;
         })
         .catch(() => {
-          console.log("Erro ao tentar verificar nome do usuário")
+          console.log("Erro ao tentar verificar nome do usuário");
         });
     },
     DefineUltimaVersao(state, objeto) {
       state.ultimaVersao = objeto;
-    },
+    }
   },
   actions: {
     setUser({ commit }) {
@@ -63,6 +63,6 @@ export default new Vuex.Store({
     },
     DefineUltimaVersao({ commit }, ultimaVersao) {
       commit("DefineUltimaVersao", ultimaVersao);
-    },
+    }
   }
 });

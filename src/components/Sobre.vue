@@ -13,9 +13,9 @@
               <div class="text-center">João Medeiros</div>
             </div>
           </q-btn>
-          
+
           <q-btn color="black" type="a" target="_blank" href="https://github.com/augustoOliveira1993">
-            <div class="row items-center no-wrap" >
+            <div class="row items-center no-wrap">
               <div class="text-center">Augusto Oliveira</div>
             </div>
           </q-btn>
@@ -36,17 +36,17 @@ export default {
   data() {
     return {
       key: value
-    }
+    };
   },
   computed: {
     versionUpdate() {
       if (this.$store.getters.getUltimaVersao) {
-        return this.$store.getters.getUltimaVersao
+        return this.$store.getters.getUltimaVersao;
       } else {
         return;
       }
     }
-  },
+  }
 };
 </script>
 

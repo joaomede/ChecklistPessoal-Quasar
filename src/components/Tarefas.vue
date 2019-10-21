@@ -4,29 +4,15 @@
     <q-btn round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
       <q-icon name="fas fa-arrow-left" />
     </q-btn>
-    <q-btn
-      round
-      color="orange darken-2"
-      @click.stop="dialogoAddTarefa = true, resetForm()"
-      class="fixed fabRight"
-    >
+    <q-btn round color="orange darken-2" @click.stop="(dialogoAddTarefa = true), resetForm()" class="fixed fabRight">
       <q-icon name="add" />
     </q-btn>
     <div class="text-h5 text-center">Tarefas</div>
 
     <!-- tabs -->
     <div class="divPrincipal">
-      
       <q-card>
-        <q-tabs
-          v-model="tab"
-          dense
-          class="text-grey"
-          active-color="primary"
-          indicator-color="primary"
-          align="justify"
-          narrow-indicator
-        >
+        <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
           <q-tab name="ativo" label="Ativas" />
           <q-tab name="concluido" label="Concluídas" />
         </q-tabs>
@@ -39,13 +25,7 @@
             <q-list bordered style="max-width: 900px; margin: auto;">
               <div class="text-h5 text-center">/{{ nomePasta }}/{{ nomeQuadro }}/</div>
 
-              <q-item
-                clickable
-                v-ripple
-                v-for="item in listTasksActive"
-                :key="item.idTarefa"
-                @click="showActivityTasks(item)"
-              >
+              <q-item clickable v-ripple v-for="item in listTasksActive" :key="item.idTarefa" @click="showActivityTasks(item)">
                 <q-item-section avatar top>
                   <q-avatar icon="event_note" color="primary" text-color="white" />
                 </q-item-section>
@@ -55,19 +35,11 @@
                 </q-item-section>
 
                 <q-item-section side>
-                  <q-icon
-                    name="check"
-                    color="primary"
-                    @click.stop="showDialogFinishTasks(item)"
-                  />
+                  <q-icon name="check" color="primary" @click.stop="showDialogFinishTasks(item)" />
                 </q-item-section>
 
                 <q-item-section side>
-                  <q-icon
-                    name="delete_sweep"
-                    color="grey ligten-1"
-                    @click.stop="showdialogTasksDelete(item)"
-                  />
+                  <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="showdialogTasksDelete(item)" />
                 </q-item-section>
               </q-item>
             </q-list>
@@ -78,13 +50,7 @@
             <q-list bordered style="max-width: 900px; margin: auto;">
               <div class="text-h5 text-center">/{{ this.nomePasta }}/{{ this.nomeQuadro }}/</div>
 
-              <q-item
-                clickable
-                v-ripple
-                v-for="item in listTaskFinish"
-                :key="item.idTarefa"
-                @click="showFinishedActivities(item)"
-              >
+              <q-item clickable v-ripple v-for="item in listTaskFinish" :key="item.idTarefa" @click="showFinishedActivities(item)">
                 <q-item-section avatar top>
                   <q-avatar icon="event_note" color="primary" text-color="white" />
                 </q-item-section>
@@ -98,15 +64,10 @@
                 </q-item-section>
 
                 <q-item-section side>
-                  <q-icon
-                    name="delete_sweep"
-                    color="grey ligten-1"
-                    @click.stop="showdialogTasksDelete(item)"
-                  />
+                  <q-icon name="delete_sweep" color="grey ligten-1" @click.stop="showdialogTasksDelete(item)" />
                 </q-item-section>
               </q-item>
             </q-list>
-
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -146,10 +107,7 @@
       <q-card class="text-center" style="background-color: #4fc3f7">
         <q-card-section>
           <div class="text-h6">Titulo:</div>
-          <div
-            style="background-color: #ffcc80"
-            class="text-h6"
-          >{{ this.formTaskFinish.nomeDaTarefa }}</div>
+          <div style="background-color: #ffcc80" class="text-h6">{{ this.formTaskFinish.nomeDaTarefa }}</div>
         </q-card-section>
         <q-card-section></q-card-section>
 
@@ -166,11 +124,7 @@
         </q-card-section>
 
         <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogShowFinishedActivities = false"
-          >Voltar</q-btn>
+          <q-btn class="q-ma-xs" color="black" @click.stop="dialogShowFinishedActivities = false">Voltar</q-btn>
           <q-btn class="q-ma-xs" color="red" @click="dialogDeleteTasks = true">Apagar</q-btn>
         </q-card-section>
 
@@ -187,22 +141,14 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="formTaskActive.nomeDaTarefa"
-              label="Informe o titulo da tarefa"
-              required
-            ></q-input>
+            <q-input v-model="formTaskActive.nomeDaTarefa" label="Informe o titulo da tarefa" required></q-input>
           </q-form>
         </q-card-section>
 
         <q-card-section>
           <q-form class="q-gutter-md">
             <div class="text-h6">Descrição:</div>
-            <q-editor
-              v-model="formTaskActive.descricaoTarefa"
-              :toolbar="editorTools"
-              :fonts="nomeDasFronts"
-            />
+            <q-editor v-model="formTaskActive.descricaoTarefa" :toolbar="editorTools" :fonts="nomeDasFronts" />
           </q-form>
         </q-card-section>
 
@@ -222,22 +168,14 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="formTaskActive.nomeDaTarefa"
-              label="Informe o titulo da tarefa"
-              required
-            ></q-input>
+            <q-input v-model="formTaskActive.nomeDaTarefa" label="Informe o titulo da tarefa" required></q-input>
           </q-form>
         </q-card-section>
 
         <q-card-section>
           <q-form class="q-gutter-md">
             <div class="text-h6">Descrição:</div>
-            <q-editor
-              v-model="formTaskActive.descricaoTarefa"
-              :toolbar="editorTools"
-              :fonts="nomeDasFronts"
-            />
+            <q-editor v-model="formTaskActive.descricaoTarefa" :toolbar="editorTools" :fonts="nomeDasFronts" />
           </q-form>
         </q-card-section>
 
@@ -318,11 +256,7 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input
-              v-model="formTaskActive.notaConclusao"
-              label="Informe a nota de conclusão"
-              required
-            ></q-input>
+            <q-input v-model="formTaskActive.notaConclusao" label="Informe a nota de conclusão" required></q-input>
           </q-form>
         </q-card-section>
 
@@ -496,7 +430,7 @@ export default {
         });
       this.dialogoAddNota = false;
     },
-    
+
     showdialogTasksDelete(item) {
       this.resetForm();
       this.dialogDeleteTasks = true;

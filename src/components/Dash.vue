@@ -2,7 +2,6 @@
   <div>
     <div class="text-h4 text-center">{{ msg }}</div>
     <!-- flutuante -->
-    <!-- flutuante -->
     <q-btn round color="orange darken-2" @click.stop="dialogoAddPasta = true, resetNameFolder()" class="fixed fabRight">
       <q-icon name="add" />
     </q-btn>

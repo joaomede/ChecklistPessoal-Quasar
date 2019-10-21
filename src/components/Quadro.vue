@@ -5,12 +5,7 @@
     <q-btn round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
       <q-icon name="fas fa-arrow-left" />
     </q-btn>
-    <q-btn
-      round
-      color="orange darken-2"
-      @click.stop="dialogoAddQuadro = true, resetForm()"
-      class="fixed fabRight"
-    >
+    <q-btn round color="orange darken-2" @click.stop="(dialogoAddQuadro = true), resetForm()" class="fixed fabRight">
       <q-icon name="add" />
     </q-btn>
 
@@ -19,13 +14,7 @@
       <q-list bordered>
         <div class="text-h5 text-center">Selecione o Quadro</div>
         <div class="text-h6 text-center">//{{ this.pasta.nomeDaPasta }}</div>
-        <q-item
-          clickable
-          v-ripple
-          v-for="item in quadroData"
-          :key="item.idQuadro"
-          @click="carregaTarefas(item)"
-        >
+        <q-item clickable v-ripple v-for="item in quadroData" :key="item.idQuadro" @click="carregaTarefas(item)">
           <q-item-section avatar>
             <q-avatar icon="dashboard" color="primary" text-color="secondary" />
           </q-item-section>
@@ -242,7 +231,7 @@ export default {
       this.dialogoEditaQuadro = false;
       this.nomeDoQuadro = "";
     },
-    resetForm(){
+    resetForm() {
       this.nomeDoQuadro = null;
     }
   },

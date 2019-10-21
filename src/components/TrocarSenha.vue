@@ -103,7 +103,7 @@ export default {
       } else {
         return { uid: null, email: null };
       }
-    },
+    }
   }
 };
 </script>

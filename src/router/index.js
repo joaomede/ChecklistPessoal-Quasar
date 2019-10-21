@@ -66,7 +66,7 @@ export default function({ ssrContext }) {
           name: "FeedVersion",
           component: () => import("../FeedVersion"),
           meta: { requerAuth: true }
-        },
+        }
       ]
     });
 
@@ -149,13 +149,13 @@ export default function({ ssrContext }) {
           name: "FeedVersion",
           component: () => import("../FeedVersion"),
           meta: { requerAuth: true }
-        },
+        }
       ]
     });
 
     router.beforeEach((to, from, next) => {
       let autorizacao = to.matched.some(record => record.meta.requerAuth);
-      
+
       const cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies; // otherwise we're on client
       const user = cookies.get("user");
 

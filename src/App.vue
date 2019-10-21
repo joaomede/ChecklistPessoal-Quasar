@@ -18,11 +18,7 @@
       </q-header>
 
       <q-drawer v-model="left" side="left" overlay bordered>
-        <q-scroll-area
-          style="height: calc(100% - 150px);
-          margin-top: 150px; 
-          border-right: 1px solid #ddd"
-        >
+        <q-scroll-area class="scrollArea">
           <q-list padding>
             <q-item clickable v-ripple to="/dash">
               <q-item-section avatar>
@@ -74,7 +70,7 @@
 
       <q-footer reveal elevated class="bg-grey-8 text-white">
         <q-toolbar>
-          <q-toolbar-title>Organize-se - {{this.versao}}</q-toolbar-title>
+          <q-toolbar-title>Organize-se - {{ this.versao }}</q-toolbar-title>
         </q-toolbar>
       </q-footer>
     </q-layout>
