@@ -1,5 +1,5 @@
 <template>
-  <div id="q-app" class="q-pa-md">
+  <div id="q-app">
     <q-layout view="lHr lpR lFr">
       <q-header elevated class="bg-primary text-white">
         <q-toolbar>
