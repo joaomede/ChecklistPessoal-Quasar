@@ -2,7 +2,7 @@
   <div>
     <div class="text-h4 text-center">{{ msg }}</div>
     <!-- flutuante -->
-    <q-btn round color="orange darken-2" @click.stop="dialogoAddPasta = true, resetNameFolder()" class="fixed fabRight">
+    <q-btn round color="orange darken-2" @click.stop="(dialogoAddPasta = true), resetNameFolder()" class="fixed fabRight">
       <q-icon name="add" />
     </q-btn>
 
@@ -211,13 +211,13 @@ export default {
       this.nomeDaPasta = item.nomeDaPasta;
       this.idPasta = item.idPasta;
     },
-    resetNameFolder(){
-      this.nomeDaPasta = null;    
-    },
+    resetNameFolder() {
+      this.nomeDaPasta = null;
+    }
   },
   mounted() {
-    this.$store.dispatch('definePastaAtual', null);
-    this.$store.dispatch('defineQuadroAtual', null);
+    this.$store.dispatch("definePastaAtual", { idPasta: null });
+    this.$store.dispatch("defineQuadroAtual", { idQuadro: null });
     this.carregaPastas();
   },
   computed: {

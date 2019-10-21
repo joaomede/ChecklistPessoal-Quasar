@@ -351,7 +351,7 @@ export default {
       this.refQuadro
         .get()
         .then(resp => {
-          this.$store.dispatch("defineQuadroAtual", resp.data().nomeDoQuadro);
+          this.$store.dispatch("defineQuadroAtual", resp.data());
         })
         .catch(err => {
           this.$notifiy(err, "red");
@@ -361,7 +361,7 @@ export default {
       this.refPasta
         .get()
         .then(resp => {
-          this.$store.dispatch("definePastaAtual", resp.data().nomeDaPasta);
+          this.$store.dispatch("definePastaAtual", resp.data());
         })
         .catch(err => {
           this.$notifiy(err, "red");

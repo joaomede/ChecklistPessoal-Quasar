@@ -108,7 +108,7 @@ export default {
       msg: "Quadros",
       idQuadro: "",
       nomeDoQuadro: "",
-      quadroData: [],
+      quadroData: []
     };
   },
   watch: {
@@ -167,8 +167,8 @@ export default {
         this.refPasta
           .get()
           .then(resp => {
-            this.$store.dispatch("definePastaAtual", resp.data().nomeDaPasta);
-            this.$store.dispatch("defineQuadroAtual", null);
+            this.$store.dispatch("definePastaAtual", resp.data());
+            this.$store.dispatch("defineQuadroAtual", { idQuadro: null });
           })
           .catch(err => {
             this.$notifiy(err, "red");

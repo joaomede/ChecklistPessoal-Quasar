@@ -17,9 +17,9 @@
         </q-toolbar>
         <q-toolbar inset>
           <q-breadcrumbs active-color="white" style="font-size: 16px">
-            <q-breadcrumbs-el label="Home" icon="home" />
-            <q-breadcrumbs-el v-if="nomeDaPasta != null" :label="nomeDaPasta" icon="folder" />
-            <q-breadcrumbs-el v-if="nomeDoQuadro != null" :label="nomeDoQuadro" icon="folder" />
+            <q-breadcrumbs-el label="Home" icon="home" to="/dash" />
+            <q-breadcrumbs-el v-if="pastaAtual.idPasta != null" :to="'/quadro/' + pastaAtual.idPasta" :label="pastaAtual.nomeDaPasta" icon="folder" />
+            <q-breadcrumbs-el v-if="quadroAtual.idQuadro != null" :label="quadroAtual.nomeDoQuadro" icon="folder" />
           </q-breadcrumbs>
         </q-toolbar>
       </q-header>
@@ -173,16 +173,16 @@ export default {
         return "Usuario";
       }
     },
-    nomeDaPasta() {
-      if (this.$store.getters.getNomeDaPastaAtual != null) {
-        return this.$store.getters.getNomeDaPastaAtual;
+    pastaAtual() {
+      if (this.$store.getters.getPastaAtual != null) {
+        return this.$store.getters.getPastaAtual;
       } else {
         return null;
       }
     },
-    nomeDoQuadro() {
-      if (this.$store.getters.getNomeDoQuadroAtual != null) {
-        return this.$store.getters.getNomeDoQuadroAtual;
+    quadroAtual() {
+      if (this.$store.getters.getQuadroAtual != null) {
+        return this.$store.getters.getQuadroAtual;
       } else {
         return null;
       }

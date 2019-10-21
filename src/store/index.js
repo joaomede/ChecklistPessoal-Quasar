@@ -10,8 +10,12 @@ export default new Vuex.Store({
     user: null,
     nomeDoUsuario: "",
     ultimaVersao: null,
-    pastaAtual: null,
-    quadroAtual: null
+    pastaAtual: {
+      id: null
+    },
+    quadroAtual: {
+      id: null
+    }
   },
   getters: {
     getUser: state => {
@@ -23,10 +27,10 @@ export default new Vuex.Store({
     getUltimaVersao: state => {
       return state.ultimaVersao;
     },
-    getNomeDaPastaAtual(state){
+    getPastaAtual(state){
       return state.pastaAtual;
     },
-    getNomeDoQuadroAtual(state){
+    getQuadroAtual(state){
       return state.quadroAtual;
     }
   },
