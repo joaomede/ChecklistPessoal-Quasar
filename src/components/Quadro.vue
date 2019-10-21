@@ -175,7 +175,6 @@ export default {
           });
       }
     },
-    //carrega tela tarefas
     carregaTarefas(item) {
       this.$router.push({ name: "Tarefas", params: { idQuadro: item.idQuadro, idPasta: this.idPasta } });
     },

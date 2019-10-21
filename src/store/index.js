@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Firebase from "firebase";
 import { db, timestamp } from "../boot/main";
 import { Cookies } from "quasar";
 
