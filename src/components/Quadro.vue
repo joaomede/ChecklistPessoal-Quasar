@@ -13,7 +13,6 @@
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h5 text-center">Selecione o Quadro</div>
-        <div class="text-h6 text-center">//{{ this.pasta.nomeDaPasta }}</div>
         <q-item clickable v-ripple v-for="item in quadroData" :key="item.idQuadro" @click="carregaTarefas(item)">
           <q-item-section avatar>
             <q-avatar icon="dashboard" color="primary" text-color="secondary" />
@@ -110,7 +109,6 @@ export default {
       idQuadro: "",
       nomeDoQuadro: "",
       quadroData: [],
-      pasta: []
     };
   },
   watch: {
@@ -169,7 +167,8 @@ export default {
         this.refPasta
           .get()
           .then(resp => {
-            this.pasta = resp.data();
+            this.$store.dispatch("definePastaAtual", resp.data().nomeDaPasta);
+            this.$store.dispatch("defineQuadroAtual", null);
           })
           .catch(err => {
             this.$notifiy(err, "red");

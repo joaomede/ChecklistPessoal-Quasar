@@ -15,6 +15,13 @@
           <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user.uid" to="/login" />
           <q-btn alt="Sair" flat round dense icon="exit_to_app" @click="logout" v-if="user.uid" />
         </q-toolbar>
+        <q-toolbar inset>
+          <q-breadcrumbs active-color="white" style="font-size: 16px">
+            <q-breadcrumbs-el label="Home" icon="home" />
+            <q-breadcrumbs-el v-if="nomeDaPasta != null" :label="nomeDaPasta" icon="folder" />
+            <q-breadcrumbs-el v-if="nomeDoQuadro != null" :label="nomeDoQuadro" icon="folder" />
+          </q-breadcrumbs>
+        </q-toolbar>
       </q-header>
 
       <q-drawer v-model="left" side="left" overlay bordered>
@@ -164,6 +171,20 @@ export default {
         return this.$store.getters.getNomeUsuario;
       } else {
         return "Usuario";
+      }
+    },
+    nomeDaPasta() {
+      if (this.$store.getters.getNomeDaPastaAtual != null) {
+        return this.$store.getters.getNomeDaPastaAtual;
+      } else {
+        return null;
+      }
+    },
+    nomeDoQuadro() {
+      if (this.$store.getters.getNomeDoQuadroAtual != null) {
+        return this.$store.getters.getNomeDoQuadroAtual;
+      } else {
+        return null;
       }
     }
   }

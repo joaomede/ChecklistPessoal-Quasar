@@ -216,6 +216,8 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch('definePastaAtual', null);
+    this.$store.dispatch('defineQuadroAtual', null);
     this.carregaPastas();
   },
   computed: {

@@ -10,7 +10,9 @@ export default new Vuex.Store({
   state: {
     user: null,
     nomeDoUsuario: "",
-    ultimaVersao: null
+    ultimaVersao: null,
+    pastaAtual: null,
+    quadroAtual: null
   },
   getters: {
     getUser: state => {
@@ -21,6 +23,12 @@ export default new Vuex.Store({
     },
     getUltimaVersao: state => {
       return state.ultimaVersao;
+    },
+    getNomeDaPastaAtual(state){
+      return state.pastaAtual;
+    },
+    getNomeDoQuadroAtual(state){
+      return state.quadroAtual;
     }
   },
   mutations: {
@@ -52,6 +60,12 @@ export default new Vuex.Store({
     },
     DefineUltimaVersao(state, objeto) {
       state.ultimaVersao = objeto;
+    },
+    definePastaAtual(state, payload) {
+      state.pastaAtual = payload;
+    },
+    defineQuadroAtual(state, payload) {
+      state.quadroAtual = payload;
     }
   },
   actions: {
@@ -63,6 +77,12 @@ export default new Vuex.Store({
     },
     DefineUltimaVersao({ commit }, ultimaVersao) {
       commit("DefineUltimaVersao", ultimaVersao);
+    },
+    definePastaAtual({ commit }, payload) {
+      commit("definePastaAtual", payload);
+    },
+    defineQuadroAtual({ commit }, payload) {
+      commit("defineQuadroAtual", payload);
     }
   }
 });

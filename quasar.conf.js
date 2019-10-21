@@ -72,7 +72,9 @@ module.exports = function(ctx) {
         "QTimeline",
         "QTimelineEntry",
         "QBadge",
-        "QEditor"
+        "QEditor",
+        'QBreadcrumbs',
+        'QBreadcrumbsEl'
       ],
 
       directives: ["Ripple"],

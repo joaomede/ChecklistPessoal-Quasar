@@ -23,8 +23,6 @@
           <q-tab-panel name="ativo" style="padding: 0px">
             <!-- Tab tarefas ativas -->
             <q-list bordered style="max-width: 900px; margin: auto;">
-              <div class="text-h5 text-center">/{{ nomePasta }}/{{ nomeQuadro }}/</div>
-
               <q-item clickable v-ripple v-for="item in listTasksActive" :key="item.idTarefa" @click="showActivityTasks(item)">
                 <q-item-section avatar top>
                   <q-avatar icon="event_note" color="primary" text-color="white" />
@@ -48,8 +46,6 @@
           <q-tab-panel name="concluido" style="padding: 0px">
             <!-- Tab tarefas concluídas -->
             <q-list bordered style="max-width: 900px; margin: auto;">
-              <div class="text-h5 text-center">/{{ this.nomePasta }}/{{ this.nomeQuadro }}/</div>
-
               <q-item clickable v-ripple v-for="item in listTaskFinish" :key="item.idTarefa" @click="showFinishedActivities(item)">
                 <q-item-section avatar top>
                   <q-avatar icon="event_note" color="primary" text-color="white" />
@@ -309,10 +305,6 @@ export default {
         notaConclusao: null,
         tarefaTimeStamp: null
       },
-
-      pasta: null,
-      quadro: null,
-
       msg: "Tarefas Ativas",
       dialogShowFinishedActivities: false,
       listTasksActive: [],
@@ -359,7 +351,7 @@ export default {
       this.refQuadro
         .get()
         .then(resp => {
-          this.quadro = resp.data();
+          this.$store.dispatch("defineQuadroAtual", resp.data().nomeDoQuadro);
         })
         .catch(err => {
           this.$notifiy(err, "red");
@@ -369,7 +361,7 @@ export default {
       this.refPasta
         .get()
         .then(resp => {
-          this.pasta = resp.data();
+          this.$store.dispatch("definePastaAtual", resp.data().nomeDaPasta);
         })
         .catch(err => {
           this.$notifiy(err, "red");
@@ -580,26 +572,6 @@ export default {
           .collection("Quadro")
           .doc(this.idQuadro)
           .collection("Tarefas");
-      } else {
-        return null;
-      }
-    },
-    nomePasta() {
-      if (this.pasta != null) {
-        if (this.pasta.nomeDaPasta != null) {
-          return this.pasta.nomeDaPasta;
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    },
-    nomeQuadro() {
-      if (this.quadro != null) {
-        if (this.quadro.nomeDoQuadro != null) {
-          return this.quadro.nomeDoQuadro;
-        }
       } else {
         return null;
       }
