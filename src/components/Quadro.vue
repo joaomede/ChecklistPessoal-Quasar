@@ -15,7 +15,7 @@
     </q-btn>
 
     <!-- conteudo do quadro -->
-    <div class="q-pa-md" style="max-width: 900px; margin: auto;">
+    <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h5 text-center">Selecione o Quadro</div>
         <div class="text-h6 text-center">//{{ this.pasta.nomeDaPasta }}</div>

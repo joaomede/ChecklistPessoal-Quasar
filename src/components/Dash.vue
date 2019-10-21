@@ -8,7 +8,7 @@
     </q-btn>
 
     <!-- conteudo pasta -->
-    <div class="q-pa-md" style="max-width: 900px; margin: auto;">
+    <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h6 text-center">Selecione sua pasta pessoal</div>
 

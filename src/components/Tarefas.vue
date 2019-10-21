@@ -15,7 +15,7 @@
     <div class="text-h5 text-center">Tarefas</div>
 
     <!-- tabs -->
-    <div style="max-width: 900px; margin: auto;">
+    <div class="divPrincipal">
       
       <q-card>
         <q-tabs
