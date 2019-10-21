@@ -99,7 +99,7 @@ export default {
       drawer: null,
       emailUsuario: null,
       versaoUltima: null,
-      versao: "v1.23.28"
+      versao: "v1.26.34"
     };
   },
   methods: {
