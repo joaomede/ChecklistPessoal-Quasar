@@ -24,7 +24,7 @@
         </q-toolbar>
       </q-header>
 
-      <q-drawer v-model="left" side="left" overlay bordered>
+      <q-drawer :width="200" v-model="left" side="left" overlay bordered>
         <q-scroll-area class="scrollArea">
           <q-list padding>
             <q-item clickable v-ripple to="/dash">
