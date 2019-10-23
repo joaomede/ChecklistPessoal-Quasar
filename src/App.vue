@@ -15,13 +15,17 @@
           <q-btn flat round dense icon="vpn_key" class="q-mr-xs" v-if="!user.uid" to="/login" />
           <q-btn alt="Sair" flat round dense icon="exit_to_app" @click="logout" v-if="user.uid" />
         </q-toolbar>
-        <q-toolbar inset>
-          <q-breadcrumbs active-color="white" style="font-size: 16px">
-            <q-breadcrumbs-el label="Home" icon="home" to="/dash" />
-            <q-breadcrumbs-el v-if="pastaAtual.idPasta != null" :to="'/quadro/' + pastaAtual.idPasta" :label="pastaAtual.nomeDaPasta" icon="folder" />
-            <q-breadcrumbs-el v-if="quadroAtual.idQuadro != null" :label="quadroAtual.nomeDoQuadro" icon="folder" />
-          </q-breadcrumbs>
-        </q-toolbar>
+        <q-breadcrumbs v-if="$q.platform.is.mobile" align="center" active-color="white" style="font-size: 14px">
+          <q-breadcrumbs-el icon="home" to="/dash" />
+          <q-breadcrumbs-el v-if="pastaAtual.idPasta != null" :to="'/quadro/' + pastaAtual.idPasta" :label="pastaAtual.nomeDaPasta" icon="folder" />
+          <q-breadcrumbs-el v-if="quadroAtual.idQuadro != null" :label="quadroAtual.nomeDoQuadro" icon="folder" />
+        </q-breadcrumbs>
+
+        <q-breadcrumbs v-if="$q.platform.is.desktop" align="center" active-color="white" style="font-size: 20px">
+          <q-breadcrumbs-el label="Home" icon="home" to="/dash" />
+          <q-breadcrumbs-el v-if="pastaAtual.idPasta != null" :to="'/quadro/' + pastaAtual.idPasta" :label="pastaAtual.nomeDaPasta" icon="folder" />
+          <q-breadcrumbs-el v-if="quadroAtual.idQuadro != null" :label="quadroAtual.nomeDoQuadro" icon="folder" />
+        </q-breadcrumbs>
       </q-header>
 
       <q-drawer :width="200" v-model="left" side="left" overlay bordered>
