@@ -33,11 +33,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      key: value
-    };
-  },
   computed: {
     versionUpdate() {
       if (this.$store.getters.getUltimaVersao) {
