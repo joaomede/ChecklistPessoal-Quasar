@@ -1,10 +1,17 @@
 <template>
   <div class="q-pa-none">
     <!-- flutuante -->
-    <q-btn round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
+    <q-btn v-if="$q.platform.is.mobile" round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
       <q-icon name="fas fa-arrow-left" />
     </q-btn>
-    <q-btn round color="orange darken-2" @click.stop="(dialogoAddTarefa = true), resetForm()" class="fixed fabRight">
+    <q-btn v-if="$q.platform.is.desktop" round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabBack">
+      <q-icon name="fas fa-arrow-left" />
+    </q-btn>
+
+    <q-btn v-if="$q.platform.is.mobile" round color="orange darken-2" @click.stop="(dialogoAddTarefa = true), resetForm()" class="fixed fabRight">
+      <q-icon name="add" />
+    </q-btn>
+    <q-btn v-if="$q.platform.is.desktop" round color="orange darken-2" @click.stop="(dialogoAddTarefa = true), resetForm()" class="fixed fabCenter">
       <q-icon name="add" />
     </q-btn>
     <div class="text-h5 text-center">Tarefas</div>

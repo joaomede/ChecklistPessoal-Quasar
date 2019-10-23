@@ -2,10 +2,19 @@
   <div>
     <div class="text-h4 text-center">{{ msg }}</div>
     <!-- flutuante -->
-    <q-btn round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
+    <q-btn v-if="$q.platform.is.mobile" round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabLeft">
       <q-icon name="fas fa-arrow-left" />
     </q-btn>
-    <q-btn round color="orange darken-2" @click.stop="(dialogoAddQuadro = true), resetForm()" class="fixed fabRight">
+    
+    <q-btn v-if="$q.platform.is.mobile" round color="orange darken-2" @click.stop="(dialogoAddQuadro = true), resetForm()" class="fixed fabRight">
+      <q-icon name="add" />
+    </q-btn>
+
+    <q-btn v-if="$q.platform.is.desktop" round color="orange darken-2" @click.stop="$router.go(-1)" class="fixed fabBack">
+      <q-icon name="fas fa-arrow-left" />
+    </q-btn>
+
+    <q-btn v-if="$q.platform.is.desktop" round color="orange darken-2" @click.stop="(dialogoAddQuadro = true), resetForm()" class="fixed fabCenter">
       <q-icon name="add" />
     </q-btn>
 
