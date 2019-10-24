@@ -26,7 +26,7 @@ var Config = {
 firebase.initializeApp(Config);
 // incia banco
 
-var secondary = firebase.initializeApp(YourAPIedconfig, "secondary");
+var secondary = firebase.initializeApp(versionfeedconfig, "secondary");
 export const dbfeed = secondary.firestore();
 
 export const db = firebase.firestore();

@@ -103,7 +103,7 @@ export default {
       drawer: null,
       emailUsuario: null,
       versaoUltima: null,
-      versao: "v1.26.39"
+      versao: "v1.26.48"
     };
   },
   methods: {

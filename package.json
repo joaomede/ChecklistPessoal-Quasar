@@ -1,6 +1,6 @@
 {
-  "name": "YourAPIweb",
-  "version": "1.26.39",
+  "name": "checklistpessoalweb",
+  "version": "1.26.48",
   "description": "CheckList Pessoal",
   "productName": "CheckList Pessoal",
   "cordovaId": "org.cordova.quasar.app",
