@@ -78,19 +78,17 @@
 
     <!-- caixa de diálogo exibe detalhes tarefas ativas -->
     <q-dialog v-model="dialogShowActivityTasks">
-      <q-card class="text-center" style="background-color: #4fc3f7">
+      <q-card class="text-center backgroundCardColor">
         <q-card-section>
-          <div style="background-color: #ffcc80">
-            <div class="text-h6">Titulo</div>
-            <div class="text-p">{{ this.formTaskActive.nomeDaTarefa }}</div>
+          <div class="q-pa-xs backgroundTextoPopup">
+            <div class="text-h6">{{ this.formTaskActive.nomeDaTarefa }}</div>
           </div>
         </q-card-section>
 
         <q-card-section></q-card-section>
 
-        <q-card-section>
-          <div style="background-color: #ffcc80">
-            <div class="text-h6" v-if="this.formTaskActive.descricaoTarefa != null">Descrição:</div>
+        <q-card-section v-if="this.formTaskActive.descricaoTarefa != ''">
+          <div class="q-pa-xs backgroundTextoPopup">
             <div v-html="this.formTaskActive.descricaoTarefa"></div>
           </div>
         </q-card-section>
@@ -106,23 +104,19 @@
     </q-dialog>
 
     <!-- caixa de diálogo exibe detalhes tarefas concluida -->
-    <q-dialog v-model="dialogShowFinishedActivities" max-width="290" xs12 sm6 md6 lg6 xl6>
-      <q-card class="text-center" style="background-color: #4fc3f7">
+    <q-dialog v-model="dialogShowFinishedActivities">
+      <q-card class="text-center backgroundCardColor">
         <q-card-section>
-          <div class="text-h6">Titulo:</div>
-          <div style="background-color: #ffcc80" class="text-h6">{{ this.formTaskFinish.nomeDaTarefa }}</div>
+          <div class="text-h6 q-pa-xs backgroundTextoPopup">{{ this.formTaskFinish.nomeDaTarefa }}</div>
         </q-card-section>
         <q-card-section></q-card-section>
 
-        <q-card-section>
-          <div class="text-h6" v-if="this.formTaskFinish.descricaoTarefa != null">Descrição:</div>
-          <div style="background-color: #ffcc80" v-html="this.formTaskFinish.descricaoTarefa"></div>
+        <q-card-section v-if="this.formTaskFinish.descricaoTarefa != null">
+          <div class="text-h6 q-pa-xs backgroundTextoPopup" v-html="this.formTaskFinish.descricaoTarefa"></div>
         </q-card-section>
 
-        <q-card-section>
-          <div class="text-h6" v-if="this.formTaskFinish.notaConclusao != ''">Nota de Conclusão:</div>
-        </q-card-section>
-        <q-card-section>
+        <q-card-section v-if="this.formTaskFinish.notaConclusao != null">
+          <div class="text-h6" >Nota de Conclusão:</div>
           <div class="text-h6">{{ this.formTaskFinish.notaConclusao }}</div>
         </q-card-section>
 
