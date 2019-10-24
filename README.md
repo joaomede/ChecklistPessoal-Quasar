@@ -7,7 +7,7 @@ Login Screen             |  Register Screen
 
 NavDrawer                |  Add Folder
 :-----------------------:|:-------------------------:
-![](docs/navDrawer.png)      |![](docs/addFolder.png)
+![](docs/navdrawer.png)      |![](docs/addFolder.png)
 
 Folder List                |  Add Frame
 :-----------------------:|:-------------------------:
