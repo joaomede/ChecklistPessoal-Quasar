@@ -6,29 +6,12 @@ const paragrafos = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "code"];
 
 const editorTools = [
   [
-    {
-      label: "Alinhamentos",
-      icon: iconSet.editor.align,
-      fixedLabel: true,
-      list: "only-icons",
-      options: ["left", "center", "right", "justify"]
-    },
-    {
-      label: "Formatação 1",
-      icon: "format_bold",
-      fixedLabel: true,
-      fixedIcon: true,
-      list: "only-icons",
-      options: ["bold", "italic", "strike", "underline"]
-    },
-    {
-      label: "Formatação 2",
-      icon: "format_bold",
-      fixedLabel: true,
-      fixedIcon: true,
-      list: "only-icons",
-      options: ["quote", "unordered", "ordered", "outdent"]
-    }
+    ["left"],["center"],["right"],["justify"],
+  ],[
+    ["bold"], ["italic"], ["strike"], ["underline"]
+  ],
+  [
+    ["quote"], ["unordered"], ["ordered"], ["outdent"],
   ],
   [
     {
@@ -38,7 +21,7 @@ const editorTools = [
       options: paragrafos
     },
     {
-      label: "Tamanho da Fonte",
+      label: "Font Size",
       icon: iconSet.editor.fontSize,
       fixedLabel: true,
       fixedIcon: true,
@@ -46,7 +29,7 @@ const editorTools = [
       options: tamanhoDaFonte
     },
     {
-      label: "Fonte padrão",
+      label: "Font Type",
       icon: iconSet.editor.font,
       fixedIcon: true,
       list: "no-icons",
