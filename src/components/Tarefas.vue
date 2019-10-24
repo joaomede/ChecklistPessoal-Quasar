@@ -441,7 +441,7 @@ export default {
           .doc(this.formTaskActive.idTarefa)
           .delete()
           .then(() => {
-            this.$notifiy("Tarefa foi apagada", "orange");
+            this.$notifiy("Tarefa foi apagada", "green");
           })
           .catch(() => {
             this.$notifiy("Não foi possível excluir tarefa", "red");
@@ -452,7 +452,7 @@ export default {
           .doc(this.formTaskFinish.idTarefa)
           .delete()
           .then(() => {
-            this.$notifiy("Tarefa foi apagada", "orange");
+            this.$notifiy("Tarefa foi apagada", "green");
           })
           .catch(() => {
             this.$notifiy("Não foi possível excluir tarefa", "red");
