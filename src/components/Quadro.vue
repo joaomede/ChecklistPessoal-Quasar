@@ -15,7 +15,7 @@
     </q-btn>
 
     <q-btn v-if="$q.platform.is.desktop" round color="orange darken-2" @click.stop="(dialogoAddQuadro = true), resetForm()" class="fixed fabCenter">
-      <q-icon name="add" />
+      <q-icon class="iconFabCenter" name="add" />
     </q-btn>
 
     <!-- conteudo do quadro -->

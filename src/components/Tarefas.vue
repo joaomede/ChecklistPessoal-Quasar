@@ -12,7 +12,7 @@
       <q-icon name="add" />
     </q-btn>
     <q-btn v-if="$q.platform.is.desktop" round color="orange darken-2" @click.stop="(dialogoAddTarefa = true), resetForm()" class="fixed fabCenter">
-      <q-icon name="add" />
+      <q-icon class="iconFabCenter" name="add" />
     </q-btn>
     <div class="text-h5 text-center">Tarefas</div>
 
