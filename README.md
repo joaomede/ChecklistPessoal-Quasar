@@ -1,5 +1,27 @@
 ## ChecklistPessoal - Web Version
 
+
+Login Screen             |  Register Screen
+:-----------------------:|:-------------------------:
+![](docs/login.png)      |![](docs/register.png)
+
+NavDrawer                |  Add Folder
+:-----------------------:|:-------------------------:
+![](docs/navDrawer.png)      |![](docs/addFolder.png)
+
+Folder List                |  Add Frame
+:-----------------------:|:-------------------------:
+![](docs/folderList.png)      |![](docs/addFrame.png)
+
+Add Task List                |  Task List
+:-----------------------:|:-------------------------:
+![](docs/addTasks.png)      |![](docs/tasklists.png)
+
+
+### Task View    
+![](docs/taskView.png)      
+
+
 #### Conceito / Concept
 > EN: This project is part of my portfolio and is associated with my small development studio (symbol2studio), initially it was created in Java for Android, the idea consists of a simple task manager (checklist), whose organization comes in 3 levels, being "Folder "," Whiteboard ", and" Task ", Tasks contain 2 statuses, Active and Completed, if completed, the Task receives a new field called" Completion Note "in which it is possible to add some extra information.
 
