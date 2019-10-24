@@ -44,7 +44,7 @@
 
     <!-- caixa de diálogo edita quadro -->
     <q-dialog v-model="dialogoEditaQuadro">
-      <q-card>
+      <q-card class="text-center" style="width: 500px">
         <q-card-section>
           <div class="text-h6">Edite o nome do do quadro</div>
         </q-card-section>
@@ -64,7 +64,7 @@
 
     <!-- caixa de diálogo adiciona quadro -->
     <q-dialog v-model="dialogoAddQuadro">
-      <q-card>
+      <q-card class="text-center" style="width: 500px">
         <q-card-section>
           <div class="text-h6">Adicione um quadro</div>
         </q-card-section>

@@ -37,7 +37,7 @@
 
     <!-- caixa de diálogo adiciona pasta -->
     <q-dialog v-model="dialogoAddPasta">
-      <q-card>
+      <q-card class="text-center" style="width: 500px">
         <q-card-section>
           <div class="text-h6">Adicione uma pasta</div>
         </q-card-section>
@@ -57,7 +57,7 @@
 
     <!-- caixa de diálogo edita pasta -->
     <q-dialog v-model="dialogoEditaPasta">
-      <q-card>
+      <q-card class="text-center" style="width: 500px">
         <q-card-section>
           <div class="text-h6">Edite o nome da pasta</div>
         </q-card-section>
