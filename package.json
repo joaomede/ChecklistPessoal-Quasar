@@ -5,7 +5,15 @@
   "productName": "CheckList Pessoal",
   "cordovaId": "org.cordova.quasar.app",
   "author": "João Medeiros <joaoserj@gmail.com>",
-  "private": true,
+  "private": false,
+  "keywords": [
+    "firebase",
+    "firestore",
+    "quasar",
+    "vue",
+    "app"
+
+  ],
   "scripts": {
     "dev": "quasar dev",
     "build": "quasar build",
