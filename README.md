@@ -1,25 +1,18 @@
 ## ChecklistPessoal - Web Version
 
 
-Login Screen             |  Register Screen
-:-----------------------:|:-------------------------:
-![](docs/login.png)      |![](docs/register.png)
+Login Screen             |  Register Screen          |NavDrawer
+:-----------------------:|:-------------------------:|:-----------------------:
+![](docs/login.png)      |![](docs/register.png)     |![](docs/navdrawer.png) 
 
-NavDrawer                |  Add Folder
-:-----------------------:|:-------------------------:
-![](docs/navdrawer.png)      |![](docs/addFolder.png)
+Add Folder               |Folder List                |Add Frame
+:-----------------------:|:-------------------------:|:-----------------------:
+![](docs/addfolder.png)  |![](docs/folderlist.png)   |![](docs/addframe.png)
 
-Folder List                |  Add Frame
-:-----------------------:|:-------------------------:
-![](docs/folderList.png)      |![](docs/addFrame.png)
+Add Task List            |  Task List                | Task View
+:-----------------------:|:-------------------------:|:-----------------------:
+![](docs/addtasks.png)   |![](docs/tasklists.png)    |![](docs/taskview.png) 
 
-Add Task List                |  Task List
-:-----------------------:|:-------------------------:
-![](docs/addTasks.png)      |![](docs/tasklists.png)
-
-
-### Task View    
-![](docs/taskView.png)      
 
 
 #### Conceito / Concept
