@@ -59,12 +59,6 @@ export default function ({ ssrContext }) {
           props: true,
           component: () => import('../components/Tarefas'),
           meta: { requerAuth: true }
-        },
-        {
-          path: '/feedversion',
-          name: 'FeedVersion',
-          component: () => import('../FeedVersion'),
-          meta: { requerAuth: true }
         }
       ]
     })
@@ -141,12 +135,6 @@ export default function ({ ssrContext }) {
           name: 'Tarefas',
           props: true,
           component: () => import('../components/Tarefas'),
-          meta: { requerAuth: true }
-        },
-        {
-          path: '/feedversion',
-          name: 'FeedVersion',
-          component: () => import('../FeedVersion'),
           meta: { requerAuth: true }
         }
       ]
