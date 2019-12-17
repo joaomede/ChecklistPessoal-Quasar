@@ -535,7 +535,7 @@
 
 <script>
 import firebase from 'firebase'
-import { timestamp } from '../boot/main'
+import { timestamp } from '../boot/firebase'
 import { editorTools, nomeDasFronts } from '../boot/utils'
 
 export default {

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { db } from '../boot/main'
+import { db } from '../boot/firebase'
 import { Cookies } from 'quasar'
 
 Vue.use(Vuex)

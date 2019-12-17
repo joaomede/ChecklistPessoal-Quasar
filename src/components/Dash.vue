@@ -199,7 +199,7 @@
 
 <script>
 import firebase from 'firebase'
-import { db } from '../boot/main'
+import { db } from '../boot/firebase'
 
 export default {
   name: 'Dash',

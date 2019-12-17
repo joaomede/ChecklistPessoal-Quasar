@@ -77,7 +77,7 @@
 
 <script>
 import firebase from 'firebase'
-import { db, timestamp } from '../boot/main'
+import { db, timestamp } from '../boot/firebase'
 
 export default {
   name: 'Registro',
