@@ -7,7 +7,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    user: {
+      uid: null
+    },
     username: '',
     version: '',
     pastaAtual: {
@@ -40,9 +42,8 @@ export default new Vuex.Store({
       const cookies = process.env.SERVER
         ? Cookies.parseSSR(ssrContext)
         : Cookies // otherwise we're on client
-      const user = cookies.get('user')
-
-      if (user != null) {
+      const user = await cookies.get('user')
+      if (await user !== undefined) {
         try {
           const result = await db
             .collection('app')
@@ -54,6 +55,7 @@ export default new Vuex.Store({
             username: result.username
           }
         } catch (error) {
+          await cookies.remove('user')
           console.log('Erro ao tentar verificar nome do usuário')
         }
       } else {
