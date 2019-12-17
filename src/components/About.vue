@@ -5,7 +5,7 @@
       align-center
     >
       <q-img
-        src="../../statics/symbol2logo.png"
+        :src="symbol2logo"
         style="height: 140px; max-width: 150px"
       />
       <div class="centralDiv">
@@ -67,3 +67,18 @@
     </q-card>
   </div>
 </template>
+
+<script>
+import symbol2logo from '../statics/symbol2logo.png'
+export default {
+  data () {
+    return {
+      symbol2log: symbol2logo
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
+</style>
