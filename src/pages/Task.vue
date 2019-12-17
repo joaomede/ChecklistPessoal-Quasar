@@ -534,13 +534,20 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import { timestamp } from '../boot/firebase'
 import { editorTools, nomeDasFronts } from '../boot/utils'
 
 export default {
   name: 'Tarefas',
-  props: ['idPasta', 'idQuadro'],
+  props: {
+    idFolder: {
+      type: String,
+      default: ''
+    },
+    idBoard: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       editorTools: editorTools,
@@ -589,7 +596,7 @@ export default {
     },
     refQuadro () {
       if (this.user.uid != null) {
-        return firebase
+        return this.$firebase
           .firestore()
           .collection('app')
           .doc(this.user.uid)
@@ -603,7 +610,7 @@ export default {
     },
     refPasta () {
       if (this.user.uid != null) {
-        return firebase
+        return this.$firebase
           .firestore()
           .collection('app')
           .doc(this.user.uid)
@@ -615,7 +622,7 @@ export default {
     },
     refTarefas () {
       if (this.user.uid != null) {
-        return firebase
+        return this.$firebase
           .firestore()
           .collection('app')
           .doc(this.user.uid)
@@ -697,7 +704,7 @@ export default {
         .then(ref => {
           const pushID = {
             id: ref.id,
-            createdAt: timestamp
+            createdAt: this.$timestamp
           }
           ref.update(pushID)
           this.$notifiy('Novo Quadro Adicionada', 'green')

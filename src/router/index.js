@@ -22,42 +22,42 @@ export default function ({ ssrContext }) {
         {
           path: '/login',
           name: 'Login',
-          component: () => import('../components/Login')
+          component: () => import('../pages/Login')
         },
         {
           path: '/registrar',
           name: 'Registrar',
-          component: () => import('../components/Registro')
+          component: () => import('../pages/Registro')
         },
         {
           path: '/about',
           name: 'About',
-          component: () => import('../components/About')
+          component: () => import('../pages/About')
         },
         {
           path: '/trocarsenha',
           name: 'Trocar Senha',
-          component: () => import('../components/TrocarSenha'),
+          component: () => import('../pages/TrocarSenha'),
           meta: { requerAuth: true }
         },
         {
-          path: '/dash',
-          name: 'Dash',
-          component: () => import('../components/Dash'),
+          path: '/folder',
+          name: 'Folder',
+          component: () => import('../pages/Folder'),
           meta: { requerAuth: true }
         },
         {
-          path: '/quadro/:idPasta',
-          name: 'Quadro',
+          path: '/board/:idFolder',
+          name: 'Board',
           props: true,
-          component: () => import('../components/Quadro'),
+          component: () => import('../pages/Board'),
           meta: { requerAuth: true }
         },
         {
-          path: '/tarefas/:idPasta/:idQuadro',
-          name: 'Tarefas',
+          path: '/task/:idFolder/:idBoard',
+          name: 'Task',
           props: true,
-          component: () => import('../components/Tarefas'),
+          component: () => import('../pages/Task'),
           meta: { requerAuth: true }
         }
       ]
@@ -99,42 +99,42 @@ export default function ({ ssrContext }) {
         {
           path: '/login',
           name: 'Login',
-          component: () => import('../components/Login')
+          component: () => import('../pages/Login')
         },
         {
           path: '/registrar',
           name: 'Registrar',
-          component: () => import('../components/Registro')
+          component: () => import('../pages/Registro')
         },
         {
           path: '/about',
           name: 'About',
-          component: () => import('../components/About')
+          component: () => import('../pages/About')
         },
         {
           path: '/trocarsenha',
           name: 'Trocar Senha',
-          component: () => import('../components/TrocarSenha'),
+          component: () => import('../pages/TrocarSenha'),
           meta: { requerAuth: true }
         },
         {
-          path: '/dash',
-          name: 'Dash',
-          component: () => import('../components/Dash'),
+          path: '/folder',
+          name: 'Folder',
+          component: () => import('../pages/Folder'),
           meta: { requerAuth: true }
         },
         {
-          path: '/quadro/:idPasta',
-          name: 'Quadro',
+          path: '/board/:idFolder',
+          name: 'Board',
           props: true,
-          component: () => import('../components/Quadro'),
+          component: () => import('../pages/Board'),
           meta: { requerAuth: true }
         },
         {
-          path: '/tarefas/:idPasta/:idQuadro',
-          name: 'Tarefas',
+          path: '/task/:idFolder/:idBoard',
+          name: 'Task',
           props: true,
-          component: () => import('../components/Tarefas'),
+          component: () => import('../pages/Task'),
           meta: { requerAuth: true }
         }
       ]
