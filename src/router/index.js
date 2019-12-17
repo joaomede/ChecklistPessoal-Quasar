@@ -1,183 +1,182 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-//import routes from './routes'
-import firebase from "firebase";
-import { Cookies } from "quasar";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+// import routes from './routes'
+import { Cookies } from 'quasar'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
-export default function({ ssrContext }) {
-  if (process.env.MODE !== "ssr") {
+export default function ({ ssrContext }) {
+  if (process.env.MODE !== 'ssr') {
     const router = new VueRouter({
       mode: process.env.VUE_ROUTER_MODE,
       base: process.env.VUE_ROUTER_BASE,
       routes: [
         {
-          path: "*",
-          redirect: "/login"
+          path: '*',
+          redirect: '/login'
         },
         {
-          path: "/",
-          redirect: "/login"
+          path: '/',
+          redirect: '/login'
         },
         {
-          path: "/login",
-          name: "Login",
-          component: () => import("../components/Login")
+          path: '/login',
+          name: 'Login',
+          component: () => import('../components/Login')
         },
         {
-          path: "/registrar",
-          name: "Registrar",
-          component: () => import("../components/Registro")
+          path: '/registrar',
+          name: 'Registrar',
+          component: () => import('../components/Registro')
         },
         {
-          path: "/about",
-          name: "About",
-          component: () => import("../components/About")
+          path: '/about',
+          name: 'About',
+          component: () => import('../components/About')
         },
         {
-          path: "/trocarsenha",
-          name: "Trocar Senha",
-          component: () => import("../components/TrocarSenha"),
+          path: '/trocarsenha',
+          name: 'Trocar Senha',
+          component: () => import('../components/TrocarSenha'),
           meta: { requerAuth: true }
         },
         {
-          path: "/dash",
-          name: "Dash",
-          component: () => import("../components/Dash"),
+          path: '/dash',
+          name: 'Dash',
+          component: () => import('../components/Dash'),
           meta: { requerAuth: true }
         },
         {
-          path: "/quadro/:idPasta",
-          name: "Quadro",
+          path: '/quadro/:idPasta',
+          name: 'Quadro',
           props: true,
-          component: () => import("../components/Quadro"),
+          component: () => import('../components/Quadro'),
           meta: { requerAuth: true }
         },
         {
-          path: "/tarefas/:idPasta/:idQuadro",
-          name: "Tarefas",
+          path: '/tarefas/:idPasta/:idQuadro',
+          name: 'Tarefas',
           props: true,
-          component: () => import("../components/Tarefas"),
+          component: () => import('../components/Tarefas'),
           meta: { requerAuth: true }
         },
         {
-          path: "/feedversion",
-          name: "FeedVersion",
-          component: () => import("../FeedVersion"),
+          path: '/feedversion',
+          name: 'FeedVersion',
+          component: () => import('../FeedVersion'),
           meta: { requerAuth: true }
         }
       ]
-    });
+    })
 
     router.beforeEach((to, from, next) => {
-      let autorizacao = to.matched.some(record => record.meta.requerAuth);
-      const user = Cookies.get("user");
+      let autorizacao = to.matched.some(record => record.meta.requerAuth)
+      const user = Cookies.get('user')
 
       if (autorizacao) {
         if (user != null) {
           if (user.uid != null) {
-            next();
+            next()
           } else {
             next({
-              path: "/login"
-            });
+              path: '/login'
+            })
           }
         } else {
           next({
-            path: "/login"
-          });
+            path: '/login'
+          })
         }
       } else {
-        next();
+        next()
       }
-    });
+    })
 
-    return router;
+    return router
   } else {
     const router = new VueRouter({
       mode: process.env.VUE_ROUTER_MODE,
       base: process.env.VUE_ROUTER_BASE,
       routes: [
         {
-          path: "/",
-          redirect: "/login"
+          path: '/',
+          redirect: '/login'
         },
         {
-          path: "/login",
-          name: "Login",
-          component: () => import("../components/Login")
+          path: '/login',
+          name: 'Login',
+          component: () => import('../components/Login')
         },
         {
-          path: "/registrar",
-          name: "Registrar",
-          component: () => import("../components/Registro")
+          path: '/registrar',
+          name: 'Registrar',
+          component: () => import('../components/Registro')
         },
         {
-          path: "/about",
-          name: "About",
-          component: () => import("../components/About")
+          path: '/about',
+          name: 'About',
+          component: () => import('../components/About')
         },
         {
-          path: "/trocarsenha",
-          name: "Trocar Senha",
-          component: () => import("../components/TrocarSenha"),
+          path: '/trocarsenha',
+          name: 'Trocar Senha',
+          component: () => import('../components/TrocarSenha'),
           meta: { requerAuth: true }
         },
         {
-          path: "/dash",
-          name: "Dash",
-          component: () => import("../components/Dash"),
+          path: '/dash',
+          name: 'Dash',
+          component: () => import('../components/Dash'),
           meta: { requerAuth: true }
         },
         {
-          path: "/quadro/:idPasta",
-          name: "Quadro",
+          path: '/quadro/:idPasta',
+          name: 'Quadro',
           props: true,
-          component: () => import("../components/Quadro"),
+          component: () => import('../components/Quadro'),
           meta: { requerAuth: true }
         },
         {
-          path: "/tarefas/:idPasta/:idQuadro",
-          name: "Tarefas",
+          path: '/tarefas/:idPasta/:idQuadro',
+          name: 'Tarefas',
           props: true,
-          component: () => import("../components/Tarefas"),
+          component: () => import('../components/Tarefas'),
           meta: { requerAuth: true }
         },
         {
-          path: "/feedversion",
-          name: "FeedVersion",
-          component: () => import("../FeedVersion"),
+          path: '/feedversion',
+          name: 'FeedVersion',
+          component: () => import('../FeedVersion'),
           meta: { requerAuth: true }
         }
       ]
-    });
+    })
 
     router.beforeEach((to, from, next) => {
-      let autorizacao = to.matched.some(record => record.meta.requerAuth);
+      let autorizacao = to.matched.some(record => record.meta.requerAuth)
 
-      const cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies; // otherwise we're on client
-      const user = cookies.get("user");
+      const cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies // otherwise we're on client
+      const user = cookies.get('user')
 
       if (autorizacao) {
         if (user != null) {
           if (user.uid != null) {
-            next();
+            next()
           } else {
             next({
-              path: "/login"
-            });
+              path: '/login'
+            })
           }
         } else {
           next({
-            path: "/login"
-          });
+            path: '/login'
+          })
         }
       } else {
-        next();
+        next()
       }
-    });
+    })
 
-    return router;
+    return router
   }
 }
