@@ -21,7 +21,7 @@ Add Task List            |  Task List                | Task View
 > BR: Este projeto faz parte do meu portfólio e está associado a meu pequeno estúdio de desenvolvimento (symbol2studio), inicialmente ele foi criado em Java para Android, a ideia consiste em um simples gerenciador de tarefas (checklist), cuja a organização vem em 3 níveis, sendo "Pasta", "Quadro" e "Tarefa", as Tarefas contém 2 status, sendo Ativo e Concluído, caso concluído, a Tarefa recebe um novo campo chamado "Nota de Conclusão", no qual é possível agregar alguma informação extra.
 
 
-#### The Model
+#### The Model / O Modelo
 ```json
 [
   {
@@ -58,4 +58,46 @@ Add Task List            |  Task List                | Task View
     }
   }
 ]
+```
+
+#### Install / Instalar
+```bash
+yarn -i
+or
+npm install
+```
+
+#### Build / Fabricar
+```bash
+yarn build # for spa
+yarn build:pwa # for pwa
+or
+npm run build # for spa
+npm run build:pwa # for pwa
+```
+
+#### Run Dev / Executar em Desenvolvimento
+```bash
+yarn dev
+or
+npm run dev
+```
+
+#### The Environment / O ambiente
+> In .env.example you find the variables needed to configure the app, including the api firebase key and app version, which will be displayed in some places in the application, the .env.example must be copied to the .env file.
+
+> No .env.example você encontrar os variáveis necessárias para configuarar o app, incluindo a chave da api firebase e versao do app, que será exibida em alguns locais na aplicação, o .env.example deve ser copiado para o arquivo .env.
+
+```bash
+# CheckList - Firebase Key
+APIKEY=
+AUTHDOFIREBASE=
+DATABASEURL=
+PROJECTID=
+STORAGEBUCKET=
+MESSAGINGSENDERID=
+APPIP=
+
+# Version app
+VERSION=vX.Y.Z
 ```
