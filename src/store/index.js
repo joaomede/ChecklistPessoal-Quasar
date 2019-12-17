@@ -10,12 +10,11 @@ export default new Vuex.Store({
     user: {
       uid: null
     },
-    username: '',
     version: '',
-    pastaAtual: {
+    folderActive: {
       id: null
     },
-    quadroAtual: {
+    boardActive: {
       id: null
     }
   },
@@ -23,17 +22,14 @@ export default new Vuex.Store({
     getUser: state => {
       return state.user
     },
-    getNomeUsuario: state => {
-      return state.username
-    },
     getVersion: state => {
       return state.version
     },
     getPastaAtual (state) {
-      return state.pastaAtual
+      return state.folderActive
     },
     getQuadroAtual (state) {
-      return state.quadroAtual
+      return state.boardActive
     }
   },
   mutations: {
@@ -63,10 +59,10 @@ export default new Vuex.Store({
       }
     },
     definePastaAtual (state, payload) {
-      state.pastaAtual = payload
+      state.folderActive = payload
     },
     defineQuadroAtual (state, payload) {
-      state.quadroAtual = payload
+      state.boardActive = payload
     }
   },
   actions: {

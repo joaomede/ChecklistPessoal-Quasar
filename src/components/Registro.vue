@@ -76,9 +76,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import { db, timestamp } from '../boot/firebase'
-
 export default {
   name: 'Registro',
   data: () => ({
@@ -102,16 +99,16 @@ export default {
       }
 
       if (this.senha === this.senha2) {
-        firebase
+        this.$firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.senha)
           .then(data => {
             const objeto = {
               username: this.nome,
               uid: data.user.uid,
-              ultimoAcesso: timestamp
+              createdAt: this.$timestamp
             }
-            db.collection('app')
+            this.$db.collection('app')
               .doc(data.user.uid)
               .set(objeto)
               .then(() => {

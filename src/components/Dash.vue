@@ -36,7 +36,7 @@
 
         <q-item
           v-for="item in pastaData"
-          :key="item.idPasta"
+          :key="item.id"
           v-ripple
           clickable
           @click="carregaTelaQuadros(item)"
@@ -54,7 +54,7 @@
 
           <q-item-section>
             <q-item-label lines="1">
-              {{ item.nomeDaPasta }}
+              {{ item.title }}
             </q-item-label>
           </q-item-section>
 
@@ -92,7 +92,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="nomeDaPasta"
+              v-model="title"
               label="Informe o nome da pasta"
               required
             />
@@ -133,7 +133,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="nomeDaPasta"
+              v-model="title"
               label="Informe o nome da pasta"
               required
             />
@@ -170,7 +170,7 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ nomeDaPasta }}
+            {{ title }}
           </div>
         </q-card-section>
 
@@ -210,8 +210,8 @@ export default {
       dialogoConfirmaDeletaPasta: false,
 
       msg: 'Bem vindo ao App',
-      idPasta: '',
-      nomeDaPasta: '',
+      id: '',
+      title: '',
       ref: firebase.firestore().collection('app'),
       pastaData: []
     }
@@ -231,7 +231,7 @@ export default {
           .collection('app')
           .doc(this.user.uid)
           .collection('Pasta')
-          .orderBy('nomeDaPasta', 'desc')
+          .orderBy('title', 'desc')
       } else {
         return null
       }
@@ -241,20 +241,20 @@ export default {
     refPasta: 'carregaPastas'
   },
   mounted () {
-    this.$store.dispatch('definePastaAtual', { idPasta: null })
-    this.$store.dispatch('defineQuadroAtual', { idQuadro: null })
+    this.$store.dispatch('definePastaAtual', { id: null })
+    this.$store.dispatch('defineQuadroAtual', { id: null })
     this.carregaPastas()
   },
 
   methods: {
     criaPasta () {
-      if (this.nomeDaPasta.includes('/') || this.nomeDaPasta.includes('..')) {
+      if (this.title.includes('/') || this.title.includes('..')) {
         // entrada para método de alerta caractere incorreto
         return
       }
       const conteudo = {
-        nomeDaPasta: this.nomeDaPasta,
-        idPasta: null
+        title: this.title,
+        id: null
       }
 
       db.collection('app')
@@ -262,7 +262,7 @@ export default {
         .collection('Pasta')
         .add(conteudo)
         .then(ref => {
-          const pushID = { idPasta: ref.id }
+          const pushID = { id: ref.id }
           ref.update(pushID)
           this.$notifiy('Nova Pasta Adicionada', 'green')
         })
@@ -271,7 +271,7 @@ export default {
         })
 
       this.dialogoAddPasta = false
-      this.nomeDaPasta = ''
+      this.title = ''
     },
     carregaPastas () {
       if ((this.user.uid != null) & (this.refPasta != null)) {
@@ -279,26 +279,26 @@ export default {
           this.pastaData = []
           querySnapshot.forEach(doc => {
             this.pastaData.push({
-              idPasta: doc.id,
-              nomeDaPasta: doc.data().nomeDaPasta
+              id: doc.id,
+              title: doc.data().title
             })
           })
         })
       }
     },
     atualizaEditaPasta () {
-      let a = this.nomeDaPasta
+      let a = this.title
       if (a.includes('/') || a.includes('..')) {
         // entrada para método de alerta caractere incorreto
         return
       }
       const objeto = {
-        nomeDaPasta: this.nomeDaPasta
+        title: this.title
       }
       db.collection('app')
         .doc(this.$store.getters.getUser.uid)
         .collection('Pasta')
-        .doc(this.idPasta)
+        .doc(this.id)
         .update(objeto)
         .then(() => {
           this.$notifiy('Ultimo acesso atualizado', 'green')
@@ -307,13 +307,13 @@ export default {
           this.$notifiy('Acesso não atualizado', 'red')
         })
       this.dialogoEditaPasta = false
-      this.nomeDaPasta = ''
+      this.title = ''
     },
     apagaPastaDB () {
       db.collection('app')
         .doc(this.user.uid)
         .collection('Pasta')
-        .doc(this.idPasta)
+        .doc(this.id)
         .delete()
         .then(() => {
           this.$notifiy('Pasta removida com sucesso', 'green')
@@ -327,21 +327,21 @@ export default {
     carregaTelaQuadros (item) {
       this.$router.push({
         name: 'Quadro',
-        params: { idPasta: item.idPasta }
+        params: { id: item.id }
       })
     },
     editaPasta (item) {
       this.dialogoEditaPasta = true
-      this.nomeDaPasta = item.nomeDaPasta
-      this.idPasta = item.idPasta
+      this.title = item.title
+      this.id = item.id
     },
     deletaPasta (item) {
       this.dialogoConfirmaDeletaPasta = true
-      this.nomeDaPasta = item.nomeDaPasta
-      this.idPasta = item.idPasta
+      this.title = item.title
+      this.id = item.id
     },
     resetNameFolder () {
-      this.nomeDaPasta = null
+      this.title = null
     }
   }
 }

@@ -87,7 +87,7 @@ npm run dev
 #### The Environment / O ambiente
 > In .env.example you find the variables needed to configure the app, including the api firebase key and app version, which will be displayed in some places in the application, the .env.example must be copied to the .env file.
 
-> No .env.example você encontrar os variáveis necessárias para configuarar o app, incluindo a chave da api firebase e versao do app, que será exibida em alguns locais na aplicação, o .env.example deve ser copiado para o arquivo .env.
+> No .env.example você encontrar as variáveis necessárias para configuarar o app, incluindo a chave da api firebase e versao do app, que será exibida em alguns locais na aplicação, o .env.example deve ser copiado para o arquivo .env.
 
 ```bash
 # CheckList - Firebase Key

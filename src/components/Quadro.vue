@@ -55,7 +55,7 @@
         </div>
         <q-item
           v-for="item in quadroData"
-          :key="item.idQuadro"
+          :key="item.id"
           v-ripple
           clickable
           @click="carregaTarefas(item)"
@@ -70,7 +70,7 @@
 
           <q-item-section>
             <q-item-label lines="1">
-              {{ item.nomeDoQuadro }}
+              {{ item.title }}
             </q-item-label>
           </q-item-section>
 
@@ -108,7 +108,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="nomeDoQuadro"
+              v-model="title"
               label="Informe o nome do quadro"
               required
             />
@@ -149,7 +149,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="nomeDoQuadro"
+              v-model="title"
               label="Informe o nome do quadro"
               required
             />
@@ -186,7 +186,7 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ nomeDoQuadro }}
+            {{ title }}
           </div>
         </q-card-section>
 
@@ -217,15 +217,15 @@ import { db } from '../boot/firebase'
 
 export default {
   name: 'Quadro',
-  props: ['idPasta'],
+  props: ['id'],
   data () {
     return {
       dialogoAddQuadro: false,
       dialogoEditaQuadro: false,
       dialogoApagaQuadro: false,
       msg: 'Quadros',
-      idQuadro: '',
-      nomeDoQuadro: '',
+      id: '',
+      title: '',
       quadroData: []
     }
   },
@@ -244,9 +244,9 @@ export default {
           .collection('app')
           .doc(this.user.uid)
           .collection('Pasta')
-          .doc(this.idPasta)
+          .doc(this.id)
           .collection('Quadro')
-          .orderBy('nomeDoQuadro', 'desc')
+          .orderBy('title', 'desc')
       } else {
         return null
       }
@@ -258,7 +258,7 @@ export default {
           .collection('app')
           .doc(this.user.uid)
           .collection('Pasta')
-          .doc(this.idPasta)
+          .doc(this.id)
       } else {
         return null
       }
@@ -273,24 +273,24 @@ export default {
   },
   methods: {
     criaQuadro () {
-      let b = this.nomeDoQuadro
+      let b = this.title
       if (b.includes('/') | b.includes('..')) {
         // entrada para metodo de alerta de caractere proibido
         return
       }
       const conteudo = {
-        nomeDoQuadro: this.nomeDoQuadro,
-        idQuadro: this.idQuadro
+        title: this.title,
+        id: this.id
       }
 
       db.collection('app')
         .doc(this.user.uid)
         .collection('Pasta')
-        .doc(this.idPasta)
+        .doc(this.id)
         .collection('Quadro')
         .add(conteudo)
         .then(ref => {
-          const pushID = { idQuadro: ref.id }
+          const pushID = { id: ref.id }
           ref.update(pushID)
           this.$notifiy('Novo Quadro Adicionada', 'green')
         })
@@ -299,7 +299,7 @@ export default {
         })
 
       this.dialogoAddQuadro = false
-      this.nomeDoQuadro = ''
+      this.title = ''
     },
     init () {
       this.carregaPastaAtual()
@@ -311,8 +311,8 @@ export default {
           this.quadroData = []
           querySnapshot.forEach(doc => {
             this.quadroData.push({
-              idQuadro: doc.id,
-              nomeDoQuadro: doc.data().nomeDoQuadro
+              id: doc.id,
+              title: doc.data().title
             })
           })
         })
@@ -324,7 +324,7 @@ export default {
           .get()
           .then(resp => {
             this.$store.dispatch('definePastaAtual', resp.data())
-            this.$store.dispatch('defineQuadroAtual', { idQuadro: null })
+            this.$store.dispatch('defineQuadroAtual', { id: null })
           })
           .catch(err => {
             this.$notifiy(err, 'red')
@@ -332,25 +332,25 @@ export default {
       }
     },
     carregaTarefas (item) {
-      this.$router.push({ name: 'Tarefas', params: { idQuadro: item.idQuadro, idPasta: this.idPasta } })
+      this.$router.push({ name: 'Tarefas', params: { id: item.id, id: this.id } })
     },
     editaQuadro (item) {
       this.dialogoEditaQuadro = true
-      this.nomeDoQuadro = item.nomeDoQuadro
-      this.idQuadro = item.idQuadro
+      this.title = item.title
+      this.id = item.id
     },
     deletaQuadro (item) {
       this.dialogoApagaQuadro = true
-      this.nomeDoQuadro = item.nomeDoQuadro
-      this.idQuadro = item.idQuadro
+      this.title = item.title
+      this.id = item.id
     },
     apagaQuadroDB () {
       db.collection('app')
         .doc(this.user.uid)
         .collection('Pasta')
-        .doc(this.idPasta)
+        .doc(this.id)
         .collection('Quadro')
-        .doc(this.idQuadro)
+        .doc(this.id)
         .delete()
         .then(() => {
           this.$notifiy('Quadro apagado com sucesso', 'green')
@@ -361,20 +361,20 @@ export default {
       this.dialogoApagaQuadro = false
     },
     salvaEdicao () {
-      let b = this.nomeDoQuadro
+      let b = this.title
       if (b.includes('/') | b.includes('..')) {
         // entrada para metodo de alerta de caractere proibido
         return
       }
       const objeto = {
-        nomeDoQuadro: this.nomeDoQuadro
+        title: this.title
       }
       db.collection('app')
         .doc(this.user.uid)
         .collection('Pasta')
-        .doc(this.idPasta)
+        .doc(this.id)
         .collection('Quadro')
-        .doc(this.idQuadro)
+        .doc(this.id)
         .update(objeto)
         .then(() => {
           this.$notifiy('Quadro excluído com sucesso', 'green')
@@ -383,10 +383,10 @@ export default {
           this.$notifiy('Erro ao tentar excluir o quadro', 'red')
         })
       this.dialogoEditaQuadro = false
-      this.nomeDoQuadro = ''
+      this.title = ''
     },
     resetForm () {
-      this.nomeDoQuadro = null
+      this.title = null
     }
   }
 }

@@ -86,7 +86,7 @@
             >
               <q-item
                 v-for="item in listTasksActive"
-                :key="item.idTarefa"
+                :key="item.id"
                 v-ripple
                 clickable
                 @click="showActivityTasks(item)"
@@ -104,7 +104,7 @@
 
                 <q-item-section>
                   <q-item-label lines="1">
-                    {{ item.nomeDaTarefa }}
+                    {{ item.title }}
                   </q-item-label>
                 </q-item-section>
 
@@ -138,7 +138,7 @@
             >
               <q-item
                 v-for="item in listTaskFinish"
-                :key="item.idTarefa"
+                :key="item.id"
                 v-ripple
                 clickable
                 @click="showFinishedActivities(item)"
@@ -156,7 +156,7 @@
 
                 <q-item-section>
                   <q-item-label lines="1">
-                    {{ item.nomeDaTarefa }}
+                    {{ item.title }}
                   </q-item-label>
                 </q-item-section>
 
@@ -188,16 +188,16 @@
         <q-card-section>
           <div class="q-pa-xs backgroundTextoPopup">
             <div class="text-h6">
-              {{ formTaskActive.nomeDaTarefa }}
+              {{ formTaskActive.title }}
             </div>
           </div>
         </q-card-section>
 
         <q-card-section />
 
-        <q-card-section v-if="formTaskActive.descricaoTarefa != ''">
+        <q-card-section v-if="formTaskActive.content != ''">
           <div class="q-pa-xs backgroundTextoPopup">
-            <div v-html="formTaskActive.descricaoTarefa" />
+            <div v-html="formTaskActive.content" />
           </div>
         </q-card-section>
 
@@ -229,29 +229,29 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo exibe detalhes tarefas concluida -->
+    <!-- caixa de diálogo exibe detalhes tarefas finished -->
     <q-dialog v-model="dialogShowFinishedActivities">
       <q-card class="text-center backgroundCardColor">
         <q-card-section>
           <div class="text-h6 q-pa-xs backgroundTextoPopup">
-            {{ formTaskFinish.nomeDaTarefa }}
+            {{ formTaskFinish.title }}
           </div>
         </q-card-section>
         <q-card-section />
 
-        <q-card-section v-if="formTaskFinish.descricaoTarefa != null">
+        <q-card-section v-if="formTaskFinish.content != null">
           <div
             class="text-h6 q-pa-xs backgroundTextoPopup"
-            v-html="formTaskFinish.descricaoTarefa"
+            v-html="formTaskFinish.content"
           />
         </q-card-section>
 
-        <q-card-section v-if="formTaskFinish.notaConclusao != null">
+        <q-card-section v-if="formTaskFinish.finishNotes != null">
           <div class="text-h6">
             Nota de Conclusão:
           </div>
           <div class="text-h6">
-            {{ formTaskFinish.notaConclusao }}
+            {{ formTaskFinish.finishNotes }}
           </div>
         </q-card-section>
 
@@ -288,7 +288,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="formTaskActive.nomeDaTarefa"
+              v-model="formTaskActive.title"
               label="Informe o titulo da tarefa"
               required
             />
@@ -301,7 +301,7 @@
               Descrição:
             </div>
             <q-editor
-              v-model="formTaskActive.descricaoTarefa"
+              v-model="formTaskActive.content"
               :toolbar="editorTools"
               :fonts="nomeDasFronts"
             />
@@ -339,7 +339,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="formTaskActive.nomeDaTarefa"
+              v-model="formTaskActive.title"
               label="Informe o titulo da tarefa"
               required
             />
@@ -352,7 +352,7 @@
               Descrição:
             </div>
             <q-editor
-              v-model="formTaskActive.descricaoTarefa"
+              v-model="formTaskActive.content"
               :toolbar="editorTools"
               :fonts="nomeDasFronts"
             />
@@ -389,10 +389,10 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ formTaskActive.nomeDaTarefa }}
+            {{ formTaskActive.title }}
           </div>
           <div class="text-h6">
-            {{ formTaskFinish.nomeDaTarefa }}
+            {{ formTaskFinish.title }}
           </div>
         </q-card-section>
 
@@ -426,7 +426,7 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ formTaskActive.nomeDaTarefa }}
+            {{ formTaskActive.title }}
           </div>
         </q-card-section>
 
@@ -460,7 +460,7 @@
 
         <q-card-section>
           <div class="text-h6">
-            "{{ formTaskFinish.nomeDaTarefa }}"?
+            "{{ formTaskFinish.title }}"?
           </div>
         </q-card-section>
 
@@ -496,14 +496,14 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ formTaskActive.nomeDaTarefa }}
+            {{ formTaskActive.title }}
           </div>
         </q-card-section>
 
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="formTaskActive.notaConclusao"
+              v-model="formTaskActive.finishNotes"
               label="Informe a nota de conclusão"
               required
             />
@@ -555,21 +555,23 @@ export default {
       dialogDeleteTasks: false,
 
       formTaskActive: {
-        idTarefa: null,
-        concluida: null,
-        descricaoTarefa: '',
-        nomeDaTarefa: null,
-        notaConclusao: null,
-        tarefaTimeStamp: null
+        id: null,
+        finished: '',
+        content: '',
+        title: '',
+        finishNotes: '',
+        createdAt: '',
+        updated: ''
       },
 
       formTaskFinish: {
-        idTarefa: null,
-        concluida: null,
-        descricaoTarefa: '',
-        nomeDaTarefa: null,
-        notaConclusao: null,
-        tarefaTimeStamp: null
+        id: null,
+        finished: '',
+        content: '',
+        title: '',
+        finishNotes: '',
+        createdAt: '',
+        updatedAt: ''
       },
       msg: 'Tarefas Ativas',
       dialogShowFinishedActivities: false,
@@ -646,8 +648,8 @@ export default {
     },
     loadingTasksActive () {
       this.refTarefas
-        .where('concluida', '==', false)
-        .orderBy('tarefaTimeStamp', 'asc')
+        .where('finished', '==', false)
+        .orderBy('createdAt', 'asc')
         .onSnapshot(querySnapshot => {
           this.listTasksActive = []
           querySnapshot.forEach(doc => {
@@ -657,8 +659,8 @@ export default {
     },
     loadingTasksFinsh () {
       this.refTarefas
-        .where('concluida', '==', true)
-        .orderBy('tarefaTimeStamp', 'asc')
+        .where('finished', '==', true)
+        .orderBy('createdAt', 'asc')
         .onSnapshot(querySnapshot => {
           this.listTaskFinish = []
           querySnapshot.forEach(doc => {
@@ -687,15 +689,15 @@ export default {
         })
     },
     createTasks () {
-      this.formTaskActive.concluida = false
+      this.formTaskActive.finished = false
       const content = this.formTaskActive
 
       this.refTarefas
         .add(content)
         .then(ref => {
           const pushID = {
-            idTarefa: ref.id,
-            tarefaTimeStamp: timestamp
+            id: ref.id,
+            createdAt: timestamp
           }
           ref.update(pushID)
           this.$notifiy('Novo Quadro Adicionada', 'green')
@@ -718,8 +720,8 @@ export default {
     },
     finishTasks () {
       this.refTarefas
-        .doc(this.formTaskActive.idTarefa)
-        .update({ concluida: true })
+        .doc(this.formTaskActive.id)
+        .update({ finished: true })
         .then(() => {
           this.$notifiy('Tarefa foi concluída', 'green')
         })
@@ -731,10 +733,10 @@ export default {
     },
     addNota () {
       this.refTarefas
-        .doc(this.formTaskActive.idTarefa)
-        .update({ notaConclusao: this.formTaskActive.notaConclusao })
+        .doc(this.formTaskActive.id)
+        .update({ finishNotes: this.formTaskActive.finishNotes })
         .then(() => {
-          this.$notifiy('Nota "' + this.formTaskActive.notaConclusao + '" foi adicionada', 'green')
+          this.$notifiy('Nota "' + this.formTaskActive.finishNotes + '" foi adicionada', 'green')
         })
         .catch(() => {
           this.$notifiy('Não foi possível adicionar nota', 'green')
@@ -746,17 +748,17 @@ export default {
       this.resetForm()
       this.dialogDeleteTasks = true
 
-      if (item.concluida === false) {
+      if (item.finished === false) {
         this.formTaskActive = item
       }
-      if (item.concluida === true) {
+      if (item.finished === true) {
         this.formTaskFinish = item
       }
     },
     deleteTasks () {
-      if (this.formTaskActive.concluida === false) {
+      if (this.formTaskActive.finished === false) {
         this.refTarefas
-          .doc(this.formTaskActive.idTarefa)
+          .doc(this.formTaskActive.id)
           .delete()
           .then(() => {
             this.$notifiy('Tarefa foi apagada', 'green')
@@ -765,9 +767,9 @@ export default {
             this.$notifiy('Não foi possível excluir tarefa', 'red')
           })
       }
-      if (this.formTaskFinish.concluida === true) {
+      if (this.formTaskFinish.finished === true) {
         this.refTarefas
-          .doc(this.formTaskFinish.idTarefa)
+          .doc(this.formTaskFinish.id)
           .delete()
           .then(() => {
             this.$notifiy('Tarefa foi apagada', 'green')
@@ -798,8 +800,8 @@ export default {
     },
     restoreTasks () {
       this.refTarefas
-        .doc(this.formTaskFinish.idTarefa)
-        .update({ concluida: false, notaConclusao: '' })
+        .doc(this.formTaskFinish.id)
+        .update({ finished: false, finishNotes: '' })
         .then(() => {
           this.$notifiy('Tarefa restaurada', 'green')
         })
@@ -811,7 +813,7 @@ export default {
 
     updateTasks () {
       this.refTarefas
-        .doc(this.formTaskActive.idTarefa)
+        .doc(this.formTaskActive.id)
         .update(this.formTaskActive)
         .then(ref => {
           this.$notifiy('Tarefa atualizada', 'green')
@@ -825,21 +827,21 @@ export default {
 
     resetForm () {
       this.formTaskActive = {
-        idTarefa: null,
-        concluida: null,
-        descricaoTarefa: '',
-        nomeDaTarefa: null,
-        notaConclusao: null,
-        tarefaTimeStamp: null
+        id: null,
+        finished: null,
+        content: '',
+        title: null,
+        finishNotes: null,
+        createdAt: null
       }
 
       this.formTaskFinish = {
-        idTarefa: null,
-        concluida: null,
-        descricaoTarefa: '',
-        nomeDaTarefa: null,
-        notaConclusao: null,
-        tarefaTimeStamp: null
+        id: null,
+        finished: null,
+        content: '',
+        title: null,
+        finishNotes: null,
+        createdAt: null
       }
     }
   }
