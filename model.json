@@ -1,24 +1,29 @@
 [
   {
     "app": {
-      "nomeDoUsuario": "João M.",
+      "username": "João M.",
       "uid": "123abc",
-      "Pasta": [
+      "createdAt": "timestamp here",
+      "folder": [
         {
-          "idPasta": "1",
-          "nomeDaPasta": "folder title",
-          "Quadro": [
+          "id": "1",
+          "title": "folder title",
+          "createdAt": "timestamp here",
+          "updated": "timestamp update",
+          "board": [
             {
-              "idQuadro": "1",
-              "nomeDoQuadro": "title board",
+              "id": "1",
+              "title": "title board",
+              "createdAt": "timestamp here",
+              "updated": "timestamp update",
               "task": [
                 {
-                  "idTarefa": "1",
-                  "concluida": "Boolean",
-                  "nomeDaTarefa": "title here",
-                  "descricaoTarefa": "Description here",
-                  "notaConclusao": "Additional content here upon completion",
-                  "tarefaTimeStamp": "timestamp here",
+                  "id": "1",
+                  "finished": "Boolean",
+                  "content": "Description here",
+                  "finishNotes": "Additional content here upon completion",
+                  "createdAt": "timestamp here",
+                  "updated": "timestamp update"
                 }
               ]
             }
