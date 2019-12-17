@@ -92,7 +92,7 @@
 <script>
 import firebase from "firebase";
 import router from "./router";
-import { db, dbfeed } from "./boot/main";
+import { db } from "./boot/main";
 
 export default {
   name: "App",
@@ -100,16 +100,10 @@ export default {
     return {
       left: false,
       login: null,
-      drawer: null,
       emailUsuario: null,
-      versaoUltima: null,
-      versao: "v1.26.48"
     };
   },
   methods: {
-    carregaNomeDoUsuario() {
-      this.$store.dispatch("carregaNomeDoUsuario");
-    },
     logout() {
       firebase.auth().signOut();
       this.$q.cookies.remove("user");
@@ -122,53 +116,17 @@ export default {
       } else {
         this.emailUsuario = "sem@email.com";
       }
-    },
-    verificaVersaoCloud() {
-      dbfeed
-        .collection("app")
-        .doc("nsArXKTPGLVF471Jd3Lv")
-        .collection("feed")
-        .where("novo", "==", true)
-        .onSnapshot(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            this.versaoUltima = doc.data().tituloPostagem;
-          });
-          this.$store.dispatch("DefineUltimaVersao", this.versaoUltima);
-          this.checagem();
-        });
-    },
-    defineVersaoSistemica() {
-      if (this.versaoAtual == null) {
-        this.$store.dispatch("DefineVersaoDoApp", this.versao);
-      }
-    },
-    checagem() {
-      if (this.versaoUltima != this.versao) {
-        window.location.reload(true);
-      }
     }
   },
 
   mounted() {
-    this.verificaVersaoCloud();
-    this.$store.dispatch("setUser");
-    this.carregaNomeDoUsuario();
+    this.$store.dispatch("boot");
+    this.carregausername();
     this.verificaSeEstaLogado();
   },
   computed: {
-    versionUpdate() {
-      if (this.$store.getters.getUltimaVersao) {
-        return this.checagem();
-      } else {
-        return;
-      }
-    },
     user() {
-      if (this.$store.getters.getUser != null) {
-        return this.$store.getters.getUser;
-      } else {
-        return { uid: null, email: null };
-      }
+      return this.$store.getters.getUser
     },
     nomeUsuario() {
       if (this.user.uid != null) {

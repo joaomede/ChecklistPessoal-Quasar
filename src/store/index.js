@@ -1,15 +1,15 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import { db, timestamp } from "../boot/main";
-import { Cookies } from "quasar";
+import Vue from 'vue'
+import Vuex from 'vuex'
+import { db } from '../boot/main'
+import { Cookies } from 'quasar'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     user: null,
-    nomeDoUsuario: "",
-    ultimaVersao: null,
+    username: '',
+    version: '',
     pastaAtual: {
       id: null
     },
@@ -19,73 +19,68 @@ export default new Vuex.Store({
   },
   getters: {
     getUser: state => {
-      return state.user;
+      return state.user
     },
     getNomeUsuario: state => {
-      return state.nomeDoUsuario;
+      return state.username
     },
-    getUltimaVersao: state => {
-      return state.ultimaVersao;
+    getVersion: state => {
+      return state.version
     },
-    getPastaAtual(state){
-      return state.pastaAtual;
+    getPastaAtual (state) {
+      return state.pastaAtual
     },
-    getQuadroAtual(state){
-      return state.quadroAtual;
+    getQuadroAtual (state) {
+      return state.quadroAtual
     }
   },
   mutations: {
-    setUser(state) {
-      const cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies; // otherwise we're on client
-      const user = cookies.get("user");
+    async boot (state, { ssrContext }) {
+      const cookies = process.env.SERVER
+        ? Cookies.parseSSR(ssrContext)
+        : Cookies // otherwise we're on client
+      const user = cookies.get('user')
 
       if (user != null) {
-        state.user = { uid: user.uid, email: user.email };
+        try {
+          const result = await db
+            .collection('app')
+            .doc(user.uid)
+            .get()
+          state.user = {
+            uid: user.uid,
+            email: user.email,
+            username: result.username
+          }
+        } catch (error) {
+          console.log('Erro ao tentar verificar nome do usuário')
+        }
       } else {
-        state.user = { uid: null, email: null };
+        state.user = { uid: null, email: 'email@email.com', username: 'no name' }
       }
     },
-    carregaNomeDoUsuario(state) {
-      if (state.user == null) {
-        state.nomeDoUsuario = null;
-        return;
-      }
-
-      db.collection("app")
-        .doc(state.user.uid)
-        .get()
-        .then(docs => {
-          state.nomeDoUsuario = docs.data().nomeDoUsuario;
-        })
-        .catch(() => {
-          console.log("Erro ao tentar verificar nome do usuário");
-        });
+    setVersion (state) {
+      state.version = process.env.VERSION
     },
-    DefineUltimaVersao(state, objeto) {
-      state.ultimaVersao = objeto;
+    definePastaAtual (state, payload) {
+      state.pastaAtual = payload
     },
-    definePastaAtual(state, payload) {
-      state.pastaAtual = payload;
-    },
-    defineQuadroAtual(state, payload) {
-      state.quadroAtual = payload;
+    defineQuadroAtual (state, payload) {
+      state.quadroAtual = payload
     }
   },
   actions: {
-    setUser({ commit }) {
-      commit("setUser");
+    boot ({ commit }) {
+      commit('boot')
     },
-    carregaNomeDoUsuario({ commit }) {
-      commit("carregaNomeDoUsuario");
+    setVersion ({ commit }) {
+      commit('setVersion')
     },
-    DefineUltimaVersao({ commit }, ultimaVersao) {
-      commit("DefineUltimaVersao", ultimaVersao);
+    definePastaAtual ({ commit }, payload) {
+      commit('definePastaAtual', payload)
     },
-    definePastaAtual({ commit }, payload) {
-      commit("definePastaAtual", payload);
-    },
-    defineQuadroAtual({ commit }, payload) {
-      commit("defineQuadroAtual", payload);
+    defineQuadroAtual ({ commit }, payload) {
+      commit('defineQuadroAtual', payload)
     }
   }
-});
+})

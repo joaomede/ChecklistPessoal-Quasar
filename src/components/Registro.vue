@@ -59,7 +59,7 @@ export default {
           .createUserWithEmailAndPassword(this.email, this.senha)
           .then(data => {
             const objeto = {
-              nomeDoUsuario: this.nome,
+              username: this.nome,
               uid: data.user.uid,
               ultimoAcesso: timestamp
             };
