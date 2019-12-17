@@ -19,7 +19,7 @@
       round
       color="orange darken-2"
       class="fixed fabRight"
-      @click.stop="(dialogoAddQuadro = true), resetForm()"
+      @click.stop="(dialogoAddQuadro = true), resetFormBoard()"
     >
       <q-icon name="add" />
     </q-btn>
@@ -39,7 +39,7 @@
       round
       color="orange darken-2"
       class="fixed fabCenter"
-      @click.stop="(dialogoAddQuadro = true), resetForm()"
+      @click.stop="(dialogoAddQuadro = true), resetFormBoard()"
     >
       <q-icon
         class="iconFabCenter"
@@ -51,14 +51,14 @@
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h5 text-center">
-          Selecione o Quadro
+          Selecione o board
         </div>
         <q-item
-          v-for="item in quadroData"
-          :key="item.id"
+          v-for="boards in boardList"
+          :key="boards.id"
           v-ripple
           clickable
-          @click="carregaTarefas(item)"
+          @click="runTaskScreen(boards)"
         >
           <q-item-section avatar>
             <q-avatar
@@ -70,7 +70,7 @@
 
           <q-item-section>
             <q-item-label lines="1">
-              {{ item.title }}
+              {{ boards.title }}
             </q-item-label>
           </q-item-section>
 
@@ -78,7 +78,7 @@
             <q-icon
               name="edit"
               color="blue"
-              @click.stop="editaQuadro(item)"
+              @click.stop="editaQuadro(boards)"
             />
           </q-item-section>
 
@@ -86,7 +86,7 @@
             <q-icon
               name="delete_sweep"
               color="grey ligten-1"
-              @click.stop="deletaQuadro(item)"
+              @click.stop="deletaQuadro(boards)"
             />
           </q-item-section>
         </q-item>
@@ -108,7 +108,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="title"
+              v-model="board.title"
               label="Informe o nome do quadro"
               required
             />
@@ -149,7 +149,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="title"
+              v-model="board.title"
               label="Informe o nome do quadro"
               required
             />
@@ -186,7 +186,7 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ title }}
+            {{ board.title }}
           </div>
         </q-card-section>
 
@@ -212,40 +212,40 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import { db } from '../boot/firebase'
-
+import { stringify } from 'querystring'
 export default {
-  name: 'Quadro',
-  props: ['id'],
+  name: 'Board',
+  props: {
+    idFolder: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       dialogoAddQuadro: false,
       dialogoEditaQuadro: false,
       dialogoApagaQuadro: false,
-      msg: 'Quadros',
-      id: '',
-      title: '',
-      quadroData: []
+      msg: 'Boards',
+      board: {
+        id: null,
+        title: '',
+        createdAt: null,
+        updatedAt: null
+      },
+      boardList: []
     }
   },
   computed: {
-    user () {
-      if (this.$store.getters.getUser != null) {
-        return this.$store.getters.getUser
-      } else {
-        return { uid: null, email: null }
-      }
-    },
     refQuadro () {
       if (this.user.uid != null) {
-        return firebase
+        return this.$firebase
           .firestore()
           .collection('app')
           .doc(this.user.uid)
-          .collection('Pasta')
-          .doc(this.id)
-          .collection('Quadro')
+          .collection('folder')
+          .doc(this.idFolder)
+          .collection('board')
           .orderBy('title', 'desc')
       } else {
         return null
@@ -253,12 +253,12 @@ export default {
     },
     refPasta () {
       if (this.user.uid != null) {
-        return firebase
+        return this.$firebase
           .firestore()
           .collection('app')
           .doc(this.user.uid)
-          .collection('Pasta')
-          .doc(this.id)
+          .collection('folder')
+          .doc(this.idFolder)
       } else {
         return null
       }
@@ -278,28 +278,25 @@ export default {
         // entrada para metodo de alerta de caractere proibido
         return
       }
-      const conteudo = {
-        title: this.title,
-        id: this.id
-      }
+      const newBoard = this.board
 
-      db.collection('app')
+      this.$db.collection('app')
         .doc(this.user.uid)
-        .collection('Pasta')
+        .collection('folder')
         .doc(this.id)
-        .collection('Quadro')
-        .add(conteudo)
+        .collection('board')
+        .add(newBoard)
         .then(ref => {
-          const pushID = { id: ref.id }
+          const pushID = { id: ref.id, createdAt: this.$timestamp, updatedAt: this.$timestamp }
           ref.update(pushID)
-          this.$notifiy('Novo Quadro Adicionada', 'green')
+          this.$notifiy('Novo board Adicionada', 'green')
         })
         .catch(() => {
           this.$notifiy('Objeto não adicionado', 'red')
         })
 
       this.dialogoAddQuadro = false
-      this.title = ''
+      this.resetFormBoardBoard()
     },
     init () {
       this.carregaPastaAtual()
@@ -308,12 +305,9 @@ export default {
     carregaQuadro () {
       if ((this.user.uid != null) & (this.refQuadro != null)) {
         this.refQuadro.onSnapshot(querySnapshot => {
-          this.quadroData = []
+          this.boardList = []
           querySnapshot.forEach(doc => {
-            this.quadroData.push({
-              id: doc.id,
-              title: doc.data().title
-            })
+            this.boardList = doc.data()
           })
         })
       }
@@ -331,29 +325,27 @@ export default {
           })
       }
     },
-    carregaTarefas (item) {
-      this.$router.push({ name: 'Tarefas', params: { id: item.id, id: this.id } })
+    runTaskScreen (board) {
+      this.$router.push({ name: 'Task', params: { idBoard: stringify(board.id), idFolder: stringify(this.idFolder) } })
     },
-    editaQuadro (item) {
+    editaQuadro (board) {
       this.dialogoEditaQuadro = true
-      this.title = item.title
-      this.id = item.id
+      this.board = board
     },
-    deletaQuadro (item) {
+    deletaQuadro (board) {
       this.dialogoApagaQuadro = true
-      this.title = item.title
-      this.id = item.id
+      this.board = board
     },
     apagaQuadroDB () {
-      db.collection('app')
+      this.$db.collection('app')
         .doc(this.user.uid)
-        .collection('Pasta')
-        .doc(this.id)
-        .collection('Quadro')
-        .doc(this.id)
+        .collection('folder')
+        .doc(this.idFolder)
+        .collection('board')
+        .doc(this.board.id)
         .delete()
         .then(() => {
-          this.$notifiy('Quadro apagado com sucesso', 'green')
+          this.$notifiy('board apagado com sucesso', 'green')
         })
         .catch(() => {
           this.$notifiy('Erro ao tentar apagar o contrato', 'red')
@@ -361,32 +353,34 @@ export default {
       this.dialogoApagaQuadro = false
     },
     salvaEdicao () {
-      let b = this.title
-      if (b.includes('/') | b.includes('..')) {
-        // entrada para metodo de alerta de caractere proibido
+      if (this.board.title.includes('/') | this.board.title.includes('..')) {
         return
       }
-      const objeto = {
-        title: this.title
-      }
-      db.collection('app')
+      const newBoard = this.board
+      newBoard.updatedAt = this.$timestamp
+      this.$db.collection('app')
         .doc(this.user.uid)
-        .collection('Pasta')
-        .doc(this.id)
-        .collection('Quadro')
-        .doc(this.id)
-        .update(objeto)
+        .collection('folder')
+        .doc(this.idFolder)
+        .collection('board')
+        .doc(this.board.id)
+        .update(newBoard)
         .then(() => {
-          this.$notifiy('Quadro excluído com sucesso', 'green')
+          this.$notifiy('board excluído com sucesso', 'green')
         })
         .catch(() => {
           this.$notifiy('Erro ao tentar excluir o quadro', 'red')
         })
       this.dialogoEditaQuadro = false
-      this.title = ''
+      this.resetFormBoardBoard()
     },
-    resetForm () {
-      this.title = null
+    resetFormBoard () {
+      this.board = {
+        id: null,
+        title: '',
+        createdAt: null,
+        updatedAt: null
+      }
     }
   }
 }
