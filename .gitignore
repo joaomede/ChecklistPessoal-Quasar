@@ -13,6 +13,7 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 yarn.lock
+src-pwd
 
 # Editor directories and files
 .idea
