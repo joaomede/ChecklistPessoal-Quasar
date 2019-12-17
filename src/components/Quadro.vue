@@ -186,7 +186,7 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ this.nomeDoQuadro }}
+            {{ nomeDoQuadro }}
           </div>
         </q-card-section>
 
