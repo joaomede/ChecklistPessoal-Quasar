@@ -18,7 +18,9 @@ module.exports = function(ctx) {
     ],
 
     framework: {
-      // all: true, // --- includes everything; for dev only!
+      iconSet: 'material-icons',
+      lang: 'pt-br', // Quasar language pack
+      all: false, // --- includes everything; for dev only!
 
       components: [
         "QLayout",
@@ -81,9 +83,6 @@ module.exports = function(ctx) {
 
       // Quasar plugins
       plugins: ["Notify", "Cookies"]
-
-      // iconSet: 'ionicons-v4'
-      // lang: 'de' // Quasar language
     },
 
     supportIE: false,
@@ -92,10 +91,22 @@ module.exports = function(ctx) {
       scopeHoisting: true,
       vueRouterMode: "history",
       // vueCompiler: true,
-      // gzip: true,
-      // analyze: true,
-      // extractCSS: false,
-      extendWebpack(cfg) {}
+      showProgress: true,
+      gzip: false,
+      analyze: false,
+      extractCSS: false,
+      extendWebpack (cfg) {
+        cfg.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /node_modules/,
+          options: {
+            formatter: require('eslint').CLIEngine.getFormatter('stylish')
+          }
+        })
+      }
+
     },
 
     devServer: {
@@ -152,18 +163,20 @@ module.exports = function(ctx) {
       }
     },
 
+    // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
+    capacitor: {
+      hideSplashscreen: true
+    },
+
+    // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
-      // id: 'org.cordova.quasar.app'
+      id: 'org.cordova.quasar.app'
       // noIosLegacyBuildFlag: true // uncomment only if you know what you are doing
     },
 
+    // Full list of options: https://quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
     electron: {
-      // bundler: 'builder', // or 'packager'
-
-      extendWebpack(cfg) {
-        // do something with Electron main process Webpack cfg
-        // chainWebpack also available besides this extendWebpack
-      },
+      bundler: 'packager', // 'packager' or 'builder'
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
@@ -172,14 +185,25 @@ module.exports = function(ctx) {
         // appCategoryType: '',
         // osxSign: '',
         // protocol: 'myapp://path',
-        // Window only
+        // Windows only
         // win32metadata: { ... }
       },
 
       builder: {
         // https://www.electron.build/configuration/configuration
-        // appId: 'quasar-app'
+
+        appId: 'app'
+      },
+
+      // keep in sync with /src-electron/main-process/electron-main
+      // > BrowserWindow > webPreferences > nodeIntegration
+      // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
+      nodeIntegration: true,
+
+      extendWebpack (cfg) {
+        // do something with Electron main process Webpack cfg
+        // chainWebpack also available besides this extendWebpack
       }
     }
-  };
+  }
 };

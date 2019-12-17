@@ -21,3 +21,5 @@ yarn.lock
 *.ntvs*
 *.njsproj
 *.sln
+
+.env
