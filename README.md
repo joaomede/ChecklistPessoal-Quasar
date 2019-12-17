@@ -45,6 +45,7 @@ Add Task List            |  Task List                | Task View
                 {
                   "id": "1",
                   "finished": "Boolean",
+                  "title": "task title",
                   "content": "Description here",
                   "finishNotes": "Additional content here upon completion",
                   "createdAt": "timestamp here",
