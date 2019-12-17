@@ -9,13 +9,13 @@
           "id": "1",
           "title": "folder title",
           "createdAt": "timestamp here",
-          "updated": "timestamp update",
+          "updatedAt": "timestamp update",
           "board": [
             {
               "id": "1",
               "title": "title board",
               "createdAt": "timestamp here",
-              "updated": "timestamp update",
+              "updatedAt": "timestamp update",
               "task": [
                 {
                   "id": "1",
@@ -23,7 +23,7 @@
                   "content": "Description here",
                   "finishNotes": "Additional content here upon completion",
                   "createdAt": "timestamp here",
-                  "updated": "timestamp update"
+                  "updatedAt": "timestamp update"
                 }
               ]
             }
