@@ -1,7 +1,7 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
 import { db } from '../boot/firebase'
 import { Cookies } from 'quasar'
+import Vue, { ssrContext } from 'vue'
 
 Vue.use(Vuex)
 
@@ -35,7 +35,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    async boot (state, { ssrContext }) {
+    async boot (state) {
       const cookies = process.env.SERVER
         ? Cookies.parseSSR(ssrContext)
         : Cookies // otherwise we're on client
