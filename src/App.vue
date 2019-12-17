@@ -16,24 +16,7 @@
 
           <q-toolbar-title>CheckList Pessoal</q-toolbar-title>
           <q-btn
-            v-if="user"
-            class="q-mr-xs"
-            dense
-            round
-            flat
-            icon="new_releases"
-            to="/feedversion"
-          >
-            <q-badge
-              color="red"
-              floating
-              transparent
-            >
-              {{ versaoUltima }}
-            </q-badge>
-          </q-btn>
-          <q-btn
-            v-if="!user"
+            v-if="user.uid != null"
             class="q-mr-xs"
             dense
             round
@@ -45,11 +28,11 @@
               floating
               transparent
             >
-              {{ versaoUltima }}
+              {{ version }}
             </q-badge>
           </q-btn>
           <q-btn
-            v-if="!user.uid"
+            v-if="user.uid == null"
             flat
             round
             dense
@@ -58,7 +41,7 @@
             to="/login"
           />
           <q-btn
-            v-if="user.uid"
+            v-if="user.uid != null"
             alt="Sair"
             flat
             round
@@ -188,9 +171,9 @@
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
             <div class="text-weight-bold">
-              {{ nomeUsuario }}
+              {{ user.username }}
             </div>
-            <div>{{ emailUsuario }}</div>
+            <div>{{ user.email }}</div>
           </div>
         </q-img>
       </q-drawer>
@@ -205,7 +188,7 @@
         class="bg-grey-8 text-white"
       >
         <q-toolbar>
-          <q-toolbar-title>Organize-se - {{ versao }}</q-toolbar-title>
+          <q-toolbar-title>Organize-se - {{ version }}</q-toolbar-title>
         </q-toolbar>
       </q-footer>
     </q-layout>
@@ -224,37 +207,8 @@ export default {
       emailUsuario: null
     }
   },
-  computed: {
-    user () {
-      return this.$store.getters.getUser
-    },
-    nomeUsuario () {
-      if (this.user.uid != null) {
-        return this.$store.getters.getNomeUsuario
-      } else {
-        return 'Usuario'
-      }
-    },
-    pastaAtual () {
-      if (this.$store.getters.getPastaAtual != null) {
-        return this.$store.getters.getPastaAtual
-      } else {
-        return null
-      }
-    },
-    quadroAtual () {
-      if (this.$store.getters.getQuadroAtual != null) {
-        return this.$store.getters.getQuadroAtual
-      } else {
-        return null
-      }
-    }
-  },
-
   mounted () {
     this.$store.dispatch('boot')
-    this.carregausername()
-    this.verificaSeEstaLogado()
   },
   methods: {
     logout () {
@@ -262,13 +216,6 @@ export default {
       this.$q.cookies.remove('user')
       this.$store.dispatch('setUser')
       this.$router.replace('login')
-    },
-    verificaSeEstaLogado () {
-      if (this.user.uid != null) {
-        this.emailUsuario = this.user.email
-      } else {
-        this.emailUsuario = 'sem@email.com'
-      }
     }
   }
 }
