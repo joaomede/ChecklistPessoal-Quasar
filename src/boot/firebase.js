@@ -3,13 +3,13 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 
 var Config = {
-  apiKey: 'YourAPI',
-  authDomain: 'YourAPI',
-  databaseURL: 'YourAPI',
-  projectId: 'YourAPI',
-  storageBucket: 'YourAPI',
-  messagingSenderId: 'YourAPI',
-  appId: 'YourAPI'
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTHDOFIREBASE,
+  databaseURL: process.env.DATABASEURL,
+  projectId: process.env.PROJECTID,
+  storageBucket: process.env.STORAGEBUCKET,
+  messagingSenderId: process.env.MESSAGINGSENDERID,
+  appId: process.env.APPIP
 }
 firebase.initializeApp(Config)
 firebase
