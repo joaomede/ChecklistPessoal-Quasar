@@ -9,7 +9,7 @@
       round
       color="orange darken-2"
       class="fixed fabRight"
-      @click.stop="(dialogoAddPasta = true), resetNameFolder()"
+      @click.stop="(dialogoAddPasta = true), resetFolder()"
     >
       <q-icon name="add" />
     </q-btn>
@@ -19,7 +19,7 @@
       round
       color="orange darken-2"
       class="fixed fabCenter"
-      @click.stop="(dialogoAddPasta = true), resetNameFolder()"
+      @click.stop="(dialogoAddPasta = true), resetFolder()"
     >
       <q-icon
         class="iconFabCenter"
@@ -27,7 +27,7 @@
       />
     </q-btn>
 
-    <!-- conteudo pasta -->
+    <!-- content pasta -->
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h6 text-center">
@@ -35,11 +35,11 @@
         </div>
 
         <q-item
-          v-for="item in pastaData"
-          :key="item.id"
+          v-for="folders in folderList"
+          :key="folders.id"
           v-ripple
           clickable
-          @click="carregaTelaQuadros(item)"
+          @click="runBoardScreen(folders)"
         >
           <q-item-section
             avatar
@@ -54,7 +54,7 @@
 
           <q-item-section>
             <q-item-label lines="1">
-              {{ item.title }}
+              {{ folders.title }}
             </q-item-label>
           </q-item-section>
 
@@ -62,7 +62,7 @@
             <q-icon
               name="edit"
               color="blue"
-              @click.stop="editaPasta(item)"
+              @click.stop="showFolderEdit(folders)"
             />
           </q-item-section>
 
@@ -70,7 +70,7 @@
             <q-icon
               name="delete_sweep"
               color="grey ligten-1"
-              @click.stop="deletaPasta(item)"
+              @click.stop="showFolderDelete(folders)"
             />
           </q-item-section>
         </q-item>
@@ -92,7 +92,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="title"
+              v-model="folder.title"
               label="Informe o nome da pasta"
               required
             />
@@ -133,7 +133,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="title"
+              v-model="folder.title"
               label="Informe o nome da pasta"
               required
             />
@@ -170,7 +170,7 @@
 
         <q-card-section>
           <div class="text-h6">
-            {{ title }}
+            {{ folder.title }}
           </div>
         </q-card-section>
 
@@ -198,9 +198,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import { db } from '../boot/firebase'
-
+import { stringify } from 'querystring'
 export default {
   name: 'Dash',
   data () {
@@ -210,23 +208,20 @@ export default {
       dialogoConfirmaDeletaPasta: false,
 
       msg: 'Bem vindo ao App',
-      id: '',
-      title: '',
-      ref: firebase.firestore().collection('app'),
-      pastaData: []
+      folder: {
+        id: null,
+        title: '',
+        createdAt: null,
+        updatedAt: null
+      },
+      ref: this.$firebase.firestore().collection('app'),
+      folderList: []
     }
   },
   computed: {
-    user () {
-      if (this.$store.getters.getUser != null) {
-        return this.$store.getters.getUser
-      } else {
-        return { uid: null, email: null }
-      }
-    },
     refPasta () {
       if (this.user.uid != null) {
-        return firebase
+        return this.$firebase
           .firestore()
           .collection('app')
           .doc(this.user.uid)
@@ -252,22 +247,24 @@ export default {
         // entrada para método de alerta caractere incorreto
         return
       }
-      const conteudo = {
+      const newFolder = {
         title: this.title,
-        id: null
+        id: null,
+        createdAt: null,
+        updatedAt: null
       }
 
-      db.collection('app')
-        .doc(this.$store.getters.getUser.uid)
+      this.$db.collection('app')
+        .doc(this.user.uid)
         .collection('Pasta')
-        .add(conteudo)
+        .add(newFolder)
         .then(ref => {
-          const pushID = { id: ref.id }
+          const pushID = { id: ref.id, createdAt: this.$timestamp, updatedAt: this.$timestamp }
           ref.update(pushID)
           this.$notifiy('Nova Pasta Adicionada', 'green')
         })
         .catch(() => {
-          this.$notifiy('objeto não adicionado', 'red')
+          this.$notifiy('object não adicionado', 'red')
         })
 
       this.dialogoAddPasta = false
@@ -276,30 +273,26 @@ export default {
     carregaPastas () {
       if ((this.user.uid != null) & (this.refPasta != null)) {
         this.refPasta.onSnapshot(querySnapshot => {
-          this.pastaData = []
+          this.folderList = []
           querySnapshot.forEach(doc => {
-            this.pastaData.push({
-              id: doc.id,
-              title: doc.data().title
-            })
+            this.folderList.push(doc.data())
           })
         })
       }
     },
     atualizaEditaPasta () {
-      let a = this.title
-      if (a.includes('/') || a.includes('..')) {
-        // entrada para método de alerta caractere incorreto
+      if (this.folder.title.includes('/') || this.folder.title.includes('..')) {
         return
       }
-      const objeto = {
-        title: this.title
+      const newFolder = {
+        title: this.folder.title,
+        updatedAt: this.folder.updatedAt
       }
-      db.collection('app')
-        .doc(this.$store.getters.getUser.uid)
+      this.$db.collection('app')
+        .doc(this.user.uid)
         .collection('Pasta')
         .doc(this.id)
-        .update(objeto)
+        .update(newFolder)
         .then(() => {
           this.$notifiy('Ultimo acesso atualizado', 'green')
         })
@@ -307,13 +300,13 @@ export default {
           this.$notifiy('Acesso não atualizado', 'red')
         })
       this.dialogoEditaPasta = false
-      this.title = ''
+      this.resetFolder()
     },
     apagaPastaDB () {
-      db.collection('app')
+      this.$db.collection('app')
         .doc(this.user.uid)
         .collection('Pasta')
-        .doc(this.id)
+        .doc(this.folder.id)
         .delete()
         .then(() => {
           this.$notifiy('Pasta removida com sucesso', 'green')
@@ -323,25 +316,27 @@ export default {
         })
       this.dialogoConfirmaDeletaPasta = false
     },
-    // carrega tela quadros
-    carregaTelaQuadros (item) {
+    runBoardScreen (folder) {
       this.$router.push({
-        name: 'Quadro',
-        params: { id: item.id }
+        name: 'Board',
+        params: { idFolder: stringify(folder.id) }
       })
     },
-    editaPasta (item) {
+    showFolderEdit (folder) {
       this.dialogoEditaPasta = true
-      this.title = item.title
-      this.id = item.id
+      this.folder = folder
     },
-    deletaPasta (item) {
+    showFolderDelete (folder) {
       this.dialogoConfirmaDeletaPasta = true
-      this.title = item.title
-      this.id = item.id
+      this.folder = folder
     },
-    resetNameFolder () {
-      this.title = null
+    resetFolder () {
+      this.folder = {
+        id: null,
+        title: '',
+        createdAt: null,
+        updatedAt: null
+      }
     }
   }
 }
