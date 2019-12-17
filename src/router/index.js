@@ -31,9 +31,9 @@ export default function({ ssrContext }) {
           component: () => import("../components/Registro")
         },
         {
-          path: "/sobre",
-          name: "Sobre",
-          component: () => import("../components/Sobre")
+          path: "/about",
+          name: "About",
+          component: () => import("../components/About")
         },
         {
           path: "/trocarsenha",
@@ -114,9 +114,9 @@ export default function({ ssrContext }) {
           component: () => import("../components/Registro")
         },
         {
-          path: "/sobre",
-          name: "Sobre",
-          component: () => import("../components/Sobre")
+          path: "/about",
+          name: "About",
+          component: () => import("../components/About")
         },
         {
           path: "/trocarsenha",

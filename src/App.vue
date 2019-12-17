@@ -54,12 +54,12 @@
               <q-item-section>Trocar Senha</q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/sobre">
+            <q-item clickable v-ripple to="/about">
               <q-item-section avatar>
                 <q-icon name="question_answer" />
               </q-item-section>
 
-              <q-item-section>Sobre</q-item-section>
+              <q-item-section>About</q-item-section>
             </q-item>
           </q-list>
         </q-scroll-area>
