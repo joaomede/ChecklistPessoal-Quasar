@@ -2,16 +2,6 @@
 import firebase from "firebase";
 import "firebase/firestore";
 
-var versionfeedconfig = {
-  apiKey: "YourAPI",
-  authDomain: "YourAPI",
-  databaseURL: "YourAPI",
-  projectId: "YourAPI",
-  storageBucket: "",
-  messagingSenderId: "YourAPI",
-  appId: "YourAPI"
-};
-
 var Config = {
   apiKey: "YourAPI",
   authDomain: "YourAPI",
@@ -21,17 +11,7 @@ var Config = {
   messagingSenderId: "YourAPI",
   appId: "YourAPI"
 };
-
-// Initialize Firebase
 firebase.initializeApp(Config);
-// incia banco
-
-var secondary = firebase.initializeApp(versionfeedconfig, "secondary");
-export const dbfeed = secondary.firestore();
-
-export const db = firebase.firestore();
-export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-export default firebase;
 firebase
   .firestore()
   .enablePersistence()
@@ -47,3 +27,7 @@ firebase
       // ...
     }
   });
+
+export const db = firebase.firestore();
+export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+export default firebase;

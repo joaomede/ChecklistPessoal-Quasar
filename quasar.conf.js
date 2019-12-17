@@ -4,7 +4,7 @@ module.exports = function(ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
-    boot: ["main.js", "boot.js", "notify.js"],
+    boot: ["firebase.js", "boot.js", "notify.js"],
 
     css: ["app.styl"],
 
