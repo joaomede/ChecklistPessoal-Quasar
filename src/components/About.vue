@@ -5,7 +5,7 @@
       align-center
     >
       <q-img
-        :src="symbol2logo"
+        src="../statics/symbol2logo.png"
         style="height: 140px; max-width: 150px"
       />
       <div class="centralDiv">
@@ -17,7 +17,7 @@
             Symbol 2 Studio
           </div>
           <div class="text-h6 text-bold">
-            (2019 - {{ versionUpdate }})
+            (2019 - {{ version }})
           </div>
           <div class="text-h6 text-bold">
             Contribuições:
@@ -67,18 +67,3 @@
     </q-card>
   </div>
 </template>
-
-<script>
-import symbol2logo from '../statics/symbol2logo.png'
-export default {
-  data () {
-    return {
-      symbol2log: symbol2logo
-    }
-  }
-}
-</script>
-
-<style lang="scss" scoped>
-
-</style>
