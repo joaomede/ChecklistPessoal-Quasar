@@ -36,6 +36,7 @@ export default new Vuex.Store({
   },
   mutations: {
     async boot (state) {
+      state.version = process.env.VERSION
       const cookies = process.env.SERVER
         ? Cookies.parseSSR(ssrContext)
         : Cookies // otherwise we're on client
@@ -59,9 +60,6 @@ export default new Vuex.Store({
         state.user = { uid: null, email: 'email@email.com', username: 'no name' }
       }
     },
-    setVersion (state) {
-      state.version = process.env.VERSION
-    },
     definePastaAtual (state, payload) {
       state.pastaAtual = payload
     },
@@ -72,9 +70,6 @@ export default new Vuex.Store({
   actions: {
     boot ({ commit }) {
       commit('boot')
-    },
-    setVersion ({ commit }) {
-      commit('setVersion')
     },
     definePastaAtual ({ commit }, payload) {
       commit('definePastaAtual', payload)
