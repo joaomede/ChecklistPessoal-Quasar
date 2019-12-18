@@ -8,7 +8,7 @@
       <q-card class="my-card">
         <q-card-section>
           <div class="text-h6">
-            Registre-se
+            {{ $t('register.title') }}
           </div>
         </q-card-section>
 
@@ -17,7 +17,7 @@
             <q-input
               v-model="nome"
               :rules="rulesNome"
-              label="Qual seu nome?"
+              :label="$t('register.questionName')"
               required
               filled
               lazy-rules
@@ -36,7 +36,7 @@
               v-model="senha"
               type="password"
               :rules="senhaRules"
-              label="Senha"
+              :label="$t('register.password')"
               required
               filled
               lazy-rules
@@ -45,7 +45,7 @@
               v-model="senha2"
               type="password"
               :rules="senhaRules"
-              label="Repita a senha"
+              :label="$t('register.labelRepeatPassword')"
               required
               filled
               lazy-rules
@@ -58,7 +58,7 @@
             color="primary"
             @click="registrar"
           >
-            registre-se
+            {{ $t('register.btnRegister') }}
           </q-btn>
         </q-card-section>
 
@@ -67,7 +67,7 @@
             color="primary"
             to="login"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -113,17 +113,17 @@ export default {
               .set(objeto)
               .then(() => {
                 this.$router.replace('folder')
-                this.$notifiy('Cadastro realizado com sucesso', 'green')
+                this.$notifiy(this.$t('register.sucessRegister'), 'green')
               })
               .catch(() => {
-                this.$notifiy('Erro ao tentar efetuar login', 'red')
+                this.$notifiy(this.$t('register.failLogin'), 'red')
               })
           })
           .catch(() => {
-            this.$notifiy('Erro ao tentar criar usuário', 'red')
+            this.$notifiy(this.$t('register.failRegister'), 'red')
           })
       } else {
-        this.$notifiy('Senhas são diferentes', 'red')
+        this.$notifiy(this.$t('register.differentPasswords'), 'red')
       }
     }
   }
