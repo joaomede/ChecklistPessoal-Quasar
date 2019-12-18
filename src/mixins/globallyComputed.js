@@ -13,16 +13,16 @@ export default {
         return 'Usuario'
       }
     },
-    pastaAtual () {
-      if (this.$store.getters.getPastaAtual != null) {
-        return this.$store.getters.getPastaAtual
+    currentFolder () {
+      if (this.$store.getters.getCurrentFolder != null) {
+        return this.$store.getters.getCurrentFolder
       } else {
         return null
       }
     },
-    quadroAtual () {
-      if (this.$store.getters.getQuadroAtual != null) {
-        return this.$store.getters.getQuadroAtual
+    currentBoard () {
+      if (this.$store.getters.getCurrentBoard != null) {
+        return this.$store.getters.getCurrentBoard
       } else {
         return null
       }

@@ -25,10 +25,10 @@ export default new Vuex.Store({
     getVersion: state => {
       return state.version
     },
-    getPastaAtual (state) {
+    getCurrentFolder (state) {
       return state.folderActive
     },
-    getQuadroAtual (state) {
+    getCurrentBoard (state) {
       return state.boardActive
     }
   },
