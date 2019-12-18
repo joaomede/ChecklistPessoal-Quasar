@@ -14,7 +14,7 @@
             @click="left = !left"
           />
 
-          <q-toolbar-title>CheckList Pessoal</q-toolbar-title>
+          <q-toolbar-title>{{ $t('app.title') }}</q-toolbar-title>
           <q-btn
             class="q-mr-xs"
             dense
@@ -115,7 +115,7 @@
                 <q-icon name="dashboard" />
               </q-item-section>
 
-              <q-item-section>Tela Inicial</q-item-section>
+              <q-item-section>{{ $t('app.menuDrawer.home') }}</q-item-section>
             </q-item>
 
             <q-item
@@ -127,7 +127,7 @@
               <q-item-section avatar>
                 <q-icon name="fas fa-sync-alt" />
               </q-item-section>
-              <q-item-section>Atualizações</q-item-section>
+              <q-item-section>{{ $t('app.menuDrawer.updates') }}</q-item-section>
             </q-item>
 
             <q-item
@@ -140,7 +140,7 @@
                 <q-icon name="vpn_key" />
               </q-item-section>
 
-              <q-item-section>Trocar Senha</q-item-section>
+              <q-item-section>{{ $t('app.menuDrawer.changePassword') }}</q-item-section>
             </q-item>
 
             <q-item
@@ -152,7 +152,7 @@
                 <q-icon name="question_answer" />
               </q-item-section>
 
-              <q-item-section>About</q-item-section>
+              <q-item-section>{{ $t('app.menuDrawer.about') }}</q-item-section>
             </q-item>
           </q-list>
         </q-scroll-area>
@@ -187,7 +187,7 @@
         class="bg-grey-8 text-white"
       >
         <q-toolbar>
-          <q-toolbar-title>{{ $t('footerMessage') }} - {{ version }}</q-toolbar-title>
+          <q-toolbar-title>{{ $t('app.footerMessage') }} - {{ version }}</q-toolbar-title>
         </q-toolbar>
       </q-footer>
     </q-layout>
