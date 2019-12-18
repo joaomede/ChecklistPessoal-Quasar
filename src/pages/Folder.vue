@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-h4 text-center">
-      {{ msg }}
+      {{ $t('folder.welcome') }}
     </div>
     <!-- flutuante -->
     <q-btn
@@ -31,7 +31,7 @@
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h6 text-center">
-          Selecione sua pasta pessoal
+          {{ $t('folder.title') }}
         </div>
 
         <q-item
@@ -85,7 +85,7 @@
       >
         <q-card-section>
           <div class="text-h6">
-            Adicione uma pasta
+            {{ $t('dialogs.addNewFolder') }}
           </div>
         </q-card-section>
 
@@ -105,14 +105,14 @@
             color="black"
             @click.stop="dialogoAddPasta = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="criaPasta"
           >
-            Salvar
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -126,7 +126,7 @@
       >
         <q-card-section>
           <div class="text-h6">
-            Edite o nome da pasta
+            {{ $t('dialogs.editFolder') }}
           </div>
         </q-card-section>
 
@@ -146,14 +146,14 @@
             color="black"
             @click.stop="dialogoEditaPasta = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="atualizaEditaPasta"
           >
-            Salvar
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -164,7 +164,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h5">
-            Deseja realmente apagar?
+            {{ $t('dialogs.editFolder') }}
           </div>
         </q-card-section>
 
@@ -180,20 +180,18 @@
             color="black"
             @click.stop="dialogoConfirmaDeletaPasta = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="apagaPastaDB"
           >
-            Sim
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
-
-    <!-- lista de pastas-->
   </div>
 </template>
 
@@ -206,8 +204,6 @@ export default {
       dialogoAddPasta: false,
       dialogoEditaPasta: false,
       dialogoConfirmaDeletaPasta: false,
-
-      msg: 'Bem vindo ao App',
       folder: {
         id: null,
         title: '',
@@ -261,10 +257,10 @@ export default {
         .then(ref => {
           const pushID = { id: ref.id, createdAt: this.$timestamp, updatedAt: this.$timestamp }
           ref.update(pushID)
-          this.$notifiy(this.$t('newFolderAdded'), 'green')
+          this.$notifiy(this.$t('alert.sucess.addedFolder'), 'green')
         })
         .catch(() => {
-          this.$notifiy('object não adicionado', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'red')
         })
 
       this.dialogoAddPasta = false
@@ -294,10 +290,10 @@ export default {
         .doc(this.id)
         .update(newFolder)
         .then(() => {
-          this.$notifiy('Ultimo acesso atualizado', 'green')
+          this.$notifiy(this.$t('alert.sucess.updatedFolder'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Acesso não atualizado', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToUpdated'), 'red')
         })
       this.dialogoEditaPasta = false
       this.resetFolder()
@@ -309,10 +305,10 @@ export default {
         .doc(this.folder.id)
         .delete()
         .then(() => {
-          this.$notifiy('Pasta removida com sucesso', 'green')
+          this.$notifiy(this.$t('alert.sucess.removedFolder'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Erro ao tentar remover pasta', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'red')
         })
       this.dialogoConfirmaDeletaPasta = false
     },

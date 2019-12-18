@@ -14,6 +14,7 @@ export default {
   },
   // Folder
   folder: {
+    welcome: 'Bem vindo ao App',
     title: 'Selecione sua pasta pessoal'
   },
   dialogs: {
@@ -29,17 +30,17 @@ export default {
       errorTryingToLoading: 'Erro ao tentar carregar'
     },
     sucess: {
-      addFolder: 'Nova pasta adicionada com sucesso',
-      addBoard: 'Novo quadro adicionado com sucesso',
-      addTask: 'Nova tarefa adicionada com sucesso',
+      addedFolder: 'Nova pasta adicionada com sucesso',
+      addedBoard: 'Novo quadro adicionado com sucesso',
+      addedTask: 'Nova tarefa adicionada com sucesso',
       //
-      updateFolder: 'Pasta atualizada com sucesso',
-      updateBoard: 'Quadro atualizado com sucesso',
-      updateTask: 'Tarefa atualizada com sucesso',
+      updatedFolder: 'Pasta atualizada com sucesso',
+      updatedBoard: 'Quadro atualizado com sucesso',
+      updatedTask: 'Tarefa atualizada com sucesso',
       //
-      removeFolder: 'Pasta removida com sucesso',
-      removeBoard: 'Quadro removido com sucesso',
-      removeTask: 'Tarefa removida com sucesso'
+      removedFolder: 'Pasta removida com sucesso',
+      removedBoard: 'Quadro removido com sucesso',
+      removedTask: 'Tarefa removida com sucesso'
       //
     }
   },
