@@ -42,7 +42,7 @@
       />
     </q-btn>
     <div class="text-h5 text-center">
-      Tarefas
+      {{ $t('task.title') }}
     </div>
 
     <!-- tabs -->
@@ -207,21 +207,21 @@
             color="black"
             @click.stop="dialogShowActivityTasks = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="red"
             @click="dialogDeleteTasks = true"
           >
-            Apagar
+            {{ $t('geral.delete') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="dialogTasksEdit = true"
           >
-            Editar
+            {{ $t('geral.edit') }}
           </q-btn>
         </q-card-section>
 
@@ -248,7 +248,7 @@
 
         <q-card-section v-if="formTaskFinish.finishNotes != null">
           <div class="text-h6">
-            Nota de Conclusão:
+            {{ $t('dialogs.finishTaskNoteTitle') }}
           </div>
           <div class="text-h6">
             {{ formTaskFinish.finishNotes }}
@@ -261,14 +261,14 @@
             color="black"
             @click.stop="dialogShowFinishedActivities = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="red"
             @click="dialogDeleteTasks = true"
           >
-            Apagar
+            {{ $t('geral.delete') }}
           </q-btn>
         </q-card-section>
 
@@ -281,7 +281,7 @@
       <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">
-            Adicione uma Tarefa
+            {{ $t('dialogs.addNewTask') }}
           </div>
         </q-card-section>
 
@@ -298,7 +298,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <div class="text-h6">
-              Descrição:
+              {{ $t('dialogs.description') }}
             </div>
             <q-editor
               v-model="formTaskActive.content"
@@ -314,14 +314,14 @@
             color="black"
             @click.stop="dialogoAddTarefa = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="createTasks"
           >
-            Salvar
+            {{ $t('geral.save') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -332,7 +332,7 @@
       <q-card class="text-center">
         <q-card-section>
           <div class="text-h6">
-            Editar Tarefa
+            {{ $t('dialogs.editTask') }}
           </div>
         </q-card-section>
 
@@ -349,7 +349,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <div class="text-h6">
-              Descrição:
+              {{ $t('dialogs.description') }}
             </div>
             <q-editor
               v-model="formTaskActive.content"
@@ -365,14 +365,14 @@
             color="black"
             @click.stop="dialogTasksEdit = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="updateTasks()"
           >
-            Salvar
+            {{ $t('geral.save') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -383,7 +383,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h6">
-            Deseja realmente apagar esta tarefa?
+            {{ $t('dialogs.questionDelete') }}
           </div>
         </q-card-section>
 
@@ -402,14 +402,14 @@
             color="black"
             @click.stop="dialogDeleteTasks = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="red"
             @click="deleteTasks()"
           >
-            Sim
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -420,7 +420,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h6">
-            Deseja realmente concluir tarefa?
+            {{ $t('dialogs.dialogs') }}
           </div>
         </q-card-section>
 
@@ -436,14 +436,14 @@
             color="black"
             @click="dialogoConcluirTarefa = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="finishTasks"
           >
-            Sim
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -454,7 +454,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h6">
-            Deseja restaurar esta tarefa:
+            {{ $t('dialogs.questionRestore') }}
           </div>
         </q-card-section>
 
@@ -470,14 +470,14 @@
             color="black"
             @click="dialogRestoreTasks = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="restoreTasks()"
           >
-            Sim
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
 
@@ -490,7 +490,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h6">
-            Deseja adicionar alguma nota de conclusão?
+            {{ $t('dialogs.questionForAddNotes') }}
           </div>
         </q-card-section>
 
@@ -516,14 +516,14 @@
             color="black"
             @click.stop="dialogoAddNota = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="addNota()"
           >
-            Sim
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
 
@@ -707,10 +707,10 @@ export default {
             createdAt: this.$timestamp
           }
           ref.update(pushID)
-          this.$notifiy('Novo Quadro Adicionada', 'green')
+          this.$notifiy(this.$t('alert.sucess.addedTask'), 'green')
         })
         .catch(() => {
-          this.$notifiy('objeto não adicionado', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'green')
         })
 
       this.dialogoAddTarefa = false
@@ -730,10 +730,10 @@ export default {
         .doc(this.formTaskActive.id)
         .update({ finished: true })
         .then(() => {
-          this.$notifiy('Tarefa foi concluída', 'green')
+          this.$notifiy(this.$t('alert.sucess.finishTask'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Não foi possível concluir tarefa', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToFinish'), 'green')
         })
       this.dialogoAddNota = true
       this.dialogoConcluirTarefa = false
@@ -743,10 +743,10 @@ export default {
         .doc(this.formTaskActive.id)
         .update({ finishNotes: this.formTaskActive.finishNotes })
         .then(() => {
-          this.$notifiy('Nota "' + this.formTaskActive.finishNotes + '" foi adicionada', 'green')
+          this.$notifiy(this.$t('alert.sucess.addedTask'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Não foi possível adicionar nota', 'green')
+          this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'green')
         })
       this.dialogoAddNota = false
     },
@@ -768,10 +768,10 @@ export default {
           .doc(this.formTaskActive.id)
           .delete()
           .then(() => {
-            this.$notifiy('Tarefa foi apagada', 'green')
+            this.$notifiy(this.$t('alert.sucess.removedTask'), 'green')
           })
           .catch(() => {
-            this.$notifiy('Não foi possível excluir tarefa', 'red')
+            this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'green')
           })
       }
       if (this.formTaskFinish.finished === true) {
@@ -779,10 +779,10 @@ export default {
           .doc(this.formTaskFinish.id)
           .delete()
           .then(() => {
-            this.$notifiy('Tarefa foi apagada', 'green')
+            this.$notifiy(this.$t('alert.sucess.removedTask'), 'green')
           })
           .catch(() => {
-            this.$notifiy('Não foi possível excluir tarefa', 'red')
+            this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'green')
           })
       }
 
@@ -810,10 +810,10 @@ export default {
         .doc(this.formTaskFinish.id)
         .update({ finished: false, finishNotes: '' })
         .then(() => {
-          this.$notifiy('Tarefa restaurada', 'green')
+          this.$notifiy(this.$t('alert.sucess.restoreTask'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Não foi possível restaurar essa tarefa, tente novamente.', 'green')
+          this.$notifiy(this.$t('alert.error.errorTryingToRestore'), 'green')
         })
       this.dialogRestoreTasks = false
     },
@@ -823,10 +823,10 @@ export default {
         .doc(this.formTaskActive.id)
         .update(this.formTaskActive)
         .then(ref => {
-          this.$notifiy('Tarefa atualizada', 'green')
+          this.$notifiy(this.$t('alert.sucess.updatedTask'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Problemas ao tentar atualizar tarefa', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToUpdated'), 'red')
         })
       this.dialogTasksEdit = false
       this.dialogShowActivityTasks = false

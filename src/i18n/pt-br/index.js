@@ -20,19 +20,32 @@ export default {
   board: {
     title: 'Selecione o board'
   },
+  task: {
+    title: 'Tarefas'
+  },
   dialogs: {
     addNewFolder: 'Adicione uma pasta',
     addNewBoard: 'Adicione um quadro',
+    addNewTask: 'Adicione uma Tarefa',
+    finishTaskNoteTitle: 'Nota de Conclusão:',
+    description: 'Descrição:',
     editFolder: 'Edite o nome da pasta',
     editBoard: 'Edite o nome do do quadro',
-    questionDelete: 'Deseja realmente apagar?'
+    editTask: 'Editar Tarefa',
+    questionDelete: 'Deseja realmente apagar?',
+    questionFinish: 'Deseja realmente concluir tarefa?',
+    questionRestore: 'Deseja restaurar esta tarefa:',
+    questionForAddNotes: 'Deseja adicionar alguma nota de conclusão?'
   },
   alert: {
     error: {
       errorTryingToAdd: 'Erro ao tentar adicionar',
       errorTryingToRemove: 'Erro ao tentar remover',
       errorTryingToUpdated: 'Erro ao tentar atualizar',
-      errorTryingToLoading: 'Erro ao tentar carregar'
+      errorTryingToLoading: 'Erro ao tentar carregar',
+      //
+      errorTryingToRestore: 'Erro ao  tentar restaurar esta a tarefa',
+      errorTryingToFinish: 'Erro ao tentar finalizar esta tarefa'
     },
     sucess: {
       addedFolder: 'Nova pasta adicionada com sucesso',
@@ -45,13 +58,17 @@ export default {
       //
       removedFolder: 'Pasta removida com sucesso',
       removedBoard: 'Quadro removido com sucesso',
-      removedTask: 'Tarefa removida com sucesso'
+      removedTask: 'Tarefa removida com sucesso',
       //
+      finishTask: 'Tarefa concluída com sucesso',
+      restoreTask: 'A Tarefa foi restaurada com sucesso'
     }
   },
   geral: {
     back: 'Voltar',
     save: 'Salvar',
-    yes: 'Sim'
+    yes: 'Sim',
+    delete: 'Apagar',
+    edit: 'Editar'
   }
 }
