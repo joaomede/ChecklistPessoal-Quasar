@@ -59,7 +59,7 @@
       <q-card-section class="q-gutter-md">
         <q-btn
           color="green"
-          to="/dash"
+          to="/folder"
         >
           Volta para Página Inicial
         </q-btn>

@@ -261,7 +261,7 @@ export default {
         .then(ref => {
           const pushID = { id: ref.id, createdAt: this.$timestamp, updatedAt: this.$timestamp }
           ref.update(pushID)
-          this.$notifiy('Nova Pasta Adicionada', 'green')
+          this.$notifiy(this.$t('newFolderAdded'), 'green')
         })
         .catch(() => {
           this.$notifiy('object não adicionado', 'red')

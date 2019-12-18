@@ -43,7 +43,7 @@
         <q-card-section>
           <q-btn
             color="primary"
-            to="/registrar"
+            to="/register"
           >
             Registrar-se
           </q-btn>
@@ -52,7 +52,7 @@
         <q-card-section>
           <q-btn
             color="primary"
-            @click.stop="dialogoEsqueciSenha = true"
+            @click.stop="dialogForgotPassword = true"
           >
             Esqueci minha senha
           </q-btn>
@@ -62,7 +62,7 @@
 
     <!-- caixa de diálogo adiciona pasta -->
     <q-dialog
-      v-model="dialogoEsqueciSenha"
+      v-model="dialogForgotPassword"
       transition-show="rotate"
       transition-hide="rotate"
     >
@@ -76,7 +76,7 @@
         <q-card-section>
           <q-form class="q-gutter-md">
             <q-input
-              v-model="emailRecuperacao"
+              v-model="email"
               label="Informe seu email de recuperação"
               required
             />
@@ -86,7 +86,7 @@
         <q-card-section>
           <q-btn
             color="primary"
-            @click="recuperaAcesso"
+            @click="recoveryLogin"
           >
             Recuperar Acesso
           </q-btn>
@@ -95,7 +95,7 @@
         <q-card-section>
           <q-btn
             color="primary"
-            @click.stop="dialogoEsqueciSenha = false"
+            @click.stop="dialogForgotPassword = false"
           >
             Voltar
           </q-btn>
@@ -106,58 +106,43 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-
 export default {
   name: 'Login',
   data: () => ({
     valid: false,
-    dialogoEsqueciSenha: false,
+    dialogForgotPassword: false,
     email: '',
     senha: '',
-    emailRecuperacao: '',
     emailRules: [v => !!v || 'E-mail é requerido', v => /.+@.+/.test(v) || 'E-mail precisa ser válido'],
     senhaRules: [v => !!v || 'Senha é requerida', v => v.length >= 6 || 'Precisa ter mais de 6 dígitos']
   }),
-
-  computed: {
-    user () {
-      return this.$store.getters.getUser
-    }
-  },
   created () {
-    this.verificaEstaLogado()
+    this.verifyIsLogged()
   },
   methods: {
-    login () {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.senha)
-        .then(data => {
-          this.$q.cookies.set('user', data.user)
-          this.$store.dispatch('setUser')
-          this.$router.replace('dash')
-          this.$notifiy('Bem vindo de volta', 'green')
-        })
-        .catch(() => {
-          this.$notifiy('Erro ao tentar efetuar o login', 'red')
-        })
+    async login () {
+      try {
+        const result = await this.$firebase.auth().signInWithEmailAndPassword(this.email, this.senha)
+        this.$q.cookies.set('user', await result.user)
+        await this.$store.dispatch('boot')
+        await this.$router.replace('folder')
+        this.$notifiy('Bem vindo de volta', 'green')
+      } catch (error) {
+        this.$notifiy('Erro ao tentar efetuar o login', 'red')
+      }
     },
-    recuperaAcesso () {
-      firebase
-        .auth()
-        .sendPasswordResetEmail(this.emailRecuperacao)
-        .then(() => {
-          this.$notifiy('Email de recuperação enviado com sucesso', 'green')
-        })
-        .catch(() => {
-          this.$notifiy('Erro ao tentar enviar de recuperação', 'red')
-        })
-      this.dialogoEsqueciSenha = false
+    async recoveryLogin () {
+      this.dialogForgotPassword = false
+      try {
+        await this.$firebase.auth().sendPasswordResetEmail(this.email)
+        this.$notifiy('Email de recuperação enviado com sucesso', 'green')
+      } catch (error) {
+        this.$notifiy('Erro ao tentar enviar de recuperação', 'red')
+      }
     },
-    verificaEstaLogado () {
-      if (this.$store.getters.getUser != null) {
-        this.$router.replace('dash')
+    verifyIsLogged () {
+      if (this.user.uid != null) {
+        this.$router.replace('folder')
       }
     }
   }

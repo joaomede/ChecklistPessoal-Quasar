@@ -16,7 +16,6 @@
 
           <q-toolbar-title>CheckList Pessoal</q-toolbar-title>
           <q-btn
-            v-if="user.uid != null"
             class="q-mr-xs"
             dense
             round
@@ -58,7 +57,7 @@
         >
           <q-breadcrumbs-el
             icon="home"
-            to="/dash"
+            to="/folder"
           />
           <q-breadcrumbs-el
             v-if="currentFolder.idPasta != null"
@@ -82,7 +81,7 @@
           <q-breadcrumbs-el
             label="Home"
             icon="home"
-            to="/dash"
+            to="/folder"
           />
           <q-breadcrumbs-el
             v-if="currentFolder.idPasta != null"
@@ -110,7 +109,7 @@
             <q-item
               v-ripple
               clickable
-              to="/dash"
+              to="/folder"
             >
               <q-item-section avatar>
                 <q-icon name="dashboard" />
@@ -188,7 +187,7 @@
         class="bg-grey-8 text-white"
       >
         <q-toolbar>
-          <q-toolbar-title>Organize-se - {{ version }}</q-toolbar-title>
+          <q-toolbar-title>{{ $t('footerMessage') }} - {{ version }}</q-toolbar-title>
         </q-toolbar>
       </q-footer>
     </q-layout>
@@ -196,25 +195,41 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-
 export default {
   name: 'App',
   data () {
     return {
       left: false,
-      login: null,
-      emailUsuario: null
+      langs: [
+        {
+          label: 'Brazilian - PT',
+          value: 'pt-br'
+        },
+        {
+          label: 'English - US',
+          value: 'en-us'
+        }
+      ],
+      lang: this.$i18n.locale
     }
   },
   mounted () {
+    this.checkLanguage()
     this.$store.dispatch('boot')
   },
   methods: {
+    async checkLanguage () {
+      const localeClientLang = this.$q.lang.getLocale()
+      for (const language of this.$i18n.availableLocales) {
+        if (language === localeClientLang) {
+          this.lang = localeClientLang
+        }
+      }
+    },
     logout () {
-      firebase.auth().signOut()
+      this.$firebase.auth().signOut()
       this.$q.cookies.remove('user')
-      this.$store.dispatch('setUser')
+      this.$store.dispatch('boot')
       this.$router.replace('login')
     }
   }
