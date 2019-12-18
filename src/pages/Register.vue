@@ -58,7 +58,7 @@
             color="primary"
             @click="registrar"
           >
-            Registrar-se
+            registre-se
           </q-btn>
         </q-card-section>
 
@@ -77,7 +77,7 @@
 
 <script>
 export default {
-  name: 'Registro',
+  name: 'Register',
   data: () => ({
     valid: false,
     nome: '',
@@ -112,7 +112,7 @@ export default {
               .doc(data.user.uid)
               .set(objeto)
               .then(() => {
-                this.$router.replace('dash')
+                this.$router.replace('folder')
                 this.$notifiy('Cadastro realizado com sucesso', 'green')
               })
               .catch(() => {

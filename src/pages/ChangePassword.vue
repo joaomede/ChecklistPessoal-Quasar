@@ -54,7 +54,7 @@
         <q-card-section>
           <q-btn
             color="primary"
-            @click="trocarSenha"
+            @click="changePassword"
           >
             Trocar Senha
           </q-btn>
@@ -94,8 +94,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-
 export default {
   data: () => ({
     valid: false,
@@ -117,14 +115,11 @@ export default {
     }
   },
   created () {
-    this.setUser()
+    this.$store.dispatch('boot')
   },
   methods: {
-    setUser: function () {
-      this.$store.dispatch('setUser')
-    },
-    trocarSenha () {
-      const user = firebase.auth().currentUser
+    changePassword () {
+      const user = this.$firebase.auth().currentUser
       if (this.senha1 === this.senha2) {
         user
           .updatePassword(this.senha1)
