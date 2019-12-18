@@ -48,7 +48,7 @@ export default new Vuex.Store({
           state.user = {
             uid: user.uid,
             email: user.email,
-            username: result.username
+            username: result.data().username
           }
         } catch (error) {
           await cookies.remove('user')
