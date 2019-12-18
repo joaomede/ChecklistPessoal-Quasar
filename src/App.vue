@@ -117,24 +117,11 @@
 
               <q-item-section>{{ $t('app.menuDrawer.home') }}</q-item-section>
             </q-item>
-
             <q-item
               v-if="user"
               v-ripple
               clickable
-              to="feedversion"
-            >
-              <q-item-section avatar>
-                <q-icon name="fas fa-sync-alt" />
-              </q-item-section>
-              <q-item-section>{{ $t('app.menuDrawer.updates') }}</q-item-section>
-            </q-item>
-
-            <q-item
-              v-if="user"
-              v-ripple
-              clickable
-              to="/trocarsenha"
+              to="/changepassword"
             >
               <q-item-section avatar>
                 <q-icon name="vpn_key" />

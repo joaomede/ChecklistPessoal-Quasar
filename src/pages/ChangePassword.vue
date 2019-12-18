@@ -104,16 +104,6 @@ export default {
     senha2: '',
     senhaRules: [v => !!v || 'Senha é requerida', v => v.length >= 6 || 'Precisa ter mais de 6 dígitos']
   }),
-
-  computed: {
-    user () {
-      if (this.$store.getters.getUser != null) {
-        return this.$store.getters.getUser
-      } else {
-        return { uid: null, email: null }
-      }
-    }
-  },
   created () {
     this.$store.dispatch('boot')
   },

@@ -28,7 +28,7 @@ export default function ({ ssrContext }) {
     },
     {
       path: '/changepassword',
-      name: 'Trocar Senha',
+      name: 'ChangePassword',
       component: () => import('../pages/ChangePassword'),
       meta: { requiredAuth: true }
     },
