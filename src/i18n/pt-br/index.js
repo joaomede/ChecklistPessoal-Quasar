@@ -79,7 +79,6 @@ export default {
     btnRegister: 'Registre-se',
     sucessRegister: 'Cadastro realizado com sucesso',
     failRegister: 'Erro ao tentar criar usuário',
-    failLogin: 'Erro ao tentar efetuar login',
     differentPasswords: 'Senhas são diferentes'
   }
 }
