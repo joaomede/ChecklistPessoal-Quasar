@@ -17,9 +17,14 @@ export default {
     welcome: 'Bem vindo ao App',
     title: 'Selecione sua pasta pessoal'
   },
+  board: {
+    title: 'Selecione o board'
+  },
   dialogs: {
     addNewFolder: 'Adicione uma pasta',
+    addNewBoard: 'Adicione um quadro',
     editFolder: 'Edite o nome da pasta',
+    editBoard: 'Edite o nome do do quadro',
     questionDelete: 'Deseja realmente apagar?'
   },
   alert: {

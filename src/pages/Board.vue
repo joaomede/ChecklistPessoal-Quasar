@@ -51,7 +51,7 @@
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h5 text-center">
-          Selecione o board
+          {{ $t('board.title') }}
         </div>
         <q-item
           v-for="boards in boardList"
@@ -101,7 +101,7 @@
       >
         <q-card-section>
           <div class="text-h6">
-            Edite o nome do do quadro
+            {{ $t('dialogs.editBoard') }}
           </div>
         </q-card-section>
 
@@ -121,14 +121,14 @@
             color="black"
             @click.stop="dialogoEditaQuadro = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="salvaEdicao()"
           >
-            Salvar
+            {{ $t('geral.save') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -142,7 +142,7 @@
       >
         <q-card-section>
           <div class="text-h6">
-            Adicione um quadro
+            {{ $t('dialogs.editBoard') }}
           </div>
         </q-card-section>
 
@@ -162,14 +162,14 @@
             color="black"
             @click.stop="dialogoAddQuadro = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="criaQuadro"
           >
-            Salvar
+            {{ $t('geral.save') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -180,7 +180,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h6">
-            Deseja realmente apagar este quadro?
+            {{ $t('dialogs.questionDelete') }}
           </div>
         </q-card-section>
 
@@ -196,14 +196,14 @@
             color="black"
             @click.stop="dialogoApagaQuadro = false"
           >
-            Voltar
+            {{ $t('geral.back') }}
           </q-btn>
           <q-btn
             class="q-ma-xs"
             color="green"
             @click="apagaQuadroDB()"
           >
-            Sim
+            {{ $t('geral.yes') }}
           </q-btn>
         </q-card-section>
       </q-card>
@@ -289,10 +289,10 @@ export default {
         .then(ref => {
           const pushID = { id: ref.id, createdAt: this.$timestamp, updatedAt: this.$timestamp }
           ref.update(pushID)
-          this.$notifiy('Novo board Adicionada', 'green')
+          this.$notifiy(this.$t('alert.sucess.addedBoard'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Objeto não adicionado', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'red')
         })
 
       this.dialogoAddQuadro = false
@@ -345,10 +345,10 @@ export default {
         .doc(this.board.id)
         .delete()
         .then(() => {
-          this.$notifiy('board apagado com sucesso', 'green')
+          this.$notifiy(this.$t('alert.sucess.removedFolder'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Erro ao tentar apagar o contrato', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'red')
         })
       this.dialogoApagaQuadro = false
     },
@@ -366,10 +366,10 @@ export default {
         .doc(this.board.id)
         .update(newBoard)
         .then(() => {
-          this.$notifiy('board excluído com sucesso', 'green')
+          this.$notifiy(this.$t('alert.sucess.updatedBoard'), 'green')
         })
         .catch(() => {
-          this.$notifiy('Erro ao tentar excluir o quadro', 'red')
+          this.$notifiy(this.$t('alert.error.errorTryingToUpdated'), 'red')
         })
       this.dialogoEditaQuadro = false
       this.resetFormBoardBoard()
