@@ -196,7 +196,6 @@
 </template>
 
 <script>
-import { stringify } from 'querystring'
 export default {
   name: 'Dash',
   data () {
@@ -314,7 +313,7 @@ export default {
     runBoardScreen (folder) {
       this.$router.push({
         name: 'Board',
-        params: { idFolder: stringify(folder.id) }
+        params: { idFolder: (folder.id).toString() }
       })
     },
     showFolderEdit (folder) {

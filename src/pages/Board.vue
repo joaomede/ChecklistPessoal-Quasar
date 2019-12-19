@@ -212,7 +212,6 @@
 </template>
 
 <script>
-import { stringify } from 'querystring'
 export default {
   name: 'Board',
   props: {
@@ -326,7 +325,14 @@ export default {
       }
     },
     runTaskScreen (board) {
-      this.$router.push({ name: 'Task', params: { idBoard: stringify(board.id), idFolder: stringify(this.idFolder) } })
+      this.$router.push(
+        { name: 'Task',
+          params: {
+            idBoard: (board.id).toString(),
+            idFolder: (this.idFolder).toString()
+          }
+        }
+      )
     },
     showBoardEdit (board) {
       this.dialogoEditaQuadro = true
