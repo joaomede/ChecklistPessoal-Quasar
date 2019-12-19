@@ -537,7 +537,7 @@
 import { editorTools, nomeDasFronts } from '../boot/utils'
 
 export default {
-  name: 'Tarefas',
+  name: 'Task',
   props: {
     idFolder: {
       type: String,
