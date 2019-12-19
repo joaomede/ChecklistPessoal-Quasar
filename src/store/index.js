@@ -58,10 +58,10 @@ export default new Vuex.Store({
         state.user = { uid: null, email: 'email@email.com', username: 'no name' }
       }
     },
-    definePastaAtual (state, payload) {
+    setCurrentFolder (state, payload) {
       state.folderActive = payload
     },
-    defineQuadroAtual (state, payload) {
+    setCurrentBoard (state, payload) {
       state.boardActive = payload
     }
   },
@@ -69,11 +69,11 @@ export default new Vuex.Store({
     boot ({ commit }) {
       commit('boot')
     },
-    definePastaAtual ({ commit }, payload) {
-      commit('definePastaAtual', payload)
+    setCurrentFolder ({ commit }, payload) {
+      commit('setCurrentFolder', payload)
     },
-    defineQuadroAtual ({ commit }, payload) {
-      commit('defineQuadroAtual', payload)
+    setCurrentBoard ({ commit }, payload) {
+      commit('setCurrentBoard', payload)
     }
   }
 })

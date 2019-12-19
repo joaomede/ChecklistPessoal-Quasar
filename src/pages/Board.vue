@@ -317,8 +317,8 @@ export default {
         this.refPasta
           .get()
           .then(resp => {
-            this.$store.dispatch('definePastaAtual', resp.data())
-            this.$store.dispatch('defineQuadroAtual', { id: null })
+            this.$store.dispatch('setCurrentFolder', resp.data())
+            this.$store.dispatch('setCurrentBoard', { id: null })
           })
           .catch(err => {
             this.$notifiy(err, 'red')
