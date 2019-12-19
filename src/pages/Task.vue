@@ -587,13 +587,6 @@ export default {
     }
   },
   computed: {
-    user () {
-      if (this.$store.getters.getUser != null) {
-        return this.$store.getters.getUser
-      } else {
-        return { uid: null, email: null }
-      }
-    },
     refQuadro () {
       if (this.user.uid != null) {
         return this.$firebase
