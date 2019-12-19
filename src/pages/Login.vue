@@ -60,7 +60,6 @@
       </q-card>
     </q-form>
 
-    <!-- caixa de diálogo adiciona pasta -->
     <q-dialog
       v-model="dialogForgotPassword"
       transition-show="rotate"

@@ -1,6 +1,5 @@
 <template>
   <div class="q-pa-none">
-    <!-- flutuante -->
     <q-btn
       v-if="$q.platform.is.mobile"
       round
@@ -45,7 +44,6 @@
       {{ $t('task.title') }}
     </div>
 
-    <!-- tabs -->
     <div class="divPrincipal">
       <q-card>
         <q-tabs
@@ -79,7 +77,6 @@
             name="ativo"
             style="padding: 0px"
           >
-            <!-- Tab tarefas ativas -->
             <q-list
               bordered
               style="max-width: 900px; margin: auto;"
@@ -131,7 +128,6 @@
             name="concluido"
             style="padding: 0px"
           >
-            <!-- Tab tarefas concluídas -->
             <q-list
               bordered
               style="max-width: 900px; margin: auto;"
@@ -182,7 +178,6 @@
       </q-card>
     </div>
 
-    <!-- caixa de diálogo exibe detalhes tarefas ativas -->
     <q-dialog v-model="dialogShowActivityTasks">
       <q-card class="text-center backgroundCardColor">
         <q-card-section>
@@ -229,7 +224,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo exibe detalhes tarefas finished -->
     <q-dialog v-model="dialogShowFinishedActivities">
       <q-card class="text-center backgroundCardColor">
         <q-card-section>
@@ -276,7 +270,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo adiciona tarefa -->
     <q-dialog v-model="dialogoAddTarefa">
       <q-card class="text-center">
         <q-card-section>
@@ -327,7 +320,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo edita tarefa -->
     <q-dialog v-model="dialogTasksEdit">
       <q-card class="text-center">
         <q-card-section>
@@ -378,7 +370,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo apagar tarefa ativa confirmação -->
     <q-dialog v-model="dialogDeleteTasks">
       <q-card>
         <q-card-section>
@@ -415,7 +406,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo concluir tarefa ativa -->
     <q-dialog v-model="dialogoConcluirTarefa">
       <q-card>
         <q-card-section>
@@ -449,7 +439,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo restaurar tarefa -->
     <q-dialog v-model="dialogRestoreTasks">
       <q-card>
         <q-card-section>
@@ -485,7 +474,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo nota de conclusão -->
     <q-dialog v-model="dialogoAddNota">
       <q-card>
         <q-card-section>

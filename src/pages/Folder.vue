@@ -3,7 +3,7 @@
     <div class="text-h4 text-center">
       {{ $t('folder.welcome') }}
     </div>
-    <!-- flutuante -->
+
     <q-btn
       v-if="$q.platform.is.mobile"
       round
@@ -27,7 +27,6 @@
       />
     </q-btn>
 
-    <!-- content pasta -->
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h6 text-center">
@@ -77,7 +76,6 @@
       </q-list>
     </div>
 
-    <!-- caixa de diálogo adiciona pasta -->
     <q-dialog v-model="dialogoAddPasta">
       <q-card
         class="text-center"
@@ -118,7 +116,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo edita pasta -->
     <q-dialog v-model="dialogoEditaPasta">
       <q-card
         class="text-center"
@@ -159,7 +156,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo apagar tarefa confirmação -->
     <q-dialog v-model="dialogoConfirmaDeletaPasta">
       <q-card>
         <q-card-section>
