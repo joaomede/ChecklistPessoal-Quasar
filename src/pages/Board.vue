@@ -304,7 +304,7 @@ export default {
         this.refQuadro.onSnapshot(querySnapshot => {
           this.boardList = []
           querySnapshot.forEach(doc => {
-            this.boardList = doc.data()
+            this.boardList.push(doc.data())
           })
         })
       }
@@ -376,7 +376,7 @@ export default {
           this.$notifiy(this.$t('alert.error.errorTryingToUpdated'), 'red')
         })
       this.dialogoEditaQuadro = false
-      this.resetFormBoardBoard()
+      this.resetFormBoard()
     },
     resetFormBoard () {
       this.board = {
