@@ -110,7 +110,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="criaPasta"
+            @click="storeFolder"
           >
             {{ $t('geral.yes') }}
           </q-btn>
@@ -151,7 +151,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="atualizaEditaPasta"
+            @click="updateFolder"
           >
             {{ $t('geral.yes') }}
           </q-btn>
@@ -185,7 +185,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="apagaPastaDB"
+            @click="destroyFolder"
           >
             {{ $t('geral.yes') }}
           </q-btn>
@@ -229,17 +229,16 @@ export default {
     }
   },
   watch: {
-    refPasta: 'carregaPastas'
+    refPasta: 'indexFolder'
   },
   mounted () {
     this.$store.dispatch('definePastaAtual', { id: null })
     this.$store.dispatch('defineQuadroAtual', { id: null })
-    this.carregaPastas()
+    this.indexFolder()
   },
 
   methods: {
-    criaPasta () {
-      if (this.title.includes('/') || this.title.includes('..')) {
+    storeFolder () {
         // entrada para método de alerta caractere incorreto
         return
       }
@@ -266,7 +265,7 @@ export default {
       this.dialogoAddPasta = false
       this.title = ''
     },
-    carregaPastas () {
+    indexFolder () {
       if ((this.user.uid != null) & (this.refPasta != null)) {
         this.refPasta.onSnapshot(querySnapshot => {
           this.folderList = []
@@ -276,7 +275,7 @@ export default {
         })
       }
     },
-    atualizaEditaPasta () {
+    updateFolder () {
       if (this.folder.title.includes('/') || this.folder.title.includes('..')) {
         return
       }
@@ -298,7 +297,7 @@ export default {
       this.dialogoEditaPasta = false
       this.resetFolder()
     },
-    apagaPastaDB () {
+    destroyFolder () {
       this.$db.collection('app')
         .doc(this.user.uid)
         .collection('Pasta')
