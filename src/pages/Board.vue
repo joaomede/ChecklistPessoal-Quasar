@@ -272,9 +272,7 @@ export default {
   },
   methods: {
     storeBoard () {
-      let b = this.title
-      if (b.includes('/') | b.includes('..')) {
-        // entrada para metodo de alerta de caractere proibido
+      if (this.board.title.includes('/') | this.board.title.includes('..')) {
         return
       }
       const newBoard = this.board
@@ -282,7 +280,7 @@ export default {
       this.$db.collection('app')
         .doc(this.user.uid)
         .collection('folder')
-        .doc(this.id)
+        .doc(this.idFolder)
         .collection('board')
         .add(newBoard)
         .then(ref => {
@@ -295,7 +293,7 @@ export default {
         })
 
       this.dialogoAddQuadro = false
-      this.resetFormBoardBoard()
+      this.resetFormBoard()
     },
     init () {
       this.getCurrentFolder()
