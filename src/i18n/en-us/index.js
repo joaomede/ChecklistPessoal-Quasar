@@ -1,7 +1,7 @@
 export default {
   // APP
   app: {
-    title: 'CheckList Pessoal',
+    title: 'Personal CheckList',
     menuDrawer: [
       {
         home: 'Home screen',
