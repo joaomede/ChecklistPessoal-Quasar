@@ -220,7 +220,7 @@ export default {
           .firestore()
           .collection('app')
           .doc(this.user.uid)
-          .collection('Pasta')
+          .collection('folder')
           .orderBy('title', 'desc')
       } else {
         return null
@@ -250,7 +250,7 @@ export default {
 
       this.$db.collection('app')
         .doc(this.user.uid)
-        .collection('Pasta')
+        .collection('folder')
         .add(newFolder)
         .then(ref => {
           const pushID = { id: ref.id }
@@ -284,8 +284,8 @@ export default {
       }
       this.$db.collection('app')
         .doc(this.user.uid)
-        .collection('Pasta')
-        .doc(this.id)
+        .collection('folder')
+        .doc(this.folder.id)
         .update(newFolder)
         .then(() => {
           this.$notifiy(this.$t('alert.sucess.updatedFolder'), 'green')
@@ -299,7 +299,7 @@ export default {
     destroyFolder () {
       this.$db.collection('app')
         .doc(this.user.uid)
-        .collection('Pasta')
+        .collection('folder')
         .doc(this.folder.id)
         .delete()
         .then(() => {
