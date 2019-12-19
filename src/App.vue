@@ -14,7 +14,7 @@
             @click="left = !left"
           />
 
-          <q-toolbar-title>CheckList Pessoal</q-toolbar-title>
+          <q-toolbar-title>Personal CheckList</q-toolbar-title>
           <q-btn
             v-if="user.uid != null"
             class="q-mr-xs"
@@ -116,7 +116,7 @@
                 <q-icon name="dashboard" />
               </q-item-section>
 
-              <q-item-section>Tela Inicial</q-item-section>
+              <q-item-section>Home screen</q-item-section>
             </q-item>
 
             <q-item
@@ -128,7 +128,7 @@
               <q-item-section avatar>
                 <q-icon name="fas fa-sync-alt" />
               </q-item-section>
-              <q-item-section>Atualizações</q-item-section>
+              <q-item-section>Updates</q-item-section>
             </q-item>
 
             <q-item
@@ -141,7 +141,7 @@
                 <q-icon name="vpn_key" />
               </q-item-section>
 
-              <q-item-section>Trocar Senha</q-item-section>
+              <q-item-section>Change Password</q-item-section>
             </q-item>
 
             <q-item
@@ -188,7 +188,7 @@
         class="bg-grey-8 text-white"
       >
         <q-toolbar>
-          <q-toolbar-title>Organize-se - {{ version }}</q-toolbar-title>
+          <q-toolbar-title>Get organized - {{ version }}</q-toolbar-title>
         </q-toolbar>
       </q-footer>
     </q-layout>
