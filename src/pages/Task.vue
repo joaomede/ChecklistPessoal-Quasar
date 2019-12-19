@@ -593,10 +593,10 @@ export default {
           .firestore()
           .collection('app')
           .doc(this.user.uid)
-          .collection('Pasta')
-          .doc(this.idPasta)
-          .collection('Quadro')
-          .doc(this.idQuadro)
+          .collection('folder')
+          .doc(this.idFolder)
+          .collection('board')
+          .doc(this.idBoard)
       } else {
         return null
       }
@@ -607,8 +607,8 @@ export default {
           .firestore()
           .collection('app')
           .doc(this.user.uid)
-          .collection('Pasta')
-          .doc(this.idPasta)
+          .collection('folder')
+          .doc(this.idFolder)
       } else {
         return null
       }
@@ -619,11 +619,11 @@ export default {
           .firestore()
           .collection('app')
           .doc(this.user.uid)
-          .collection('Pasta')
-          .doc(this.idPasta)
-          .collection('Quadro')
-          .doc(this.idQuadro)
-          .collection('Tarefas')
+          .collection('folder')
+          .doc(this.idFolder)
+          .collection('board')
+          .doc(this.idBoard)
+          .collection('task')
       } else {
         return null
       }
