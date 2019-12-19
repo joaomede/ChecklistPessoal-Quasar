@@ -78,7 +78,7 @@
             <q-icon
               name="edit"
               color="blue"
-              @click.stop="editaQuadro(boards)"
+              @click.stop="showBoardEdit(boards)"
             />
           </q-item-section>
 
@@ -86,7 +86,7 @@
             <q-icon
               name="delete_sweep"
               color="grey ligten-1"
-              @click.stop="deletaQuadro(boards)"
+              @click.stop="showBoardDelete(boards)"
             />
           </q-item-section>
         </q-item>
@@ -126,7 +126,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="salvaEdicao()"
+            @click="updateBoard()"
           >
             {{ $t('geral.save') }}
           </q-btn>
@@ -167,7 +167,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="criaQuadro"
+            @click="storeBoard"
           >
             {{ $t('geral.save') }}
           </q-btn>
@@ -201,7 +201,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="apagaQuadroDB()"
+            @click="destroyBoard()"
           >
             {{ $t('geral.yes') }}
           </q-btn>
@@ -272,7 +272,7 @@ export default {
     this.init()
   },
   methods: {
-    criaQuadro () {
+    storeBoard () {
       let b = this.title
       if (b.includes('/') | b.includes('..')) {
         // entrada para metodo de alerta de caractere proibido
@@ -299,10 +299,10 @@ export default {
       this.resetFormBoardBoard()
     },
     init () {
-      this.carregaPastaAtual()
-      this.carregaQuadro()
+      this.getCurrentFolder()
+      this.indexBoard()
     },
-    carregaQuadro () {
+    indexBoard () {
       if ((this.user.uid != null) & (this.refQuadro != null)) {
         this.refQuadro.onSnapshot(querySnapshot => {
           this.boardList = []
@@ -312,7 +312,7 @@ export default {
         })
       }
     },
-    carregaPastaAtual () {
+    getCurrentFolder () {
       if (this.refPasta != null) {
         this.refPasta
           .get()
@@ -328,15 +328,15 @@ export default {
     runTaskScreen (board) {
       this.$router.push({ name: 'Task', params: { idBoard: stringify(board.id), idFolder: stringify(this.idFolder) } })
     },
-    editaQuadro (board) {
+    showBoardEdit (board) {
       this.dialogoEditaQuadro = true
       this.board = board
     },
-    deletaQuadro (board) {
+    showBoardDelete (board) {
       this.dialogoApagaQuadro = true
       this.board = board
     },
-    apagaQuadroDB () {
+    destroyBoard () {
       this.$db.collection('app')
         .doc(this.user.uid)
         .collection('folder')
@@ -352,7 +352,7 @@ export default {
         })
       this.dialogoApagaQuadro = false
     },
-    salvaEdicao () {
+    updateBoard () {
       if (this.board.title.includes('/') | this.board.title.includes('..')) {
         return
       }

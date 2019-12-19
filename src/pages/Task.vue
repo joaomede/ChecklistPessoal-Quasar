@@ -112,7 +112,7 @@
                   <q-icon
                     name="check"
                     color="primary"
-                    @click.stop="showDialogFinishTasks(item)"
+                    @click.stop="showFinishTask(item)"
                   />
                 </q-item-section>
 
@@ -120,7 +120,7 @@
                   <q-icon
                     name="delete_sweep"
                     color="grey ligten-1"
-                    @click.stop="showdialogTasksDelete(item)"
+                    @click.stop="showTaskDelete(item)"
                   />
                 </q-item-section>
               </q-item>
@@ -164,7 +164,7 @@
                   <q-icon
                     name="restore"
                     color="primary"
-                    @click.stop="dialogRestore(item)"
+                    @click.stop="showRestoreTask(item)"
                   />
                 </q-item-section>
 
@@ -172,7 +172,7 @@
                   <q-icon
                     name="delete_sweep"
                     color="grey ligten-1"
-                    @click.stop="showdialogTasksDelete(item)"
+                    @click.stop="showTaskDelete(item)"
                   />
                 </q-item-section>
               </q-item>
@@ -319,7 +319,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="createTasks"
+            @click="storeTask"
           >
             {{ $t('geral.save') }}
           </q-btn>
@@ -407,7 +407,7 @@
           <q-btn
             class="q-ma-xs"
             color="red"
-            @click="deleteTasks()"
+            @click="destroyTask()"
           >
             {{ $t('geral.yes') }}
           </q-btn>
@@ -521,7 +521,7 @@
           <q-btn
             class="q-ma-xs"
             color="green"
-            @click="addNota()"
+            @click="addFinishNotes()"
           >
             {{ $t('geral.yes') }}
           </q-btn>
@@ -638,8 +638,8 @@ export default {
   },
   watch: {
     user: 'init',
-    refPasta: 'loadingPastaTitle',
-    refQuadro: 'loadingQuadroTitle'
+    refPasta: 'getCurrentFolder',
+    refQuadro: 'getCurrentBoard'
   },
   mounted () {
     this.init()
@@ -647,13 +647,13 @@ export default {
   methods: {
     init () {
       if ((this.user.uid != null) & (this.refTarefas != null)) {
-        this.loadingQuadroTitle()
-        this.loadingPastaTitle()
-        this.loadingTasksActive()
-        this.loadingTasksFinsh()
+        this.getCurrentBoard()
+        this.getCurrentFolder()
+        this.indexTaskActive()
+        this.indexTaskFinish()
       }
     },
-    loadingTasksActive () {
+    indexTaskActive () {
       this.refTarefas
         .where('finished', '==', false)
         .orderBy('createdAt', 'asc')
@@ -664,7 +664,7 @@ export default {
           })
         })
     },
-    loadingTasksFinsh () {
+    indexTaskFinish () {
       this.refTarefas
         .where('finished', '==', true)
         .orderBy('createdAt', 'asc')
@@ -675,7 +675,7 @@ export default {
           })
         })
     },
-    loadingQuadroTitle () {
+    getCurrentBoard () {
       this.refQuadro
         .get()
         .then(resp => {
@@ -685,7 +685,7 @@ export default {
           this.$notifiy(err, 'red')
         })
     },
-    loadingPastaTitle () {
+    getCurrentFolder () {
       this.refPasta
         .get()
         .then(resp => {
@@ -695,7 +695,7 @@ export default {
           this.$notifiy(err, 'red')
         })
     },
-    createTasks () {
+    storeTask () {
       this.formTaskActive.finished = false
       const content = this.formTaskActive
 
@@ -738,7 +738,7 @@ export default {
       this.dialogoAddNota = true
       this.dialogoConcluirTarefa = false
     },
-    addNota () {
+    addFinishNotes () {
       this.refTarefas
         .doc(this.formTaskActive.id)
         .update({ finishNotes: this.formTaskActive.finishNotes })
@@ -751,7 +751,7 @@ export default {
       this.dialogoAddNota = false
     },
 
-    showdialogTasksDelete (item) {
+    showTaskDelete (item) {
       this.resetForm()
       this.dialogDeleteTasks = true
 
@@ -762,7 +762,7 @@ export default {
         this.formTaskFinish = item
       }
     },
-    deleteTasks () {
+    destroyTask () {
       if (this.formTaskActive.finished === false) {
         this.refTarefas
           .doc(this.formTaskActive.id)
@@ -796,12 +796,12 @@ export default {
         this.dialogDeleteTasks = false
       }
     },
-    showDialogFinishTasks (item) {
+    showFinishTask (item) {
       this.dialogoConcluirTarefa = true
       this.formTaskActive = item
     },
 
-    dialogRestore (item) {
+    showRestoreTask (item) {
       this.dialogRestoreTasks = true
       this.formTaskFinish = item
     },
