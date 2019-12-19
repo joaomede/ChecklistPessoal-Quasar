@@ -232,8 +232,8 @@ export default {
     refPasta: 'indexFolder'
   },
   mounted () {
-    this.$store.dispatch('definePastaAtual', { id: null })
-    this.$store.dispatch('defineQuadroAtual', { id: null })
+    this.$store.dispatch('setCurrentFolder', { id: null })
+    this.$store.dispatch('setCurrentBoard', { id: null })
     this.indexFolder()
   },
 
