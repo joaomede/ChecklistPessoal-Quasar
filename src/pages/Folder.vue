@@ -239,14 +239,14 @@ export default {
 
   methods: {
     storeFolder () {
-        // entrada para método de alerta caractere incorreto
+      if (this.folder.title.includes('/') || this.folder.title.includes('..')) {
         return
       }
       const newFolder = {
-        title: this.title,
+        title: this.folder.title,
         id: null,
-        createdAt: null,
-        updatedAt: null
+        createdAt: this.$timestamp,
+        updatedAt: this.$timestamp
       }
 
       this.$db.collection('app')
@@ -254,7 +254,7 @@ export default {
         .collection('Pasta')
         .add(newFolder)
         .then(ref => {
-          const pushID = { id: ref.id, createdAt: this.$timestamp, updatedAt: this.$timestamp }
+          const pushID = { id: ref.id }
           ref.update(pushID)
           this.$notifiy(this.$t('alert.sucess.addedFolder'), 'green')
         })
@@ -263,7 +263,7 @@ export default {
         })
 
       this.dialogoAddPasta = false
-      this.title = ''
+      this.resetFolder()
     },
     indexFolder () {
       if ((this.user.uid != null) & (this.refPasta != null)) {
