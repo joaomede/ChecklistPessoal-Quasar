@@ -60,14 +60,14 @@
             to="/folder"
           />
           <q-breadcrumbs-el
-            v-if="currentFolder.idPasta != null"
-            :to="'/quadro/' + currentFolder.idPasta"
-            :label="currentFolder.nomeDaPasta"
+            v-if="currentFolder.id != null"
+            :to="'/board/' + currentFolder.id"
+            :label="currentFolder.title"
             icon="folder"
           />
           <q-breadcrumbs-el
-            v-if="currentBoard.idQuadro != null"
-            :label="currentBoard.nomeDoQuadro"
+            v-if="currentBoard.id != null"
+            :label="currentBoard.title"
             icon="folder"
           />
         </q-breadcrumbs>
@@ -84,14 +84,14 @@
             to="/folder"
           />
           <q-breadcrumbs-el
-            v-if="currentFolder.idPasta != null"
-            :to="'/quadro/' + currentFolder.idPasta"
-            :label="currentFolder.nomeDaPasta"
+            v-if="currentFolder.id != null"
+            :to="'/board/' + currentFolder.id"
+            :label="currentFolder.title"
             icon="folder"
           />
           <q-breadcrumbs-el
-            v-if="currentBoard.idQuadro != null"
-            :label="currentBoard.nomeDoQuadro"
+            v-if="currentBoard.id != null"
+            :label="currentBoard.title"
             icon="folder"
           />
         </q-breadcrumbs>
