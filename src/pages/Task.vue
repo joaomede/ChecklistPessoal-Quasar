@@ -690,14 +690,14 @@ export default {
     },
     storeTask () {
       this.formTaskActive.finished = false
-      const content = this.formTaskActive
 
       this.refTarefas
-        .add(content)
+        .add(this.formTaskActive)
         .then(ref => {
           const pushID = {
             id: ref.id,
-            createdAt: this.$timestamp
+            createdAt: this.$timestamp,
+            updatedAt: this.$timestamp
           }
           ref.update(pushID)
           this.$notifiy(this.$t('alert.sucess.addedTask'), 'green')
@@ -705,13 +705,13 @@ export default {
         .catch(() => {
           this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'green')
         })
-
+      this.resetForm()
       this.dialogoAddTarefa = false
     },
-    showActivityTasks (obj) {
+    showActivityTasks (task) {
       this.resetForm()
       this.dialogShowActivityTasks = true
-      this.formTaskActive = obj
+      this.formTaskActive = task
     },
     showFinishedActivities (obj) {
       this.resetForm()
