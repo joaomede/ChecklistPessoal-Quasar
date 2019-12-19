@@ -568,7 +568,7 @@ export default {
         title: '',
         finishNotes: '',
         createdAt: '',
-        updated: ''
+        updatedAt: ''
       },
 
       formTaskFinish: {
