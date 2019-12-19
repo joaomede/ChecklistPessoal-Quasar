@@ -20,6 +20,10 @@ Add Task List            |  Task List                | Task View
 
 > BR: Este projeto faz parte do meu portfólio e está associado a meu pequeno estúdio de desenvolvimento (symbol2studio), inicialmente ele foi criado em Java para Android, a ideia consiste em um simples gerenciador de tarefas (checklist), cuja a organização vem em 3 níveis, sendo "Pasta", "Quadro" e "Tarefa", as Tarefas contém 2 status, sendo Ativo e Concluído, caso concluído, a Tarefa recebe um novo campo chamado "Nota de Conclusão", no qual é possível agregar alguma informação extra.
 
+#### Support for other languages / Suporte para outras linguagens
+> EN: Currently the project is in Portuguese and English is being incremented, translations from all languages ​​are welcome.
+
+> BR: Atualmente o projeto está em português e o inglês está sendo incrementado, é bem vindo traduções de todos os idiomas
 
 #### The Model / O Modelo
 ```json
