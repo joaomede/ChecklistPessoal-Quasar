@@ -3,7 +3,7 @@
     <div class="text-h4 text-center">
       {{ msg }}
     </div>
-    <!-- flutuante -->
+
     <q-btn
       v-if="$q.platform.is.mobile"
       round
@@ -47,7 +47,6 @@
       />
     </q-btn>
 
-    <!-- conteudo do quadro -->
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
         <div class="text-h5 text-center">
@@ -93,7 +92,6 @@
       </q-list>
     </div>
 
-    <!-- caixa de diálogo edita quadro -->
     <q-dialog v-model="dialogoEditaQuadro">
       <q-card
         class="text-center"
@@ -134,7 +132,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo adiciona quadro -->
     <q-dialog v-model="dialogoAddQuadro">
       <q-card
         class="text-center"
@@ -175,7 +172,6 @@
       </q-card>
     </q-dialog>
 
-    <!-- caixa de diálogo apagar quadro confirmação -->
     <q-dialog v-model="dialogoApagaQuadro">
       <q-card>
         <q-card-section>
@@ -236,7 +232,7 @@ export default {
     }
   },
   computed: {
-    refQuadro () {
+    refBoard () {
       if (this.user.uid != null) {
         return this.$firebase
           .firestore()
@@ -250,7 +246,7 @@ export default {
         return null
       }
     },
-    refPasta () {
+    refFolder () {
       if (this.user.uid != null) {
         return this.$firebase
           .firestore()
@@ -264,7 +260,7 @@ export default {
     }
   },
   watch: {
-    refQuadro: 'init',
+    refBoard: 'init',
     user: 'init'
   },
   mounted () {
@@ -300,8 +296,8 @@ export default {
       this.indexBoard()
     },
     indexBoard () {
-      if ((this.user.uid != null) & (this.refQuadro != null)) {
-        this.refQuadro.onSnapshot(querySnapshot => {
+      if ((this.user.uid != null) & (this.refBoard != null)) {
+        this.refBoard.onSnapshot(querySnapshot => {
           this.boardList = []
           querySnapshot.forEach(doc => {
             this.boardList.push(doc.data())
@@ -310,8 +306,8 @@ export default {
       }
     },
     getCurrentFolder () {
-      if (this.refPasta != null) {
-        this.refPasta
+      if (this.refFolder != null) {
+        this.refFolder
           .get()
           .then(resp => {
             this.$store.dispatch('setCurrentFolder', resp.data())

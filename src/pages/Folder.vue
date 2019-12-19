@@ -214,21 +214,20 @@ export default {
     }
   },
   computed: {
-    refPasta () {
+    refFolder () {
       if (this.user.uid != null) {
         return this.$firebase
           .firestore()
           .collection('app')
           .doc(this.user.uid)
           .collection('folder')
-          .orderBy('title', 'desc')
       } else {
         return null
       }
     }
   },
   watch: {
-    refPasta: 'indexFolder'
+    refFolder: 'indexFolder'
   },
   mounted () {
     this.$store.dispatch('setCurrentFolder', { id: null })
@@ -265,8 +264,8 @@ export default {
       this.resetFolder()
     },
     indexFolder () {
-      if ((this.user.uid != null) & (this.refPasta != null)) {
-        this.refPasta.onSnapshot(querySnapshot => {
+      if ((this.user.uid != null) & (this.refFolder != null)) {
+        this.refFolder.onSnapshot(querySnapshot => {
           this.folderList = []
           querySnapshot.forEach(doc => {
             this.folderList.push(doc.data())

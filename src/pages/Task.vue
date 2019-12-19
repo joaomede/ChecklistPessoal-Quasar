@@ -587,7 +587,7 @@ export default {
     }
   },
   computed: {
-    refQuadro () {
+    refBoard () {
       if (this.user.uid != null) {
         return this.$firebase
           .firestore()
@@ -601,7 +601,7 @@ export default {
         return null
       }
     },
-    refPasta () {
+    refFolder () {
       if (this.user.uid != null) {
         return this.$firebase
           .firestore()
@@ -613,7 +613,7 @@ export default {
         return null
       }
     },
-    refTarefas () {
+    refTasks () {
       if (this.user.uid != null) {
         return this.$firebase
           .firestore()
@@ -631,15 +631,15 @@ export default {
   },
   watch: {
     user: 'init',
-    refPasta: 'getCurrentFolder',
-    refQuadro: 'getCurrentBoard'
+    refFolder: 'getCurrentFolder',
+    refBoard: 'getCurrentBoard'
   },
   mounted () {
     this.init()
   },
   methods: {
     init () {
-      if ((this.user.uid != null) & (this.refTarefas != null)) {
+      if ((this.user.uid != null) & (this.refTasks != null)) {
         this.getCurrentBoard()
         this.getCurrentFolder()
         this.indexTaskActive()
@@ -647,7 +647,7 @@ export default {
       }
     },
     indexTaskActive () {
-      this.refTarefas
+      this.refTasks
         .where('finished', '==', false)
         .orderBy('createdAt', 'asc')
         .onSnapshot(querySnapshot => {
@@ -658,7 +658,7 @@ export default {
         })
     },
     indexTaskFinish () {
-      this.refTarefas
+      this.refTasks
         .where('finished', '==', true)
         .orderBy('createdAt', 'asc')
         .onSnapshot(querySnapshot => {
@@ -669,7 +669,7 @@ export default {
         })
     },
     getCurrentBoard () {
-      this.refQuadro
+      this.refBoard
         .get()
         .then(resp => {
           this.$store.dispatch('setCurrentBoard', resp.data())
@@ -679,7 +679,7 @@ export default {
         })
     },
     getCurrentFolder () {
-      this.refPasta
+      this.refFolder
         .get()
         .then(resp => {
           this.$store.dispatch('setCurrentFolder', resp.data())
@@ -691,7 +691,7 @@ export default {
     storeTask () {
       this.formTaskActive.finished = false
 
-      this.refTarefas
+      this.refTasks
         .add(this.formTaskActive)
         .then(ref => {
           const pushID = {
@@ -719,7 +719,7 @@ export default {
       this.formTaskFinish = obj
     },
     finishTasks () {
-      this.refTarefas
+      this.refTasks
         .doc(this.formTaskActive.id)
         .update({ finished: true })
         .then(() => {
@@ -732,7 +732,7 @@ export default {
       this.dialogoConcluirTarefa = false
     },
     addFinishNotes () {
-      this.refTarefas
+      this.refTasks
         .doc(this.formTaskActive.id)
         .update({ finishNotes: this.formTaskActive.finishNotes })
         .then(() => {
@@ -757,7 +757,7 @@ export default {
     },
     destroyTask () {
       if (this.formTaskActive.finished === false) {
-        this.refTarefas
+        this.refTasks
           .doc(this.formTaskActive.id)
           .delete()
           .then(() => {
@@ -768,7 +768,7 @@ export default {
           })
       }
       if (this.formTaskFinish.finished === true) {
-        this.refTarefas
+        this.refTasks
           .doc(this.formTaskFinish.id)
           .delete()
           .then(() => {
@@ -799,7 +799,7 @@ export default {
       this.formTaskFinish = item
     },
     restoreTasks () {
-      this.refTarefas
+      this.refTasks
         .doc(this.formTaskFinish.id)
         .update({ finished: false, finishNotes: '' })
         .then(() => {
@@ -812,7 +812,7 @@ export default {
     },
 
     updateTasks () {
-      this.refTarefas
+      this.refTasks
         .doc(this.formTaskActive.id)
         .update(this.formTaskActive)
         .then(ref => {
