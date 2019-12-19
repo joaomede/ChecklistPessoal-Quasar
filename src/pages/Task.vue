@@ -420,7 +420,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h6">
-            {{ $t('dialogs.dialogs') }}
+            {{ $t('dialogs.finishTaskNoteTitle') }}
           </div>
         </q-card-section>
 
