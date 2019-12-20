@@ -4,28 +4,13 @@
       {{ $t('folder.welcome') }}
     </div>
 
-    <q-btn
-      v-if="$q.platform.is.mobile"
-      round
-      color="orange darken-2"
-      class="fixed fabRight"
-      @click.stop="(dialogoAddPasta = true), resetFolder()"
-    >
-      <q-icon name="add" />
-    </q-btn>
+    <FabBtnAddMobile
+      @eventClick="dialogoAddPasta = true, resetFolder()"
+    />
 
-    <q-btn
-      v-if="$q.platform.is.desktop"
-      round
-      color="orange darken-2"
-      class="fixed fabCenter"
-      @click.stop="(dialogoAddPasta = true), resetFolder()"
-    >
-      <q-icon
-        class="iconFabCenter"
-        name="add"
-      />
-    </q-btn>
+    <FabBtnAddDesktop
+      @eventClick="dialogoAddPasta = true, resetFolder()"
+    />
 
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
@@ -161,10 +146,14 @@
 
 <script>
 import DialogAddFolder from '../components/dialogs/DialogAddFolderBoard'
+import FabBtnAddDesktop from '../components/button/FabAddDesktop'
+import FabBtnAddMobile from '../components/button/FabAddMobile'
 export default {
   name: 'Dash',
   components: {
-    DialogAddFolder
+    DialogAddFolder,
+    FabBtnAddDesktop,
+    FabBtnAddMobile
   },
   data () {
     return {
