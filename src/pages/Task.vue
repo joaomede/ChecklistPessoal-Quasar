@@ -1,45 +1,21 @@
 <template>
   <div class="q-pa-none">
-    <q-btn
-      v-if="$q.platform.is.mobile"
-      round
-      color="orange darken-2"
-      class="fixed fabLeft"
-      @click.stop="$router.go(-1)"
-    >
-      <q-icon name="fas fa-arrow-left" />
-    </q-btn>
-    <q-btn
-      v-if="$q.platform.is.desktop"
-      round
-      color="orange darken-2"
-      class="fixed fabBack"
-      @click.stop="$router.go(-1)"
-    >
-      <q-icon name="fas fa-arrow-left" />
-    </q-btn>
+    <FabBtnBackPageMobile
+      @eventClick="$router.go(-1)"
+    />
 
-    <q-btn
-      v-if="$q.platform.is.mobile"
-      round
-      color="orange darken-2"
-      class="fixed fabRight"
-      @click.stop="(dialogoAddTarefa = true), resetForm()"
-    >
-      <q-icon name="add" />
-    </q-btn>
-    <q-btn
-      v-if="$q.platform.is.desktop"
-      round
-      color="orange darken-2"
-      class="fixed fabCenter"
-      @click.stop="(dialogoAddTarefa = true), resetForm()"
-    >
-      <q-icon
-        class="iconFabCenter"
-        name="add"
-      />
-    </q-btn>
+    <FabBtnAddMobile
+      @eventClick="(dialogoAddTarefa = true), resetForm()"
+    />
+
+    <FabBtnBackPageDesktop
+      @eventClick="$router.go(-1)"
+    />
+
+    <FabBtnAddDesktop
+      @eventClick="(dialogoAddTarefa = true), resetForm()"
+    />
+
     <div class="text-h5 text-center">
       {{ $t('task.title') }}
     </div>
