@@ -202,92 +202,15 @@
       @eventConfirm="restoreTasks()"
     />
 
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogDeleteTasks = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="red"
-            @click="destroyTask()"
-          >
-            {{ $t('geral.yes') }}
-          </q-btn>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="dialogoConcluirTarefa">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">
-            {{ $t('dialogs.finishTaskNoteTitle') }}
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <div class="text-h6">
-            {{ formTaskActive.title }}
-          </div>
-        </q-card-section>
-
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click="dialogoConcluirTarefa = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="green"
-            @click="finishTasks"
-          >
-            {{ $t('geral.yes') }}
-          </q-btn>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="dialogRestoreTasks">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">
-            {{ $t('dialogs.questionRestore') }}
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <div class="text-h6">
-            "{{ formTaskFinish.title }}"?
-          </div>
-        </q-card-section>
-
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click="dialogRestoreTasks = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="green"
-            @click="restoreTasks()"
-          >
-            {{ $t('geral.yes') }}
-          </q-btn>
-        </q-card-section>
-
-        <q-card-section />
-      </q-card>
-    </q-dialog>
+    <!-- Dialog Finish Task -->
+    <DialogConfirm
+      :dialog="dialogoConcluirTarefa"
+      :question="$t('dialogs.questionFinish')"
+      :title="formTaskActive.title"
+      :color="'green'"
+      @eventClose="dialogoConcluirTarefa = false"
+      @eventConfirm="finishTasks()"
+    />
 
     <q-dialog v-model="dialogoAddNota">
       <q-card>
