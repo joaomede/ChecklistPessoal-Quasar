@@ -192,14 +192,15 @@
       @eventConfirm="destroyTask()"
     />
 
-        <q-card-section>
-          <div class="text-h6">
-            {{ formTaskActive.title }}
-          </div>
-          <div class="text-h6">
-            {{ formTaskFinish.title }}
-          </div>
-        </q-card-section>
+    <!-- Dialog Restore -->
+    <DialogConfirm
+      :dialog="dialogRestoreTasks"
+      :question="$t('dialogs.questionRestore')"
+      :title="formTaskFinish.title"
+      :color="'green'"
+      @eventClose="dialogRestoreTasks = false"
+      @eventConfirm="restoreTasks()"
+    />
 
         <q-card-section align="center">
           <q-btn
@@ -345,6 +346,8 @@ import DialogViewActivityTask from '../components/dialogs/DialogViewActivityTask
 import DialogViewFinishedTask from '../components/dialogs/DialogViewFinishedTask'
 import DialogAddTask from '../components/dialogs/DialogAddTask'
 import DialogEditTask from '../components/dialogs/DialogEditTask'
+import DialogConfirm from '../components/dialogs/DialogConfirm'
+
 export default {
   name: 'Task',
   components: {
@@ -355,7 +358,8 @@ export default {
     DialogViewActivityTask,
     DialogViewFinishedTask,
     DialogAddTask,
-    DialogEditTask
+    DialogEditTask,
+    DialogConfirm
   },
   props: {
     idFolder: {
