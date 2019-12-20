@@ -31,29 +31,29 @@ Add Task List            |  Task List                | Task View
   {
     "app": {
       "username": "João M.",
-      "uid": "123abc",
-      "createdAt": "timestamp here",
+      "uid": "x1w2i3n4g",
+      "createdAt": "12/12/2012 - 12:12:12",
       "folder": [
         {
-          "id": "1",
+          "id": "23",
           "title": "folder title",
-          "createdAt": "timestamp here",
-          "updatedAt": "timestamp update",
+          "createdAt": "12/12/2012 - 12:12:12",
+          "updatedAt": "12/12/2012 - 12:12:12",
           "board": [
             {
-              "id": "1",
+              "id": "42",
               "title": "title board",
-              "createdAt": "timestamp here",
-              "updatedAt": "timestamp update",
+              "createdAt": "12/12/2012 - 12:12:12",
+              "updatedAt": "12/12/2012 - 12:12:12",
               "task": [
                 {
-                  "id": "1",
-                  "finished": "Boolean",
-                  "title": "task title",
-                  "content": "Description here",
-                  "finishNotes": "Additional content here upon completion",
-                  "createdAt": "timestamp here",
-                  "updatedAt": "timestamp update"
+                  "id": "2",
+                  "finished": true,
+                  "title": "The End of the World Survival Guide",
+                  "content": "Carry a towel",
+                  "finishNotes": "Ok i survived",
+                  "createdAt": "12/12/2012 - 12:12:12",
+                  "updatedAt": "12/12/2012 - 12:12:12"
                 }
               ]
             }
