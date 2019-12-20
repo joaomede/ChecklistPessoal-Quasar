@@ -7,7 +7,6 @@ export default {
       updates: 'Atualizações',
       changePassword: 'Trocar Senha',
       about: 'Sobre'
-
     },
     footerMessage: 'Organize-se',
     newFolderAdded: 'Nova Pasta Adicionada'

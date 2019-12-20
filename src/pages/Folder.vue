@@ -76,45 +76,13 @@
       </q-list>
     </div>
 
-    <q-dialog v-model="dialogoAddPasta">
-      <q-card
-        class="text-center"
-        style="width: 500px"
-      >
-        <q-card-section>
-          <div class="text-h6">
-            {{ $t('dialogs.addNewFolder') }}
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-form class="q-gutter-md">
-            <q-input
-              v-model="folder.title"
-              label="Informe o nome da pasta"
-              required
-            />
-          </q-form>
-        </q-card-section>
-
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogoAddPasta = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="green"
-            @click="storeFolder"
-          >
-            {{ $t('geral.yes') }}
-          </q-btn>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <DialogAddFolder
+      :message="$t('dialogs.addNewFolder')"
+      :label="'Informe o nome da pasta'"
+      :dialog="dialogoAddPasta"
+      @eventClose="dialogoAddPasta = false"
+      @storeEvent="storeFolder($event)"
+    />
 
     <q-dialog v-model="dialogoEditaPasta">
       <q-card
@@ -192,8 +160,12 @@
 </template>
 
 <script>
+import DialogAddFolder from '../components/dialogs/DialogAddFolderBoard'
 export default {
   name: 'Dash',
+  components: {
+    DialogAddFolder
+  },
   data () {
     return {
       dialogoAddPasta: false,
@@ -232,7 +204,8 @@ export default {
   },
 
   methods: {
-    storeFolder () {
+    storeFolder (title) {
+      this.folder.title = title
       if (this.folder.title.includes('/') || this.folder.title.includes('..')) {
         return
       }
