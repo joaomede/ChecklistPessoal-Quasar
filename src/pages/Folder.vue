@@ -237,7 +237,7 @@ export default {
       }
       const newFolder = {
         title: this.folder.title,
-        updatedAt: this.folder.updatedAt
+        updatedAt: this.$timestamp
       }
       this.$db.collection('app')
         .doc(this.user.uid)

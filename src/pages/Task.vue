@@ -538,7 +538,7 @@ export default {
     finishTasks () {
       this.refTasks
         .doc(this.formTaskActive.id)
-        .update({ finished: true })
+        .update({ finished: true, updatedAt: this.$timestamp })
         .then(() => {
           this.$notifiy(this.$t('alert.sucess.finishTask'), 'green')
         })
@@ -618,7 +618,7 @@ export default {
     restoreTasks () {
       this.refTasks
         .doc(this.formTaskFinish.id)
-        .update({ finished: false, finishNotes: '' })
+        .update({ finished: false, finishNotes: '', updatedAt: this.$timestamp })
         .then(() => {
           this.$notifiy(this.$t('alert.sucess.restoreTask'), 'green')
         })
@@ -630,6 +630,8 @@ export default {
 
     updateTasks (newForm) {
       this.formTaskActive = newForm
+      this.formTaskActive.updatedAt = this.$timestamp
+
       this.refTasks
         .doc(this.formTaskActive.id)
         .update(this.formTaskActive)
