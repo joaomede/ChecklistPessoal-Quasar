@@ -2,14 +2,12 @@ export default {
   // APP
   app: {
     title: 'Personal CheckList',
-    menuDrawer: [
-      {
-        home: 'Home screen',
-        updates: 'Updatess',
-        changePassword: 'Change Password',
-        about: 'About'
-      }
-    ],
+    menuDrawer: {
+      home: 'Home screen',
+      updates: 'Updatess',
+      changePassword: 'Change Password',
+      about: 'About'
+    },
     footerMessage: 'Get organized',
     newFolderAdded: 'New Folder Added'
   },
@@ -83,4 +81,3 @@ export default {
     differentPasswords: 'Passwords are different'
   }
 }
-
