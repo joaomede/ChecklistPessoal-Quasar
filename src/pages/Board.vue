@@ -4,48 +4,21 @@
       {{ msg }}
     </div>
 
-    <q-btn
-      v-if="$q.platform.is.mobile"
-      round
-      color="orange darken-2"
-      class="fixed fabLeft"
-      @click.stop="$router.go(-1)"
-    >
-      <q-icon name="fas fa-arrow-left" />
-    </q-btn>
+    <FabBtnBackPageMobile
+      @eventClick="$router.go(-1)"
+    />
 
-    <q-btn
-      v-if="$q.platform.is.mobile"
-      round
-      color="orange darken-2"
-      class="fixed fabRight"
-      @click.stop="(dialogoAddQuadro = true), resetFormBoard()"
-    >
-      <q-icon name="add" />
-    </q-btn>
+    <FabBtnAddMobile
+      @eventClick="(dialogoAddQuadro = true), resetFormBoard()"
+    />
 
-    <q-btn
-      v-if="$q.platform.is.desktop"
-      round
-      color="orange darken-2"
-      class="fixed fabBack"
-      @click.stop="$router.go(-1)"
-    >
-      <q-icon name="fas fa-arrow-left" />
-    </q-btn>
+    <FabBtnBackPageDesktop
+      @eventClick="$router.go(-1)"
+    />
 
-    <q-btn
-      v-if="$q.platform.is.desktop"
-      round
-      color="orange darken-2"
-      class="fixed fabCenter"
-      @click.stop="(dialogoAddQuadro = true), resetFormBoard()"
-    >
-      <q-icon
-        class="iconFabCenter"
-        name="add"
-      />
-    </q-btn>
+    <FabBtnAddDesktop
+      @eventClick="(dialogoAddQuadro = true), resetFormBoard()"
+    />
 
     <div class="q-pa-md divPrincipal">
       <q-list bordered>
@@ -208,8 +181,18 @@
 </template>
 
 <script>
+import FabBtnAddDesktop from '../components/button/FabAddDesktop'
+import FabBtnAddMobile from '../components/button/FabAddMobile'
+import FabBtnBackPageMobile from '../components/button/FabBackPageMobile'
+import FabBtnBackPageDesktop from '../components/button/FabBackPageDesktop'
 export default {
   name: 'Board',
+  components: {
+    FabBtnAddDesktop,
+    FabBtnAddMobile,
+    FabBtnBackPageMobile,
+    FabBtnBackPageDesktop
+  },
   props: {
     idFolder: {
       type: String,
