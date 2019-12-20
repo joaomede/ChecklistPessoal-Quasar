@@ -24,12 +24,12 @@ export default {
   },
   dialogs: {
     addNewFolder: 'Add a folder',
-    addNewBoard: 'Add a frame',
+    addNewBoard: 'Add a board',
     addNewTask: 'Add a Task',
     finishTaskNoteTitle: 'Concluding Note:',
     description: 'Description:',
     editFolder: 'Edit folder name',
-    editBoard: 'Edit Frame Name',
+    editBoard: 'Edit Board Name',
     editTask: 'Edit Task',
     questionDelete: 'Do you really want to delete?',
     questionFinish: 'Do you really want to complete task?',
@@ -48,15 +48,15 @@ export default {
     },
     sucess: {
       addedFolder: 'New folder added successfully',
-      addedBoard: 'New frame added successfully',
+      addedBoard: 'New board added successfully',
       addedTask: 'New task added successfully',
       //
       updatedFolder: 'Folder updated successfully',
-      updatedBoard: 'Frame updated successfully',
+      updatedBoard: 'Board updated successfully',
       updatedTask: 'Task updated successfully',
       //
       removedFolder: 'Folder successfully removed',
-      removedBoard: 'Frame successfully removed',
+      removedBoard: 'Board successfully removed',
       removedTask: 'Task successfully removed',
       //
       finishTask: 'Task completed successfully',
@@ -64,16 +64,16 @@ export default {
     }
   },
   geral: {
-    back: 'Come back',
-    save: 'To save',
-    yes: 'yes',
+    back: 'Back',
+    save: 'Save',
+    yes: 'Yes',
     delete: 'Delete',
-    edit: 'To edit'
+    edit: 'Edit'
   },
   register: {
     title: 'Sign up',
     questionName: 'What\'s your name?',
-    password: 'password',
+    password: 'Password',
     labelRepeatPassword: 'Repeat your password',
     btnRegister: 'Sign up',
     sucessRegister: 'Successful registration',
