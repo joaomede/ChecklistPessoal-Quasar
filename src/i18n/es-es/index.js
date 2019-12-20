@@ -1,5 +1,5 @@
 export default {
-    // APP
+    // aplicación
     app: {
       title: 'Lista de verificación persona',
       menuDrawer: {
