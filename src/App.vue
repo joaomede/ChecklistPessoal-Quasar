@@ -195,6 +195,10 @@ export default {
         {
           label: 'English - US',
           value: 'en-us'
+        },
+        {
+          label: 'Spanish - ES',
+          value: 'es-es'
         }
       ],
       lang: this.$i18n.locale
