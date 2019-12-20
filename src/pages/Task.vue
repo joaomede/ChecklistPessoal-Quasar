@@ -182,13 +182,15 @@
       @eventSave="updateTasks($event)"
     />
 
-    <q-dialog v-model="dialogDeleteTasks">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">
-            {{ $t('dialogs.questionDelete') }}
-          </div>
-        </q-card-section>
+    <!-- Dialog Delete -->
+    <DialogConfirm
+      :dialog="dialogDeleteTasks"
+      :question="$t('dialogs.questionDelete')"
+      :title="formTaskActive.title || formTaskFinish.title"
+      :color="'red'"
+      @eventClose="dialogDeleteTasks = false"
+      @eventConfirm="destroyTask()"
+    />
 
         <q-card-section>
           <div class="text-h6">
