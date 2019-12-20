@@ -20,139 +20,15 @@
       {{ $t('task.title') }}
     </div>
 
-    <div class="divPrincipal">
-      <q-card>
-        <q-tabs
-          v-model="tab"
-          dense
-          class="text-grey"
-          active-color="primary"
-          indicator-color="primary"
-          align="justify"
-          narrow-indicator
-        >
-          <q-tab
-            v-if="listTasksActive.length > 0"
-            name="ativo"
-            label="Ativas"
-          />
-          <q-tab
-            v-if="listTaskFinish.length > 0"
-            name="concluido"
-            label="Concluídas"
-          />
-        </q-tabs>
-
-        <q-separator />
-
-        <q-tab-panels
-          v-model="tab"
-          animated
-        >
-          <q-tab-panel
-            name="ativo"
-            style="padding: 0px"
-          >
-            <q-list
-              bordered
-              style="max-width: 900px; margin: auto;"
-            >
-              <q-item
-                v-for="item in listTasksActive"
-                :key="item.id"
-                v-ripple
-                clickable
-                @click="showActivityTasks(item)"
-              >
-                <q-item-section
-                  avatar
-                  top
-                >
-                  <q-avatar
-                    icon="event_note"
-                    color="primary"
-                    text-color="white"
-                  />
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label lines="1">
-                    {{ item.title }}
-                  </q-item-label>
-                </q-item-section>
-
-                <q-item-section side>
-                  <q-icon
-                    name="check"
-                    color="primary"
-                    @click.stop="showFinishTask(item)"
-                  />
-                </q-item-section>
-
-                <q-item-section side>
-                  <q-icon
-                    name="delete_sweep"
-                    color="grey ligten-1"
-                    @click.stop="showTaskDelete(item)"
-                  />
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-tab-panel>
-
-          <q-tab-panel
-            name="concluido"
-            style="padding: 0px"
-          >
-            <q-list
-              bordered
-              style="max-width: 900px; margin: auto;"
-            >
-              <q-item
-                v-for="item in listTaskFinish"
-                :key="item.id"
-                v-ripple
-                clickable
-                @click="showFinishedActivities(item)"
-              >
-                <q-item-section
-                  avatar
-                  top
-                >
-                  <q-avatar
-                    icon="event_note"
-                    color="primary"
-                    text-color="white"
-                  />
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label lines="1">
-                    {{ item.title }}
-                  </q-item-label>
-                </q-item-section>
-
-                <q-item-section side>
-                  <q-icon
-                    name="restore"
-                    color="primary"
-                    @click.stop="showRestoreTask(item)"
-                  />
-                </q-item-section>
-
-                <q-item-section side>
-                  <q-icon
-                    name="delete_sweep"
-                    color="grey ligten-1"
-                    @click.stop="showTaskDelete(item)"
-                  />
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card>
-    </div>
+    <TabList
+      :activelist="listTasksActive"
+      :finishedlist="listTaskFinish"
+      @showActivityTask="showActivityTask($event)"
+      @showFinishTask="showFinishTask($event)"
+      @showDeleteTask="showDeleteTask($event)"
+      @showFinishedTask="showFinishedTask($event)"
+      @showRestoreTask="showRestoreTask($event)"
+    />
 
     <DialogViewActivityTask
       :form="formTaskActive"
@@ -270,6 +146,7 @@ import DialogViewFinishedTask from '../components/dialogs/DialogViewFinishedTask
 import DialogAddTask from '../components/dialogs/DialogAddTask'
 import DialogEditTask from '../components/dialogs/DialogEditTask'
 import DialogConfirm from '../components/dialogs/DialogConfirm'
+import TabList from '../components/lists/TabListTaks'
 
 export default {
   name: 'Task',
@@ -282,7 +159,8 @@ export default {
     DialogViewFinishedTask,
     DialogAddTask,
     DialogEditTask,
-    DialogConfirm
+    DialogConfirm,
+    TabList
   },
   props: {
     idFolder: {
@@ -298,7 +176,6 @@ export default {
     return {
       editorTools: editorTools,
       nomeDasFronts: nomeDasFronts,
-      tab: 'ativo',
       dialogoAddTarefa: false,
       dialogShowActivityTasks: false,
       dialogoConcluirTarefa: false,
@@ -454,12 +331,12 @@ export default {
       this.resetForm()
       this.dialogoAddTarefa = false
     },
-    showActivityTasks (task) {
+    showActivityTask (task) {
       this.resetForm()
       this.dialogShowActivityTasks = true
       this.formTaskActive = task
     },
-    showFinishedActivities (obj) {
+    showFinishedTask (obj) {
       this.resetForm()
       this.dialogShowFinishedActivities = true
       this.formTaskFinish = obj
@@ -490,7 +367,7 @@ export default {
       this.dialogoAddNota = false
     },
 
-    showTaskDelete (item) {
+    showDeleteTask (item) {
       this.resetForm()
       this.dialogDeleteTasks = true
 
