@@ -499,9 +499,19 @@
 
 <script>
 import { editorTools, nomeDasFronts } from '../boot/utils'
+import FabBtnAddDesktop from '../components/button/FabAddDesktop'
+import FabBtnAddMobile from '../components/button/FabAddMobile'
+import FabBtnBackPageMobile from '../components/button/FabBackPageMobile'
+import FabBtnBackPageDesktop from '../components/button/FabBackPageDesktop'
 
 export default {
   name: 'Task',
+  components: {
+    FabBtnAddDesktop,
+    FabBtnAddMobile,
+    FabBtnBackPageMobile,
+    FabBtnBackPageDesktop
+  },
   props: {
     idFolder: {
       type: String,
