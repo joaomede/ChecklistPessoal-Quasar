@@ -22,95 +22,77 @@ export default {
           })
         })
     },
-    getCurrentBoard () {
-      this.refBoard
-        .get()
-        .then(resp => {
-          this.$store.dispatch('setCurrentBoard', resp.data())
-        })
-        .catch(err => {
-          this.$notifiy(err, 'red')
-        })
+    async getCurrentBoard () {
+      try {
+        const resp = await this.refBoard.get()
+        this.$store.dispatch('setCurrentBoard', await resp.data())
+      } catch (error) {
+        this.$notifiy(error, 'red')
+      }
     },
-    getCurrentFolder () {
-      this.refFolder
-        .get()
-        .then(resp => {
-          this.$store.dispatch('setCurrentFolder', resp.data())
-        })
-        .catch(err => {
-          this.$notifiy(err, 'red')
-        })
+    async getCurrentFolder () {
+      try {
+        const resp = await this.refFolder.get()
+        this.$store.dispatch('setCurrentFolder', await resp.data())
+      } catch (error) {
+        this.$notifiy(error, 'red')
+      }
     },
-    storeTask (form) {
+    async storeTask (form) {
       this.formTaskActive = form
-
-      this.refTasks
-        .add(this.formTaskActive)
-        .then(ref => {
-          const pushID = {
-            id: ref.id,
-            createdAt: this.$timestamp,
-            updatedAt: this.$timestamp
-          }
-          ref.update(pushID)
-          this.$notifiy(this.$t('alert.sucess.addedTask'), 'green')
-        })
-        .catch(() => {
-          this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'green')
-        })
-      this.resetForm()
       this.dialogoAddTarefa = false
+      try {
+        const ref = await this.refTasks.add(this.formTaskActive)
+        const pushID = { id: await ref.id, createdAt: this.$timestamp, updatedAt: this.$timestamp }
+        await ref.update(pushID)
+        this.$notifiy(this.$t('alert.sucess.addedTask'), 'green')
+      } catch (error) {
+        this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'green')
+      }
+      this.resetForm()
     },
-    finishTasks () {
-      this.refTasks
-        .doc(this.formTaskActive.id)
-        .update({ finished: true, updatedAt: this.$timestamp })
-        .then(() => {
-          this.$notifiy(this.$t('alert.sucess.finishTask'), 'green')
-        })
-        .catch(() => {
-          this.$notifiy(this.$t('alert.error.errorTryingToFinish'), 'green')
-        })
-      this.dialogoAddNota = true
+    async finishTasks () {
       this.dialogoConcluirTarefa = false
+      try {
+        await this.refTasks.doc(this.formTaskActive.id).update({
+          finished: true,
+          updatedAt: this.$timestamp
+        })
+        this.$notifiy(this.$t('alert.sucess.finishTask'), 'green')
+        this.dialogoAddNota = true
+      } catch (error) {
+        this.$notifiy(this.$t('alert.error.errorTryingToFinish'), 'green')
+      }
     },
-    addFinishNotes (note) {
+    async addFinishNotes (note) {
       this.formTaskActive.finishNotes = note
-
-      this.refTasks
-        .doc(this.formTaskActive.id)
-        .update({ finishNotes: this.formTaskActive.finishNotes })
-        .then(() => {
-          this.$notifiy(this.$t('alert.sucess.addedTask'), 'green')
+      this.dialogoAddNota = false
+      try {
+        await this.refTasks.doc(this.formTaskActive.id).update({
+          finishNotes: this.formTaskActive.finishNotes
         })
-        .catch(() => {
-          this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'green')
-        })
+        this.$notifiy(this.$t('alert.sucess.addedTask'), 'green')
+      } catch (error) {
+        this.$notifiy(this.$t('alert.error.errorTryingToAdd'), 'green')
+      }
       this.dialogoAddNota = false
     },
-    destroyTask () {
+    async destroyTask () {
       if (this.formTaskActive.finished === false) {
-        this.refTasks
-          .doc(this.formTaskActive.id)
-          .delete()
-          .then(() => {
-            this.$notifiy(this.$t('alert.sucess.removedTask'), 'green')
-          })
-          .catch(() => {
-            this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'green')
-          })
+        try {
+          await this.refTasks.doc(this.formTaskActive.id).delete()
+          this.$notifiy(this.$t('alert.sucess.removedTask'), 'green')
+        } catch (error) {
+          this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'green')
+        }
       }
       if (this.formTaskFinish.finished === true) {
-        this.refTasks
-          .doc(this.formTaskFinish.id)
-          .delete()
-          .then(() => {
-            this.$notifiy(this.$t('alert.sucess.removedTask'), 'green')
-          })
-          .catch(() => {
-            this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'green')
-          })
+        try {
+          this.refTasks.doc(this.formTaskFinish.id).delete()
+          this.$notifiy(this.$t('alert.sucess.removedTask'), 'green')
+        } catch (error) {
+          this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'green')
+        }
       }
 
       if (this.dialogShowActivityTasks === true) {
@@ -123,33 +105,32 @@ export default {
         this.dialogDeleteTasks = false
       }
     },
-    restoreTasks () {
-      this.refTasks
-        .doc(this.formTaskFinish.id)
-        .update({ finished: false, finishNotes: '', updatedAt: this.$timestamp })
-        .then(() => {
-          this.$notifiy(this.$t('alert.sucess.restoreTask'), 'green')
-        })
-        .catch(() => {
-          this.$notifiy(this.$t('alert.error.errorTryingToRestore'), 'green')
-        })
+    async restoreTasks () {
       this.dialogRestoreTasks = false
+      try {
+        await this.refTasks.doc(this.formTaskFinish.id).update(
+          { finished: false,
+            finishNotes: '',
+            updatedAt: this.$timestamp
+          })
+        this.$notifiy(this.$t('alert.sucess.restoreTask'), 'green')
+      } catch (error) {
+        this.$notifiy(this.$t('alert.error.errorTryingToRestore'), 'green')
+      }
     },
-    updateTasks (newForm) {
+    async updateTasks (newForm) {
       this.formTaskActive = newForm
       this.formTaskActive.updatedAt = this.$timestamp
 
-      this.refTasks
-        .doc(this.formTaskActive.id)
-        .update(this.formTaskActive)
-        .then(ref => {
-          this.$notifiy(this.$t('alert.sucess.updatedTask'), 'green')
-        })
-        .catch(() => {
-          this.$notifiy(this.$t('alert.error.errorTryingToUpdated'), 'red')
-        })
       this.dialogTasksEdit = false
       this.dialogShowActivityTasks = false
+
+      try {
+        await this.refTasks.doc(this.formTaskActive.id).update(this.formTaskActive)
+        this.$notifiy(this.$t('alert.sucess.updatedTask'), 'green')
+      } catch (error) {
+        this.$notifiy(this.$t('alert.error.errorTryingToUpdated'), 'red')
+      }
     }
   }
 }
