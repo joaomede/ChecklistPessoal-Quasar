@@ -113,7 +113,7 @@
       <q-card>
         <q-card-section>
           <div class="text-h5">
-            {{ $t('dialogs.editFolder') }}
+            {{ $t('dialogs.questionDelete') }}
           </div>
         </q-card-section>
 
