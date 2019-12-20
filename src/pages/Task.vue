@@ -154,197 +154,33 @@
       </q-card>
     </div>
 
-    <q-dialog v-model="dialogShowActivityTasks">
-      <q-card class="text-center backgroundCardColor">
-        <q-card-section>
-          <div class="q-pa-xs backgroundTextoPopup">
-            <div class="text-h6">
-              {{ formTaskActive.title }}
-            </div>
-          </div>
-        </q-card-section>
+    <DialogViewActivityTask
+      :form="formTaskActive"
+      :dialog="dialogShowActivityTasks"
+      @eventClose="dialogShowActivityTasks = false"
+      @eventEdit="dialogTasksEdit = true"
+      @eventDelete="dialogDeleteTasks = true"
+    />
 
-        <q-card-section />
+    <DialogViewFinishedTask
+      :form="formTaskFinish"
+      :dialog="dialogShowFinishedActivities"
+      @eventClose="dialogShowFinishedActivities = false"
+      @eventDelete="dialogDeleteTasks = true"
+    />
 
-        <q-card-section v-if="formTaskActive.content != ''">
-          <div class="q-pa-xs backgroundTextoPopup">
-            <div v-html="formTaskActive.content" />
-          </div>
-        </q-card-section>
+    <DialogAddTask
+      :dialog="dialogoAddTarefa"
+      @eventClose="dialogoAddTarefa = false"
+      @eventSave="storeTask($event)"
+    />
 
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogShowActivityTasks = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="red"
-            @click="dialogDeleteTasks = true"
-          >
-            {{ $t('geral.delete') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="green"
-            @click="dialogTasksEdit = true"
-          >
-            {{ $t('geral.edit') }}
-          </q-btn>
-        </q-card-section>
-
-        <q-card-section />
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="dialogShowFinishedActivities">
-      <q-card class="text-center backgroundCardColor">
-        <q-card-section>
-          <div class="text-h6 q-pa-xs backgroundTextoPopup">
-            {{ formTaskFinish.title }}
-          </div>
-        </q-card-section>
-        <q-card-section />
-
-        <q-card-section v-if="formTaskFinish.content != null">
-          <div
-            class="text-h6 q-pa-xs backgroundTextoPopup"
-            v-html="formTaskFinish.content"
-          />
-        </q-card-section>
-
-        <q-card-section v-if="formTaskFinish.finishNotes != null">
-          <div class="text-h6">
-            {{ $t('dialogs.finishTaskNoteTitle') }}
-          </div>
-          <div class="text-h6">
-            {{ formTaskFinish.finishNotes }}
-          </div>
-        </q-card-section>
-
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogShowFinishedActivities = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="red"
-            @click="dialogDeleteTasks = true"
-          >
-            {{ $t('geral.delete') }}
-          </q-btn>
-        </q-card-section>
-
-        <q-card-section />
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="dialogoAddTarefa">
-      <q-card class="text-center">
-        <q-card-section>
-          <div class="text-h6">
-            {{ $t('dialogs.addNewTask') }}
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-form class="q-gutter-md">
-            <q-input
-              v-model="formTaskActive.title"
-              label="Informe o titulo da tarefa"
-              required
-            />
-          </q-form>
-        </q-card-section>
-
-        <q-card-section>
-          <q-form class="q-gutter-md">
-            <div class="text-h6">
-              {{ $t('dialogs.description') }}
-            </div>
-            <q-editor
-              v-model="formTaskActive.content"
-              :toolbar="editorTools"
-              :fonts="nomeDasFronts"
-            />
-          </q-form>
-        </q-card-section>
-
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogoAddTarefa = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="green"
-            @click="storeTask"
-          >
-            {{ $t('geral.save') }}
-          </q-btn>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="dialogTasksEdit">
-      <q-card class="text-center">
-        <q-card-section>
-          <div class="text-h6">
-            {{ $t('dialogs.editTask') }}
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-form class="q-gutter-md">
-            <q-input
-              v-model="formTaskActive.title"
-              label="Informe o titulo da tarefa"
-              required
-            />
-          </q-form>
-        </q-card-section>
-
-        <q-card-section>
-          <q-form class="q-gutter-md">
-            <div class="text-h6">
-              {{ $t('dialogs.description') }}
-            </div>
-            <q-editor
-              v-model="formTaskActive.content"
-              :toolbar="editorTools"
-              :fonts="nomeDasFronts"
-            />
-          </q-form>
-        </q-card-section>
-
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogTasksEdit = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="green"
-            @click="updateTasks()"
-          >
-            {{ $t('geral.save') }}
-          </q-btn>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <DialogEditTask
+      :dialog="dialogTasksEdit"
+      :form="formTaskActive"
+      @eventClose="dialogTasksEdit = false"
+      @eventSave="updateTasks($event)"
+    />
 
     <q-dialog v-model="dialogDeleteTasks">
       <q-card>
@@ -503,14 +339,21 @@ import FabBtnAddDesktop from '../components/button/FabAddDesktop'
 import FabBtnAddMobile from '../components/button/FabAddMobile'
 import FabBtnBackPageMobile from '../components/button/FabBackPageMobile'
 import FabBtnBackPageDesktop from '../components/button/FabBackPageDesktop'
-
+import DialogViewActivityTask from '../components/dialogs/DialogViewActivityTask'
+import DialogViewFinishedTask from '../components/dialogs/DialogViewFinishedTask'
+import DialogAddTask from '../components/dialogs/DialogAddTask'
+import DialogEditTask from '../components/dialogs/DialogEditTask'
 export default {
   name: 'Task',
   components: {
     FabBtnAddDesktop,
     FabBtnAddMobile,
     FabBtnBackPageMobile,
-    FabBtnBackPageDesktop
+    FabBtnBackPageDesktop,
+    DialogViewActivityTask,
+    DialogViewFinishedTask,
+    DialogAddTask,
+    DialogEditTask
   },
   props: {
     idFolder: {
@@ -662,8 +505,8 @@ export default {
           this.$notifiy(err, 'red')
         })
     },
-    storeTask () {
-      this.formTaskActive.finished = false
+    storeTask (form) {
+      this.formTaskActive = form
 
       this.refTasks
         .add(this.formTaskActive)
@@ -785,7 +628,8 @@ export default {
       this.dialogRestoreTasks = false
     },
 
-    updateTasks () {
+    updateTasks (newForm) {
+      this.formTaskActive = newForm
       this.refTasks
         .doc(this.formTaskActive.id)
         .update(this.formTaskActive)
