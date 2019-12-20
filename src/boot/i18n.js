@@ -6,8 +6,8 @@ export default ({ app, Vue }) => {
   Vue.use(VueI18n)
 
   app.i18n = new VueI18n({
-    locale: 'pt-br',
-    fallbackLocale: 'pt-br',
+    locale: 'en-us',
+    fallbackLocale: 'en-us',
     messages
   })
 }
