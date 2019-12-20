@@ -78,6 +78,16 @@ export default {
       this.dialogoAddNota = false
     },
     async destroyTask () {
+      if (this.dialogShowActivityTasks === true) {
+        this.dialogShowActivityTasks = false
+      }
+      if (this.dialogShowFinishedActivities === true) {
+        this.dialogShowFinishedActivities = false
+      }
+      if (this.dialogDeleteTasks === true) {
+        this.dialogDeleteTasks = false
+      }
+
       if (this.formTaskActive.finished === false) {
         try {
           await this.refTasks.doc(this.formTaskActive.id).delete()
@@ -93,16 +103,6 @@ export default {
         } catch (error) {
           this.$notifiy(this.$t('alert.error.errorTryingToRemove'), 'green')
         }
-      }
-
-      if (this.dialogShowActivityTasks === true) {
-        this.dialogShowActivityTasks = false
-      }
-      if (this.dialogShowFinishedActivities === true) {
-        this.dialogShowFinishedActivities = false
-      }
-      if (this.dialogDeleteTasks === true) {
-        this.dialogDeleteTasks = false
       }
     },
     async restoreTasks () {
