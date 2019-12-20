@@ -88,50 +88,13 @@
       @eventConfirm="finishTasks()"
     />
 
-    <q-dialog v-model="dialogoAddNota">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">
-            {{ $t('dialogs.questionForAddNotes') }}
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <div class="text-h6">
-            {{ formTaskActive.title }}
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-form class="q-gutter-md">
-            <q-input
-              v-model="formTaskActive.finishNotes"
-              label="Informe a nota de conclusão"
-              required
-            />
-          </q-form>
-        </q-card-section>
-
-        <q-card-section align="center">
-          <q-btn
-            class="q-ma-xs"
-            color="black"
-            @click.stop="dialogoAddNota = false"
-          >
-            {{ $t('geral.back') }}
-          </q-btn>
-          <q-btn
-            class="q-ma-xs"
-            color="green"
-            @click="addFinishNotes()"
-          >
-            {{ $t('geral.yes') }}
-          </q-btn>
-        </q-card-section>
-
-        <q-card-section />
-      </q-card>
-    </q-dialog>
+    <DialogAddNote
+      :dialog="dialogoAddNota"
+      :question="$t('dialogs.questionForAddNotes')"
+      :title="formTaskActive.title"
+      @eventClose="dialogoAddNota = false"
+      @eventConfirm="addFinishNotes($event)"
+    />
   </div>
 </template>
 
@@ -146,6 +109,7 @@ import DialogViewFinishedTask from '../components/dialogs/DialogViewFinishedTask
 import DialogAddTask from '../components/dialogs/DialogAddTask'
 import DialogEditTask from '../components/dialogs/DialogEditTask'
 import DialogConfirm from '../components/dialogs/DialogConfirm'
+import DialogAddNote from '../components/dialogs/DialogAddNotes'
 import TabList from '../components/lists/TabListTaks'
 
 export default {
@@ -160,6 +124,7 @@ export default {
     DialogAddTask,
     DialogEditTask,
     DialogConfirm,
+    DialogAddNote,
     TabList
   },
   props: {
@@ -354,7 +319,9 @@ export default {
       this.dialogoAddNota = true
       this.dialogoConcluirTarefa = false
     },
-    addFinishNotes () {
+    addFinishNotes (note) {
+      this.formTaskActive.finishNotes = note
+
       this.refTasks
         .doc(this.formTaskActive.id)
         .update({ finishNotes: this.formTaskActive.finishNotes })
