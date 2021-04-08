@@ -49,7 +49,9 @@
           </q-btn>
 
           <div class="text-h6">
-            Contatos: (11) 96849-8492
+            João Medeiros: (11) 96849-8492
+            <br>
+            Augusto Oliveira: (99) 99224-2759
           </div>
           <div class="text-h6">
             E-mail: symbol2studio@gmail.com
